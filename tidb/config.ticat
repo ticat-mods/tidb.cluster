@@ -1,0 +1,18 @@
+help = config tidb cluster name, version and other properties for deploy
+abbr = conf
+
+[arg]
+cluster-name|cluster|name|n = test
+version|ver|v = nightly
+nightly-major-version = v5
+confirm|cfm = no
+auto-config-mysql|auto-conf-mysql|conf-mysql = true
+keep-monitor-when-destroy|keep-monitor|keep-mon = true
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.version = version
+tidb.version.nightly-major = nightly-major-version
+tidb.auto-config-mysql = auto-config-mysql
+tidb.op.keep-monitor = keep-monitor-when-destroy
+tidb.op.confirm = confirm

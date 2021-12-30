@@ -1,0 +1,8 @@
+help = config tidb cluster hosts for deploy, use ',' to seperate host list
+abbr = kv
+
+[args]
+tikv|kv = 127.0.0.1
+
+[arg2env]
+tidb.host.tikv = tikv

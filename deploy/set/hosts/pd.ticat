@@ -1,0 +1,7 @@
+help = config pd hosts for deploy, use ',' to seperate host list
+
+[args]
+pd = 127.0.0.1
+
+[arg2env]
+tidb.host.pd = pd

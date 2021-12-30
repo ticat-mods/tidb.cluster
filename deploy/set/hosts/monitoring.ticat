@@ -1,0 +1,8 @@
+help = config host of tidb monitoring component for deploy
+abbr = mon
+
+[args]
+monitoring = 127.0.0.1
+
+[arg2env]
+tidb.host.monitoring = monitoring

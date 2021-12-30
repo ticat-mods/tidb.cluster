@@ -1,0 +1,8 @@
+help = config tidb hosts for deploy, use ',' to seperate host list
+abbr = db
+
+[args]
+tidb|db = 127.0.0.1
+
+[arg2env]
+tidb.host.tidb = tidb

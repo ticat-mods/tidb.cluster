@@ -1,0 +1,11 @@
+help = config global info for deploy
+
+[arg]
+user = tidb
+group = tidb
+ssh-port|ssh = 22
+deploy-dir|deploy = /tidb-deploy
+data-dir|data = /tidb-data
+arch =  amd64
+
+# TODO: resource control

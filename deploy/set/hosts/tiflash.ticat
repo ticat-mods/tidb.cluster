@@ -1,0 +1,8 @@
+help = config tiflash hosts for deploy, use ',' to seperate host list
+abbr = flash
+
+[args]
+tiflash = 127.0.0.1
+
+[arg2env]
+tidb.host.tiflash = tiflash
