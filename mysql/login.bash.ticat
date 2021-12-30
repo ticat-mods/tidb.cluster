@@ -1,0 +1,23 @@
+help = login mysql interactive interface
+abbrs = l
+
+interactive = true
+
+[args]
+host|h = 127.0.0.1
+port|p = 4000
+user|u = root
+db-name|database|db = ''
+
+[arg2env]
+mysql.host = host
+mysql.port = port
+mysql.user = user
+
+[env]
+mysql.host = read
+mysql.port = read
+mysql.user = read
+
+[dep]
+mysql = as client

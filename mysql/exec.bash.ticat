@@ -1,0 +1,24 @@
+help = execute sql in mysql
+abbrs = exe
+
+[args]
+query|sql|q = ''
+db-name|database|db = ''
+host|h = 127.0.0.1
+port|p = 4000
+user|u = root
+output-format|format|fmt = ''
+warnings|warning|warn = true
+
+[env]
+mysql.host = read
+mysql.port = read
+mysql.user = read
+
+[arg2env]
+mysql.host = host
+mysql.port = port
+mysql.user = user
+
+[dep]
+mysql = as client

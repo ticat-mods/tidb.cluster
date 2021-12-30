@@ -1,0 +1,22 @@
+help = setup MySql access info
+abbr = conf
+cmd = config.bash
+
+[args]
+host|h = 127.0.0.1
+port|p = 4000
+user|u = root
+verify-access|verify|v = true
+
+[arg2env]
+mysql.host = host
+mysql.port = port
+mysql.user = user
+
+[env]
+mysql.host = write
+mysql.port = write
+mysql.user = write
+
+[dep]
+mysql = as client
