@@ -1,0 +1,26 @@
+help = deploy tiup cluster name and then set the name to env
+abbr = depl|dep|dpl
+
+[arg]
+yaml-path|yaml = ''
+cluster-name|cluster|name|n = ''
+version|ver|v = ''
+confirm|cfm = ''
+skip-exist|skip|s = false
+
+[arg2env]
+tidb.tiup.yaml = yaml-path
+tidb.cluster = cluster-name
+tidb.version = version
+tidb.op.confirm = confirm
+
+[env]
+tidb.tiup.yaml = read
+tidb.cluster = read
+tidb.version = read
+tidb.op.confirm = read
+
+[dep]
+tiup = to deploy cluster
+expr = to parse 'version+path'
+tar = to package binary executable file

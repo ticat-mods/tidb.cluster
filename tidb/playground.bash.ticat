@@ -1,0 +1,5 @@
+help = start playground
+abbr = play|pg
+
+[dep]
+tiup = to start tidb

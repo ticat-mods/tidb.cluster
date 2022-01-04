@@ -1,0 +1,23 @@
+help = start tiup cluster
+abbr = up
+
+[arg]
+cluster-name|cluster|name|n = ''
+user|u = root
+roles = ''
+auto-config-mysql|mysql = true
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.auto-config-mysql = auto-config-mysql
+
+[env]
+tidb.cluster = read
+tidb.auto-config-mysql = read
+
+mysql.host = write
+mysql.port = write
+mysql.user = write
+
+[dep]
+tiup = to start cluster

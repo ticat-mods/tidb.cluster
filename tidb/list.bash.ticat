@@ -1,0 +1,5 @@
+help = list tiup clusters
+abbr = ls
+
+[dep]
+tiup = to display cluster

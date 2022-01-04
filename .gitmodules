@@ -1,3 +1,6 @@
 [submodule "helper/bash.helper"]
 	path = helper/bash.helper
 	url = https://github.com/ticat-mods/bash.helper
+[submodule "helper/tiup.helper"]
+	path = helper/tiup.helper
+	url = https://github.com/ticat-mods/tiup.helper

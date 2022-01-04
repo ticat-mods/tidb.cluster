@@ -1,0 +1,13 @@
+help = directly destroy a cluster, without confirm
+abbr = destroy|rm|confirm
+trivial = 3
+
+flow = tidb.destroy
+
+[arg]
+cluster-name|cluster|name|n = ''
+confirm|cfm = false
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.op.confirm = confirm

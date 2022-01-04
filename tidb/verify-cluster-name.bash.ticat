@@ -1,0 +1,14 @@
+help = verify tiup cluster name
+abbr = verify|vrf
+
+[arg]
+cluster-name|cluster|name|n|N = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+
+[dep]
+tiup = to verify cluster name

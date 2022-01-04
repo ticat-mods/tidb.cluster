@@ -1,0 +1,17 @@
+help = stop tiup cluster
+abbr = down|dn
+
+[arg]
+cluster-name|cluster|name|n = ''
+confirm|cfm|c = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.op.confirm = confirm
+
+[env]
+tidb.cluster = read
+tidb.op.confirm = read
+
+[dep]
+tiup = to stop cluster
