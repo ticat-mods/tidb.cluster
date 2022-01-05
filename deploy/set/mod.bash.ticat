@@ -1,6 +1,0 @@
-help = config service properties (data_dir, log_dir, etc) for deploy
-
-[arg]
-mod|m = ''
-key|k = ''
-value|val|v = ''

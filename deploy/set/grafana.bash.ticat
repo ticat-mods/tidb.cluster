@@ -1,0 +1,8 @@
+help = config grafana host and port-delta for deploy
+abbr = grf|gfn
+
+[arg]
+host-port = 127.0.0.1
+
+[env]
+deploy.host.grafana = write

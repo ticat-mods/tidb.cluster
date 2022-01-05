@@ -1,0 +1,6 @@
+help = config global resource-control for deploy
+abbr = resource|res
+
+[arg]
+key|k|config|conf|name = ''
+value|val|v = ''

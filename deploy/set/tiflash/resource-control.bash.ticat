@@ -1,0 +1,7 @@
+help = config tiflash resource-control for deploy
+abbr = resource|res
+
+[arg]
+key|k|config|conf|name = ''
+value|val|v = ''
+instance-id|instance|host-and-port-delta|id = ''

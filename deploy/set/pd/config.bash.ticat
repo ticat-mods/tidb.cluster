@@ -1,0 +1,7 @@
+help = config pd additional ports
+abbr = conf|c
+
+[arg]
+key|k|config|conf|name = ''
+value|val|v = ''
+instance-id|instance|host-and-port-delta|id = ''

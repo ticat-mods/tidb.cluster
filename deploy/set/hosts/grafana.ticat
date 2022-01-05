@@ -1,8 +1,0 @@
-help = config grafana host for deploy
-abbr = gra
-
-[args]
-grafana = 127.0.0.1
-
-[arg2env]
-tidb.host.grafana = grafana

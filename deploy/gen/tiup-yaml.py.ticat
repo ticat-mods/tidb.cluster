@@ -1,0 +1,9 @@
+help = generate tiup yaml config from env values written by deploy.set.*
+abbr = tiup
+
+[env]
+deploy.host.tikv = read
+deploy.host.pd = read
+deploy.host.tidb = read
+
+tidb.tiup.yaml = write

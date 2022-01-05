@@ -1,0 +1,7 @@
+help = config monitored service ports with real port number
+abbr = p
+
+[arg]
+port-name|name = ''
+port = ''
+instance-id|instance|host-and-port-delta|id = ''

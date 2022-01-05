@@ -1,0 +1,8 @@
+help = config monitored service host and port-delta for deploy
+abbr = blackbox|bbox|bb
+
+[arg]
+host-port = 127.0.0.1
+
+[env]
+deploy.host.monitored = write

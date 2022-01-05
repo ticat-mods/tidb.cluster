@@ -1,8 +1,0 @@
-help = config hosts of tidb monitored component for deploy, use ',' to seperate host list
-abbr = exporter|exp
-
-[args]
-monitored = 127.0.0.1
-
-[arg2env]
-tidb.host.monitored = monitored

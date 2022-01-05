@@ -1,7 +1,0 @@
-help = config service yaml file for deploy
-abbr = conf
-
-[arg]
-mod|m = ''
-key|k = ''
-value|val|v = ''

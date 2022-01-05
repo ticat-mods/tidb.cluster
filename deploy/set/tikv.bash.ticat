@@ -1,0 +1,8 @@
+help = config tikv host and port-delta for deploy, use ',' to seperate if more then one tikv
+abbr = kv
+
+[arg]
+host-port = 127.0.0.1
+
+[env]
+deploy.host.tikv = write

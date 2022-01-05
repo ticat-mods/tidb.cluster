@@ -1,8 +1,0 @@
-help = generate tiup yaml config from env values
-abbr = tiup
-
-[env]
-tidb.host.tikv = read
-tidb.host.pd = read
-tidb.host.tidb = read
-tidb.tiup.yaml = write

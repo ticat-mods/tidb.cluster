@@ -1,2 +1,0 @@
-help = toolbox for config tidb cluster hosts, use ',' to seperate host list
-abbr = host|h

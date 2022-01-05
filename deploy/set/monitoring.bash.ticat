@@ -1,0 +1,8 @@
+help = config monitoring service host and port-delta for deploy
+abbr = mon
+
+[arg]
+host-port = 127.0.0.1
+
+[env]
+deploy.host.monitoring = write

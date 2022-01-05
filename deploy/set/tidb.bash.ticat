@@ -1,0 +1,8 @@
+help = config tidb host and port-delta for deploy, use ',' to seperate if more then one tidb
+abbr = db
+
+[arg]
+host-port = 127.0.0.1
+
+[env]
+deploy.host.tidb = write

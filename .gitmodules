@@ -4,3 +4,6 @@
 [submodule "helper/tiup.helper"]
 	path = helper/tiup.helper
 	url = https://github.com/ticat-mods/tiup.helper
+[submodule "helper/python.helper"]
+	path = helper/python.helper
+	url = https://github.com/ticat-mods/python.helper
