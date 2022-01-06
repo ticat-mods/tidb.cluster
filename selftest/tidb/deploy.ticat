@@ -1,0 +1,26 @@
+help = test tidb deploy, start, stop, and other things
+abbr = depl
+
+[flow/]
+depl.preset.min4 p=-222 n=st-222 v=v4.0.13 keep-mon=false
+depl.gen.tiup
+db.rm
+db.new
+
+depl.preset.min p=-333 n=st-333 v=v4.0.13 keep-mon=false
+depl.gen.tiup
+db.rm
+db.new
+
+db.upgrade v=v5.3.0
+db.show st-333
+my.exec "show databases"
+db.verify st-222
+db.verify st-333
+db.reload
+
+db.ls
+db.clean
+db.rm st-222
+db.rm st-333
+db.ls

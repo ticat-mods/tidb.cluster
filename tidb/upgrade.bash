@@ -22,14 +22,8 @@ force=`maybe_enable_opt "${1}" '--force'`
 ignore_config_check=`maybe_enable_opt "${2}" '--ignore-config-check'`
 offline=`maybe_enable_opt "${3}" '--offline'`
 
-begin=`timestamp`
-
 tiup cluster upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
 
 if [ ! -z "${path}" ]; then
 	path_patch "${path}"
 fi
-
-end=`timestamp`
-echo "tidb.upgrade.begin=${begin}" >> "${session}/env"
-echo "tidb.upgrade.end=${end}" >> "${session}/env"

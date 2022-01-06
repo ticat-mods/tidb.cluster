@@ -1,0 +1,10 @@
+target="$HOME/.ssh/authorized_keys"
+if [ ! -f "${target}" ]; then
+	echo "$key" > "${target}"
+	chmod 600 "${target}"
+else
+	exists=`grep "${key}" "${target}"`
+		if [ -z "${exists}" ]; then
+		echo "$key" >> "${target}"
+	fi
+fi

@@ -282,6 +282,9 @@ class HostInstanceCounter:
 		service_instances[service] = instances
 		self.counter[host] = service_instances
 
+	def hosts(self):
+		return self.counter.keys()
+
 	def need_location_host_label(self):
 		def multi_storage(host_info):
 			if 'tikv' in host_info:
@@ -310,7 +313,7 @@ class TiUPYaml:
 	def __init__(self):
 		self.delta = ''
 		self.instances = {}
-		self.auto_label_counter = HostInstanceCounter()
+		self.hosts_info = HostInstanceCounter()
 		self.glb = Global()
 
 		self.session = Env()
@@ -319,7 +322,7 @@ class TiUPYaml:
 		self._parse()
 
 	def _parse(self):
-		self.delta = to_int(self.env.get_ex('deploy.port.delta', ''))
+		self.delta = to_int(self.env.get_ex('port.delta', ''))
 
 		self._parse_kvs('conf.global.', self.glb.confs)
 		self._parse_kvs('resource_control.global.', self.glb.resource)
@@ -342,7 +345,7 @@ class TiUPYaml:
 			self._parse_kvs('conf.' + name + '.' + id + '.', instance.prop.confs)
 			self._parse_kvs('resource_control.' + name + '.' + id + '.', instance.prop.resource)
 			service.instances.append(instance)
-			self.auto_label_counter.add_instance(instance.host, name, id)
+			self.hosts_info.add_instance(instance.host, name, id)
 
 		self._parse_kvs('port.' + name + '.', service.prop.ports)
 		self._parse_kvs('conf.' + name + '.', service.prop.confs)
@@ -365,7 +368,7 @@ class TiUPYaml:
 				lines.append('  resource_control:')
 				lines += res_lines
 
-		need_location_host_label = not self.user_set_location_label and self.auto_label_counter.need_location_host_label()
+		need_location_host_label = not self.user_set_location_label and self.hosts_info.need_location_host_label()
 		services = Service.output_names()
 
 		glb_conf_lines = []
@@ -394,7 +397,17 @@ class TiUPYaml:
 
 	def _dump_instances(self, name, output_name, need_location_host_label):
 		lines = []
-		if name not in self.instances:
+		if name == 'monitored' and self.delta != 0:
+			lines.insert(0, name + ':')
+			port_names = Ports.names(name)
+			port_names.sort()
+			for port_name in port_names:
+				port, is_def = Ports.calculate_port(Ports.default(name, port_name), 0, self.delta, [])
+				if not is_def:
+					lines.append('  ' + port_name + ': ' + str(port))
+			return lines
+
+		if name not in self.instances or name == 'monitored':
 			return lines
 		service = self.instances[name]
 		if len(service.instances) == 0:

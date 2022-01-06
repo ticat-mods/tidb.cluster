@@ -1,0 +1,18 @@
+help = setup hosts' ssh authorization, the host list is from tiup yaml file
+abbr = auth
+
+interact = true
+
+[arg]
+password|pwd = ''
+
+[arg2env]
+ssh.pwd = password
+
+[env]
+tidb.tiup.yaml = read
+ssh.pwd = read
+
+[dep]
+ssh-keygen = to gen ssh key
+sshpass = to re-use the ssh passphrase

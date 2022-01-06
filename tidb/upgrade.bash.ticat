@@ -1,6 +1,9 @@
 help = upgrade a specified TiDB cluter
 abbr = update
 
+begin-ts-key = tidb.upgrade.begin
+end-ts-key = tidb.upgrade.end
+
 [arg]
 cluster-name|name|n = ''
 version|v = ''

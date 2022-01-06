@@ -3,7 +3,7 @@ abbr = m6
 trivial = 3
 
 [arg]
-port-delta|port|p = +0
+port-delta|delta|port|p = +0
 host|h = 127.0.0.1
 cluster-name|cluster|name|n = test
 version|ver|v = nightly

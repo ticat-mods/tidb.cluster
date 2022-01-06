@@ -1,0 +1,13 @@
+help = test tiup config file generating
+abbr = conf
+
+[flow/]
+depl.preset.min3 delta=1000
+deploy.set.global.conf user tidb
+deploy.set.global.res cpu_quota 200%
+depl.set.tikv.conf data_dir service-level-dir
+depl.set.tikv.conf data_dir instance-level-dir 127.0.0.1@+2
+deploy.set.tidb.res cpu_quota 222%
+depl.set.tidb.conf cross-join true
+depl.set.pd.conf schedule.enable-one-way-merge true
+depl.gen.tiup
