@@ -1,4 +1,7 @@
+
+mkdir -p "${HOME}/.ssh"
 target="$HOME/.ssh/authorized_keys"
+
 if [ ! -f "${target}" ]; then
 	echo "$key" > "${target}"
 	chmod 600 "${target}"

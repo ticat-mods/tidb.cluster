@@ -1,0 +1,11 @@
+help = collect hardware resource amount from host list by ssh
+abbr = hwr
+
+[arg]
+hosts = ''
+
+[arg2env]
+deploy.hosts = hosts
+
+[env]
+deploy.hosts = read

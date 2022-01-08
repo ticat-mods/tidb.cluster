@@ -1,0 +1,7 @@
+help = a basic tidb resource allocator for auto deploy
+
+[arg]
+hosts = ''
+cluster-name-prefix = 'deployer-tom-'
+tikv-pre-disk = 1
+tidb-cpu-ratio = 50%

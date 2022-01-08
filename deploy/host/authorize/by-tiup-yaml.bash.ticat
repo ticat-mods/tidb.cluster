@@ -1,19 +1,17 @@
-help = setup hosts' ssh authorization
-abbr = auth
+help = setup hosts' ssh authorization, the host list is from tiup yaml file
+abbr = tiup-yaml|yaml
 
 interact = true
 
 [arg]
-hosts|h = ''
 password|pwd = ''
 
 [arg2env]
-deploy.hosts = hosts
 ssh.pwd = password
 
 [env]
-deploy.hosts = tread
-ssh.pwd = may-read
+tidb.tiup.yaml = read
+ssh.pwd = read
 
 [dep]
 ssh-keygen = to gen ssh key

@@ -1,0 +1,21 @@
+help = tidb auto deployer
+
+[arg]
+hosts = ''
+tikv-pre-disk = 1
+tidb-cpu-ratio = 50%
+allocator = deploy.auto.allocator.tom
+
+[arg2env]
+deploy.hosts = hosts
+deploy.tikv-pre-disk = tikv-pre-disk
+
+[env]
+deploy.hosts = read
+ssh.pwd = may-read
+
+[flow/]
+deploy.host.auth
+deploy.host.hardware-resource
+deploy.host.idle-scan
+[[allocator]]
