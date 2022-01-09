@@ -5,9 +5,10 @@ import sys
 size_1g = 1024 * 1024 * 1024
 
 class Dev:
-	def __init__(self, name, type, size, parent, removable, mounted):
+	def __init__(self, name, type, fs, size, parent, removable, mounted):
 		self.name = name
 		self.type = type
+		self.fs = fs
 		self.size = int(size)
 		self.parent = parent
 		self.removable = removable == '1'
@@ -27,7 +28,7 @@ class Dev:
 		mounted = self.mounted
 		if len(mounted) == 0:
 			mounted = '(no)'
-		return "dev:"+self.name+", disk:"+self.disk()+", type:"+self.type+", size:"+str(self.size)+", avail:"+str(self.avail)+", mounted:"+self.mounted
+		return "dev:"+self.name+", disk:"+self.disk()+", type:"+self.type+", fs:"+self.fs+", size:"+str(self.size)+", avail:"+str(self.avail)+", mounted:"+self.mounted
 
 def parse_lsblk(lines):
 	lines = lines.split('\n')[1:]
@@ -36,7 +37,7 @@ def parse_lsblk(lines):
 	rtree = {}
 	for line in lines:
 		fields = line.split(' ')
-		blk = Dev(fields[0], fields[1], fields[2], fields[3], fields[4], ' '.join(fields[5:]))
+		blk = Dev(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], ' '.join(fields[6:]))
 		blks.append(blk)
 		parents.add(blk.parent)
 		rtree[blk.name] = blk.parent
@@ -125,8 +126,10 @@ def main():
 		greatest = devs[0]
 		print('dev.' + greatest.name + '.mounted=' + greatest.mounted)
 		print('dev.' + greatest.name + '.avail=' + str(greatest.avail))
+		print('dev.' + greatest.name + '.fs=' + str(greatest.fs))
 		for dev in devs[1:]:
 			print('dev.' + greatest.name + '.alter.' + dev.name + '.mounted=' + dev.mounted)
 			print('dev.' + greatest.name + '.alter.' + dev.name + '.avail=' + str(dev.avail))
+			print('dev.' + greatest.name + '.alter.' + dev.name + '.fs=' + str(dev.fs))
 
 main()

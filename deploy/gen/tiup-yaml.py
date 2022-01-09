@@ -263,8 +263,11 @@ class Attr:
 
 class Instance:
 	def __init__(self, id):
-		self.id = id
 		self.host, self.port_delta = parse_host_port(id)
+		if self.port_delta == '+0':
+			self.id = self.host
+		else:
+			self.id = id
 		self.attr = Attr()
 
 class Service:

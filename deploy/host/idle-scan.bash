@@ -3,4 +3,4 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
-echo '[:-] TODO: implement'
+echo '[:-] TODO: implement idle scan'

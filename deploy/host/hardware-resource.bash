@@ -7,18 +7,18 @@ env=`cat "${env_file}"`
 shift
 
 hosts=`must_env_val "${env}" 'deploy.hosts'`
-py=`must_env_val "${env}" 'sys.ext.exec.py'`
-
 hosts=$(echo "${hosts}" | tr "," "\n")
 
-for h in ${hosts[@]}; do
-	echo "==> ${h}"
+py=`must_env_val "${env}" 'sys.ext.exec.py'`
 
-	disks=`ssh_exe "${h}" "lsblk -rbo NAME,TYPE,SIZE,PKNAME,RM,MOUNTPOINT"`
-	echo "lsblk -rbo NAME,TYPE,SIZE,PKNAME,MOUNTPOINT"
+for host in ${hosts[@]}; do
+	echo "==> ${host}"
+
+	disks=`ssh_exe "${host}" "lsblk -rbo NAME,TYPE,FSTYPE,SIZE,PKNAME,RM,MOUNTPOINT"`
+	echo "lsblk -rbo NAME,TYPE,FSTYPE,SIZE,PKNAME,MOUNTPOINT"
 	echo "${disks}" | awk '{print "    "$0}'
 	set +e
-	disks_used=`ssh_exe "${h}" "df --output=source,avail,target"`
+	disks_used=`ssh_exe "${host}" "df --output=source,avail,target"`
 	set -e
 	echo "df --output=source,avail,target"
 	echo "${disks_used}" | awk '{print "    "$0}'
@@ -27,19 +27,19 @@ for h in ${hosts[@]}; do
 	disk_names=`lines_to_list "${disk_names}"`
 
 	echo
-	echo "${selecteds}" | awk '{print "deploy.host.resource.'${h}'."$0}' | tee -a "${env_file}"
-	echo "deploy.host.resource.${h}.devs=${disk_names}" | tee -a "${env_file}"
+	echo "${selecteds}" | awk '{print "deploy.host.resource.'${host}'."$0}' | tee -a "${env_file}"
+	echo "deploy.host.resource.${host}.devs=${disk_names}" | tee -a "${env_file}"
 
-	vc=`ssh_exe "${h}" "grep -c processor /proc/cpuinfo"`
-	echo "deploy.host.resource.${h}.vcores=${vc}" | tee -a "${env_file}"
+	vc=`ssh_exe "${host}" "grep -c processor /proc/cpuinfo"`
+	echo "deploy.host.resource.${host}.vcores=${vc}" | tee -a "${env_file}"
 
 	set +e
 	numa=`numactl --hardware|grep cpus|awk '{print $2}'`
 	set -e
 	numa=`lines_to_list "${numa}"`
-	echo "deploy.host.resource.${h}.numa=${numa}" | tee -a "${env_file}"
+	echo "deploy.host.resource.${host}.numa=${numa}" | tee -a "${env_file}"
 
-	mem=`ssh_exe "${h}" "free -g | grep Mem | awk '{print \\$2}'"`
-	echo "deploy.host.resource.${h}.mem-gb=${mem}" | tee -a "${env_file}"
+	mem=`ssh_exe "${host}" "free -g | grep Mem | awk '{print \\$2}'"`
+	echo "deploy.host.resource.${host}.mem-gb=${mem}" | tee -a "${env_file}"
 	echo
 done

@@ -1,0 +1,8 @@
+help = auto mount partition/disk from the result of deploy.host.hardware-resource
+abbr = mount
+interactive = true
+
+[arg]
+prefix = /data
+user = tidb
+group = tidb
