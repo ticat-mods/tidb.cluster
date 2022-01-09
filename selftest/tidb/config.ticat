@@ -3,11 +3,19 @@ abbr = conf
 
 [flow/]
 depl.preset.min3 delta=1000
-deploy.set.global.conf user tidb
-deploy.set.global.res cpu_quota 200%
-depl.set.tikv.conf data_dir service-level-dir
-depl.set.tikv.conf data_dir instance-level-dir 127.0.0.1@+2
-deploy.set.tidb.res cpu_quota 222%
-depl.set.tidb.conf cross-join true
+
+depl.set.global.conf user tidb
+depl.set.global.res cpu_quota 200%
+#depl.set.tikv.prop data_dir service-level-dir
+#depl.set.tikv.prop data_dir instance-level-dir 127.0.0.1@+2
+#depl.set.monitored.prop data_dir monitored-level-dir
+
+depl.set.tikv.conf raftstore.store-pool-size 4
+depl.set.tikv.conf raftstore.store-pool-size 9 127.0.0.1@+2
+depl.set.tikv.res cpu_quota 222%
+depl.set.tikv.res cpu_quota 444% 127.0.0.1@+4
+
 depl.set.pd.conf schedule.enable-one-way-merge true
+depl.set.tidb.conf cross-join true
+
 depl.gen.tiup

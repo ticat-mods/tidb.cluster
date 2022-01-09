@@ -1,0 +1,6 @@
+help = config global prop key-values for deploy
+abbr = config|conf
+
+[arg]
+key|k = ''
+value|val|v = ''

@@ -22,13 +22,62 @@
 #
 # Input env pairs:
 #
-#     # This will write to global section in tiup yaml:
-#     * Write by command: deploy.set.global.config <conf_name> <value_str>
-#  => deploy.conf.global.<conf_name> = <value_str>
+#     # This will write prop key-value to global section in tiup yaml:
+#       '''
+#       global:
+#         <conf_name>: <value>
+#       '''
+#     * Write by command: deploy.set.global.prop <prop_name> <value_str>
+#  => deploy.prop.global.<prop_name> = <value_str>
 #
 #     # This will write to global sub section of 'resource_control' in tiup yaml:
+#       '''
+#       global:
+#         resource_control:
+#           <conf_name>: <value>
+#       '''
 #     * Write by command: deploy.set.global.resouce-control <conf_name> <value_str>
 #  => deploy.resource_control.global.<conf_name> = <value_str>
+#
+#     # This will write prop key-value to instance config section in tiup yaml:
+#       '''
+#       <service>[_servers]:
+#         - host: <instance_host>
+#           <conf_name>: <value>
+#       '''
+#       - If without <instance_id>, all instance of this service will be affected
+#       - If <instance_id> is 'monitored', the output will be:
+#       '''
+#       monitored:
+#         <conf_name>: <value>
+#       '''
+#     * Write by command: deploy.set.<service>.prop <conf_name> <value_str> [<instance_id>]
+#  => deploy.prop.<service>.<conf_name> = <value_str>
+#  => deploy.prop.<service>.<instance_id>.<conf_name> = <value_str>
+#
+#     # This will write to service config section in tiup yaml:
+#       '''
+#       server_configs:
+#         <service>:
+#           <conf_name>: <value>
+#       '''
+#     * Write by command: deploy.set.<service>.config <conf_name> <value_str>
+#  => deploy.conf.<service>.<conf_name> = <value_str>
+#
+#     # This will write to instance config section in tiup yaml: (<instance_id> is defined at L81 in this doc)
+#       '''
+#       <service>[_servers]:
+#         - host: <instance_host>
+#           config:
+#             <conf_name>: <value>
+#       '''
+#     * Write by command: deploy.set.<service>.config <conf_name> <value_str> <instance_id>
+#  => deploy.conf.<service>.<instance_id>.<conf_name> = <value_str>
+#
+#     # Similiar with 'deploy.global.<resource_control>.*'
+#     * Write by command: deploy.set.<service>.resource-control <conf_name> <value_str> [<instance_id>]
+#  => deploy.resource_control.<service>.<conf_name> = <value_str>
+#  => deploy.resource_control.<service>.<instance_id>.<conf_name> = <value_str>
 #
 #     ###
 #     # Port value calculating:
@@ -51,22 +100,6 @@
 #     * Write by command: deploy.set.<service>.port <port_name> <uint> [<instance_id>]
 #  => deploy.port.<service>.<port_name> = <uint>
 #  => deploy.port.<service>.<instance_id>.<port_name> = <uint>
-#
-#     # This will write to instance config section in tiup yaml:
-#       '''
-#       tikv_servers:
-#         - host: 127.0.0.1
-#           config:
-#             <conf_name>: <value_string>
-#       '''
-#     * Write by command: deploy.set.<service>.config <conf_name> <value_str> [<instance_id>]
-#  => deploy.conf.<service>.<conf_name> = <value_str>
-#  => deploy.conf.<service>.<instance_id>.<conf_name> = <value_str>
-#
-#     # Similiar with 'deploy.global.<resource_control>.*'
-#     * Write by command: deploy.set.<service>.resource-control <conf_name> <value_str> [<instance_id>]
-#  => deploy.resource_control.<service>.<conf_name> = <value_str>
-#  => deploy.resource_control.<service>.<instance_id>.<conf_name> = <value_str>
 ##
 
 import hashlib
@@ -221,8 +254,9 @@ def dump_kvs_list(indent, *kvs_list):
 			kvs[k] = v
 	return dump_kvs(indent, kvs)
 
-class Prop:
+class Attr:
 	def __init__(self):
+		self.props = {}
 		self.ports = {}
 		self.confs = {}
 		self.resource = {}
@@ -231,12 +265,12 @@ class Instance:
 	def __init__(self, id):
 		self.id = id
 		self.host, self.port_delta = parse_host_port(id)
-		self.prop = Prop()
+		self.attr = Attr()
 
 class Service:
 	def __init__(self, name):
 		self.name = name
-		self.prop = Prop()
+		self.attr = Attr()
 		self.instances = []
 
 	@staticmethod
@@ -324,7 +358,7 @@ class TiUPYaml:
 	def _parse(self):
 		self.delta = to_int(self.env.get_ex('port.delta', ''))
 
-		self._parse_kvs('conf.global.', self.glb.confs)
+		self._parse_kvs('prop.global.', self.glb.confs)
 		self._parse_kvs('resource_control.global.', self.glb.resource)
 
 		for name in Service.names():
@@ -341,15 +375,15 @@ class TiUPYaml:
 			return
 		for id in ids:
 			instance = Instance(id)
-			self._parse_kvs('port.' + name + '.' + id + '.', instance.prop.ports)
-			self._parse_kvs('conf.' + name + '.' + id + '.', instance.prop.confs)
-			self._parse_kvs('resource_control.' + name + '.' + id + '.', instance.prop.resource)
+			self._parse_kvs('port.' + name + '.' + id + '.', instance.attr.ports)
+			self._parse_kvs('conf.' + name + '.' + id + '.', instance.attr.confs)
+			self._parse_kvs('resource_control.' + name + '.' + id + '.', instance.attr.resource)
 			service.instances.append(instance)
 			self.hosts_info.add_instance(instance.host, name, id)
 
-		self._parse_kvs('port.' + name + '.', service.prop.ports)
-		self._parse_kvs('conf.' + name + '.', service.prop.confs)
-		self._parse_kvs('resource_control.' + name + '.', service.prop.resource)
+		self._parse_kvs('port.' + name + '.', service.attr.ports)
+		self._parse_kvs('conf.' + name + '.', service.attr.confs)
+		self._parse_kvs('resource_control.' + name + '.', service.attr.resource)
 		self.instances[name] = service
 
 	def _parse_kvs(self, prefix, to):
@@ -388,7 +422,7 @@ class TiUPYaml:
 		if name not in self.instances:
 			return lines
 		service = self.instances[name]
-		lines += dump_kvs('    ', service.prop.confs)
+		lines += dump_kvs('    ', service.attr.confs)
 		if need_location_host_label and name == 'pd' and not self.env.has('conf.pd.replication.location-labels'):
 			lines.append('    replication.location-labels: [ "host" ]')
 		if len(lines) > 0:
@@ -416,16 +450,17 @@ class TiUPYaml:
 
 		for instance in service.instances:
 			lines.append('  - host: ' + instance.host)
-			lines += self._dump_ports_list(name, to_int(instance.port_delta), '    ', service.prop.ports, instance.prop.ports)
+			# lines.append('    #(ticat deployer instance id): ' + instance.id)
+			lines += self._dump_ports_list(name, to_int(instance.port_delta), '    ', service.attr.ports, instance.attr.ports)
 
-			config_lines = dump_kvs('      ', instance.prop.confs)
+			config_lines = dump_kvs('      ', instance.attr.confs)
 			if len(config_lines) > 0 or need_location_host_label and (Service.is_storage(name)):
 				lines.append('    config:')
 				lines += config_lines
 				if need_location_host_label:
-					lines.append('      server.labels: { host: "' + instance.host + '"}')
+					lines.append('      server.labels: { host: "' + instance.host + '" }')
 
-			res_lines = dump_kvs_list('      ' , service.prop.resource, instance.prop.resource)
+			res_lines = dump_kvs_list('      ' , service.attr.resource, instance.attr.resource)
 			if len(res_lines) > 0:
 				lines.append('    resource_control:')
 				lines += res_lines

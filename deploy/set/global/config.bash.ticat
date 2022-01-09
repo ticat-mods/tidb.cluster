@@ -1,6 +1,0 @@
-help = config global config key-values for deploy
-abbr = conf
-
-[arg]
-key|k = ''
-value|val|v = ''

@@ -16,4 +16,4 @@ if [ -z "${val}" ]; then
 	exit 1
 fi
 
-echo "deploy.conf.global.${key}=${val}" | tee -a "${env_file}"
+echo "deploy.prop.global.${key}=${val}" | tee -a "${env_file}"
