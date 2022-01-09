@@ -19,4 +19,4 @@ fi
 if [ ! -z "${instance}" ]; then
 	instance="${instance}."
 fi
-echo "deploy.conf.monitoring.${instance}${key}=${val}" | tee -a "${env_file}"
+echo "deploy.prop.monitoring.${instance}${key}=${val}" | tee -a "${env_file}"

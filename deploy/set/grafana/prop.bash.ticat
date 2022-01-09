@@ -1,5 +1,4 @@
-help = config grafana additional ports
-abbr = conf|c
+help = config grafana's tiup prop
 
 [arg]
 key|k|config|conf|name = ''

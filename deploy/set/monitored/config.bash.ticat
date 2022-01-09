@@ -1,6 +1,0 @@
-help = config monitored service additional ports
-abbr = conf|c
-
-[arg]
-key|k|config|conf|name = ''
-value|val|v = ''

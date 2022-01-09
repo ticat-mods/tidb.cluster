@@ -1,0 +1,5 @@
+help = config monitored's tiup prop
+
+[arg]
+key|k|config|conf|name = ''
+value|val|v = ''

@@ -365,22 +365,22 @@ class TiUPYaml:
 			self._parse_service(name)
 
 	def _parse_service(self, name):
-		if not self.env.has('host.' + name):
-			return
-
 		service = Service(name)
 
-		ids = self.env.get('host.' + name).split(',')
-		if len(ids) == 1 and len(ids[0]) == 0:
-			return
-		for id in ids:
-			instance = Instance(id)
-			self._parse_kvs('port.' + name + '.' + id + '.', instance.attr.ports)
-			self._parse_kvs('conf.' + name + '.' + id + '.', instance.attr.confs)
-			self._parse_kvs('resource_control.' + name + '.' + id + '.', instance.attr.resource)
-			service.instances.append(instance)
-			self.hosts_info.add_instance(instance.host, name, id)
+		if self.env.has('host.' + name):
+			ids = self.env.get('host.' + name)
+			if len(ids) != 0:
+				ids = ids.split(',')
+				for id in ids:
+					instance = Instance(id)
+					self._parse_kvs('prop.' + name + '.' + id + '.', instance.attr.props)
+					self._parse_kvs('port.' + name + '.' + id + '.', instance.attr.ports)
+					self._parse_kvs('conf.' + name + '.' + id + '.', instance.attr.confs)
+					self._parse_kvs('resource_control.' + name + '.' + id + '.', instance.attr.resource)
+					service.instances.append(instance)
+					self.hosts_info.add_instance(instance.host, name, id)
 
+		self._parse_kvs('prop.' + name + '.', service.attr.props)
 		self._parse_kvs('port.' + name + '.', service.attr.ports)
 		self._parse_kvs('conf.' + name + '.', service.attr.confs)
 		self._parse_kvs('resource_control.' + name + '.', service.attr.resource)
@@ -407,17 +407,21 @@ class TiUPYaml:
 
 		glb_conf_lines = []
 		for name in Service.global_configurable_names():
-			glb_conf_lines += self._dump_service(name, need_location_host_label)
+			glb_conf_lines += self._dump_service_conf(name, need_location_host_label)
 		if len(glb_conf_lines) > 0:
 			lines.append('server_configs:')
 			lines += glb_conf_lines
 
 		for name in Service.names():
-			lines += self._dump_instances(name, services[name], need_location_host_label)
+			if name == 'monitored':
+				service_lines = self._dump_monitored()
+			else:
+				service_lines = self._dump_instances(name, services[name], need_location_host_label)
+			lines += service_lines
 
 		return '\n'.join(lines)
 
-	def _dump_service(self, name, need_location_host_label):
+	def _dump_service_conf(self, name, need_location_host_label):
 		lines = []
 		if name not in self.instances:
 			return lines
@@ -429,19 +433,34 @@ class TiUPYaml:
 			lines.insert(0, '  ' + name + ':')
 		return lines
 
+	def _dump_monitored(self):
+		lines = []
+		name = 'monitored'
+		if self.delta == 0 and 'monitored' not in self.instances:
+			return lines
+		service = None
+		if name in self.instances:
+			service  = self.instances[name]
+
+		lines.append(name + ':')
+		port_names = Ports.names(name)
+		port_names.sort()
+		for port_name in port_names:
+			service_ports = []
+			if service != None:
+				defined_ports = service.attr.ports
+				if port_name in defined_ports:
+					service_ports = [defined_ports[port_name]]
+			port, is_def = Ports.calculate_port(Ports.default(name, port_name), 0, self.delta, service_ports)
+			if not is_def:
+				lines.append('  ' + port_name + ': ' + str(port))
+		if service != None:
+			lines += dump_kvs_list('  ' , service.attr.props)
+		return lines
+
 	def _dump_instances(self, name, output_name, need_location_host_label):
 		lines = []
-		if name == 'monitored' and self.delta != 0:
-			lines.insert(0, name + ':')
-			port_names = Ports.names(name)
-			port_names.sort()
-			for port_name in port_names:
-				port, is_def = Ports.calculate_port(Ports.default(name, port_name), 0, self.delta, [])
-				if not is_def:
-					lines.append('  ' + port_name + ': ' + str(port))
-			return lines
-
-		if name not in self.instances or name == 'monitored':
+		if name not in self.instances:
 			return lines
 		service = self.instances[name]
 		if len(service.instances) == 0:
@@ -450,8 +469,10 @@ class TiUPYaml:
 
 		for instance in service.instances:
 			lines.append('  - host: ' + instance.host)
-			# lines.append('    #(ticat deployer instance id): ' + instance.id)
+			lines.append('    #(deployer instance id: ' + instance.id + ')')
 			lines += self._dump_ports_list(name, to_int(instance.port_delta), '    ', service.attr.ports, instance.attr.ports)
+
+			lines += dump_kvs_list('    ' , service.attr.props, instance.attr.props)
 
 			config_lines = dump_kvs('      ', instance.attr.confs)
 			if len(config_lines) > 0 or need_location_host_label and (Service.is_storage(name)):

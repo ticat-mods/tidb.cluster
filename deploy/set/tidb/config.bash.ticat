@@ -1,4 +1,4 @@
-help = config tidb additional ports
+help = config tidb instances' config
 abbr = conf|c
 
 [arg]

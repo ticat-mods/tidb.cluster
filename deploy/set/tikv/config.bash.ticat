@@ -1,4 +1,4 @@
-help = config tikv additional ports
+help = config tikv instances' config
 abbr = conf|c
 
 [arg]

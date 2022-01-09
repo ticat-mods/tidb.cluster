@@ -1,5 +1,4 @@
-help = config monitoring service additional ports
-abbr = conf|c
+help = config tidb's tiup prop
 
 [arg]
 key|k|config|conf|name = ''

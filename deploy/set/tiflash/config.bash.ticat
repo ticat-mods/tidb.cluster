@@ -1,4 +1,4 @@
-help = config tiflash additional ports
+help = config tiflash instances' config
 abbr = conf|c
 
 [arg]

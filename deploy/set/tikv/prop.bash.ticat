@@ -1,5 +1,4 @@
-help = config pd instances' config
-abbr = conf|c
+help = config tikv's tiup prop
 
 [arg]
 key|k|config|conf|name = ''

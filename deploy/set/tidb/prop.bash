@@ -19,4 +19,4 @@ fi
 if [ ! -z "${instance}" ]; then
 	instance="${instance}."
 fi
-echo "deploy.conf.grafana.${instance}${key}=${val}" | tee -a "${env_file}"
+echo "deploy.prop.tidb.${instance}${key}=${val}" | tee -a "${env_file}"
