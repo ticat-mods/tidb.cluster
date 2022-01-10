@@ -2,7 +2,7 @@ help = collect hardware resource amount from host list by ssh
 abbr = hwr
 
 [arg]
-hosts = ''
+hosts|host|h = ''
 
 [arg2env]
 deploy.hosts = hosts

@@ -354,7 +354,7 @@ class TiUPYaml:
 		self.glb = Global()
 
 		self.session = Env()
-		self.env = self.session.with_prefix('deploy.')
+		self.env = self.session.detach_prefix('deploy.')
 		self.user_set_location_label = self.env.has('conf.pd.replication.location-labels')
 		self._parse()
 
@@ -537,7 +537,7 @@ class TiUPYaml:
 		file.close()
 
 		self.session.set('tidb.tiup.yaml', path)
-		Env.write_to_env_file(self.session)
+		self.session.flush()
 
 		print(text + '\n')
 		print('tidb.tiup.yaml=' + path)

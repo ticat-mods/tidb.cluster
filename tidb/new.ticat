@@ -1,4 +1,4 @@
-help = deploy and start a cluster with tiup yaml path
+help = deploy and start a cluster with tiup yaml file
 trivial = 1
 
 flow = tidb.deploy : tidb.start

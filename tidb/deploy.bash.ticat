@@ -1,4 +1,4 @@
-help = deploy tiup cluster name and then set the name to env
+help = deploy tiup cluster
 abbr = depl|dep|dpl
 
 [arg]

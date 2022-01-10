@@ -1,4 +1,4 @@
-help = generate tiup yaml config from env values written by deploy.set.*
+help = generate tiup yaml config from env values written by deploy.set.* or deploy.auto.allocator.*
 abbr = tiup
 
 [env]

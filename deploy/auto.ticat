@@ -2,9 +2,9 @@ help = tidb auto deployer
 trivial = 1
 
 [arg]
-hosts = ''
-deploy-user|user = tidb
-allocator = deploy.auto.allocator.tom
+hosts|host|h = ''
+deploy-user|user|u = tidb
+allocator|alloc|a = deploy.auto.allocator.tom
 
 [arg2env]
 deploy.hosts = hosts
@@ -15,6 +15,6 @@ deploy.host.auth
 deploy.host.hardware-resource
 deploy.host.idle-scan
 deploy.host.auto-mount
-[[allocator]]
 deploy.set.port.delta 1000
+[[allocator]]
 deploy.gen.tiup

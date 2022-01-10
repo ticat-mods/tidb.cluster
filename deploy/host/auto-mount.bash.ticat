@@ -3,8 +3,8 @@ abbr = mount
 interactive = true
 
 [arg]
-prefix = /tidb-data-
-deploy-user|user = tidb
+mount-point-prefix|prefix|p = /tidb-data-
+deploy-user|user|u = tidb
 
 [arg2env]
 deploy.user = deploy-user

@@ -16,7 +16,7 @@ ssh.pwd = password
 [env]
 deploy.hosts = read
 deploy.user = read
-ssh.pwd = may-read
+ssh.pwd = may-read | delete
 
 [dep]
 ssh-keygen = to gen ssh key
