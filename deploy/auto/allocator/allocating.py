@@ -1,18 +1,82 @@
 # -*- coding: utf-8 -*-
 
+import os
+import sys
+sys.path.append('../../../helper/python.helper')
+
+from copy import deepcopy
+from ticat import Env
+from ssh import ssh_exe
+
 class Dev:
-	def __init__(self, name, avail, mounted):
+	def __init__(self, cost_model, host, name, avail, mounted):
+		self.cost_model = cost_model
+		self.host = host
 		self.name = name
 		self.avail = int(avail)
 		self.mounted = mounted
+		self.deployed = {}
 
 	def is_nvme(self):
 		return self.name.startswith('nvme')
 
+	def _deploy_service(self, name):
+		use_vcores = 0
+		if name in self.cost_model:
+			use_vcores = self.cost_model[name]
+		new_cnt = 1
+		new_use_vcores = use_vcores
+		new_io_cnt = 0
+		if name in ['tikv', 'tiflash']:
+			new_io_cnt = 1
+		if name in self.deployed:
+			old_cnt, old_use_vcores = self.deployed[name]
+			new_cnt += old_cnt
+			new_use_vcores += old_use_vcores
+			new_io_cnt += old_io_cnt
+		self.deployed[name] = (new_cnt, new_use_vcores, new_io_cnt)
+
+	def deploy_tikv(self):
+		self._deploy_service('tikv')
+
+	def deploy_pd(self):
+		self._deploy_service('pd')
+
+	def deploy_tidb(self):
+		self._deploy_service('tidb')
+
+	def deploy_tiflash(self):
+		self._deploy_service('tiflash')
+
+	def deploy_monitoring(self):
+		self._deploy_service('monitoring')
+
+	def deploy_grafana(self):
+		self._deploy_service('grafana')
+
+	def used_vcores(self):
+		used_vcores_sum = 0
+		for name in self.deployed:
+			_, used_vcores, _ = self.deployed[name]
+			used_vcores_sum += used_vcores
+		return used_vcores_sum
+
+	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
+	def deployed_instances(self):
+		return deepcopy(self.deployed)
+
+	def io_instance_cnt(self):
+		io_cnt_sum = 0
+		for name in self.deployed:
+			_, _, io_cnt = self.deployed[name]
+			io_cnt_sum += io_cnt
+		return io_cnt_sum
+
 class Host:
-	def __init__(self, env, host):
-		self.host = host
-		hwr_env = env.detach_prefix('deploy.host.resource.' + host + '.')
+	def __init__(self, cost_model, env, name):
+		self.cost_model = cost_model
+		self.name = name
+		hwr_env = env.detach_prefix('deploy.host.resource.' + name + '.')
 
 		self.vcores = hwr_env.must_get('vcores')
 
@@ -22,30 +86,74 @@ class Host:
 
 		self.mem_gb = hwr_env.must_get('mem-gb')
 
-		self.dev_names = []
 		dev_names = hwr_env.must_get('devs')
 		if len(dev_names) > 0:
-			self.dev_names = dev_names.split(',')
-
+			dev_names = dev_names.split(',')
 		self.devs = []
 		self.nvmes = []
-		for dev_name in self.dev_names:
+		for dev_name in dev_names:
 			dev_env = hwr_env.with_prefix('dev.' + dev_name + '.')
 			avail = int(dev_env.must_get('avail'))
 			mounted = dev_env.must_get('mounted')
-			dev = Dev(dev_name, avail, mounted)
+			dev = Dev(cost_model, self, dev_name, avail, mounted)
 			self.devs.append(dev)
 			if dev.is_nvme():
 				self.nvmes.append(dev)
 
+	def least_use_dev(self, nvme_only):
+		devs = self.devs
+		if nvme_only:
+			devs = self.nvmes
+		cand = None
+		cand_used_vcores = -1
+		cand_io_cnt = -1
+		for dev in devs:
+			io_cnt = dev.io_instance_cnt()
+			used_vcores = dev.used_vcores()
+			if io_cnt == 0:
+				return dev
+			if cand == None or cand_io_cnt > io_cnt or cand_io_cnt == io_cnt and cand_used_vcores > used_vcores:
+				cand = dev
+				cand_io_cnt = io_cnt
+				cand_used_vcores = used_vcores
+		return cand
+
+	def used_vcores(self):
+		used_vcores_sum = 0
+		for dev in self.devs:
+			used_vcores_sum += dev.used_vcores()
+		return used_vcores_sum
+
+	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
+	def deployed_instances(self):
+		services_sum = {}
+		for dev in self.devs:
+			dev_vcores, services = dev.deployed_instances()
+			for name in services.keys():
+				cnt, vcores, io_cnt = services[name]
+				if name not in services_sum:
+					services_sum[name] = (cnt, vcores, io_cnt)
+				else:
+					old_cnt, old_vcores, old_io_cnt = services_sum[name]
+					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
+		return services_sum
+
 	def dump(self):
-		print('host:'+self.host+', vcores:'+self.vcores+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
+		print('host:'+self.name+', vcores:'+self.vcores+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
 		for dev in self.devs:
 			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted)
 
 class Hosts:
-	def __init__(self, env):
-		self.env = env
+	def __init__(self, cost_model, deploy_dir_name):
+		self.cost_model = cost_model
+		self.deploy_dir_name = deploy_dir_name
+
+		self.env = Env()
+
+		self.deploy_user = self.env.must_get('deploy.user')
+		self.deploy_group = self.env.get_ex('deploy.group', '')
+		if len(self.deploy_group) == 0:
+			self.deploy_group = self.deploy_user
 
 		self.hosts = []
 		hosts = self.env.must_get('deploy.hosts')
@@ -54,25 +162,99 @@ class Hosts:
 
 		self.hwrs = {}
 		self.vcores = 0
-		self.nvmes = 0
-		self.devs = 0
+		self.nvmes = []
+		self.devs = []
 		for host in self.hosts:
-			hwr = Host(self.env, host)
-			self.nvmes += len(hwr.nvmes)
-			self.devs += len(hwr.devs)
+			hwr = Host(self.cost_model, self.env, host)
+			self.nvmes += hwr.nvmes
+			self.devs += hwr.devs
 			self.hwrs[host] = hwr
 
-class Deployment:
-	def __init__(self, env):
-		self.env = env
-		self.tikvs = set()
-		self.tidbs = set()
+	def least_cpu_use_host(self):
+		cand = None
+		min_vcores = -1
+		for host in self.hosts:
+			hwr = self.hwrs[host]
+			used_vcores = hwr.used_vcores()
+			if cand == None or used_vcores < min_vcores:
+				cand = hwr
+				min_vcores = used_vcores
+		return cand
 
-	def add_tikv(self, tikv):
-		self.tikvs.add(tikv)
+	def used_vcores(self):
+		used_vcores_sum = 0
+		for host in self.hosts:
+			used_vcores_sum += self.hwrs[host].used_vcores()
+		return used_vcores_sum
 
-	def add_tidb(self, tidb):
-		self.tidbs.add(tidb)
+	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
+	def deployed_instances(self):
+		services_sum = {}
+		for host in self.hosts:
+			hwr = self.hwrs[host]
+			services = hwr.deployed_instances()
+			for name in services.keys():
+				cnt, vcores, io_cnt = services[name]
+				if name not in services_sum:
+					services_sum[name] = (cnt, vcores, io_cnt)
+				else:
+					old_cnt, old_vcores, old_io_cnt = services_sum[name]
+					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
+		return services_sum
 
+	def clone(self):
+		return deepcopy(self)
+
+	# TODO: auto setup numa
 	def flush(self):
-		pass
+		services = {}
+		for host in self.hosts:
+			hwr = self.hwrs[host]
+			id_gen = {}
+			for dev in hwr.devs:
+				for service in dev.deployed.keys():
+					if service not in id_gen:
+						id = host
+						nid = '@+0'
+						id_gen[service] = 0
+					else:
+						nid = '@+' + str(id_gen[service] * 2)
+						id = host + nid
+					location = (host, dev, id, nid)
+					if service not in services:
+						services[service] = [location]
+					else:
+						services[service].append(location)
+					id_gen[service] += 1
+
+		dirs = set()
+		for service in services.keys():
+			locations = services[service]
+			key = 'deploy.host.' + service
+			vals = []
+			for i in range(0, len(locations)):
+				host, dev, id, nid = locations[i]
+				vals.append(id)
+				path = os.path.join(dev.mounted, self.deploy_dir_name, service + nid)
+				self.env.set('deploy.prop.' + service + '.' + id + '.deploy_dir', path)
+				dirs.add((host, os.path.join(dev.mounted, self.deploy_dir_name)))
+			self.env.set(key, ','.join(vals))
+
+		if self.deploy_user != 'tidb':
+			self.env.set('deploy.prop.global.user', self.deploy_user)
+
+		for host, dir in dirs:
+			ssh_exe(host, 'chown -R ' + self.deploy_user + ':' + self.deploy_group + ' "' + dir + '"')
+
+		self.env.flush()
+
+	@staticmethod
+	def std_cost_model():
+		return {
+			'tikv': 16,
+			'pd': 8,
+			'tidb': 16,
+			'tiflash': 16,
+			'monitering': 2,
+			'grafana': 4,
+		}

@@ -50,6 +50,8 @@ def parse_lsblk(lines):
 	for blk in blks:
 		if blk.mounted in ['/', '/home', '[SWAP]']:
 			continue
+		if blk.mounted.find('docker') >= 0:
+			continue
 		if blk.name.startswith('sda'):
 			continue
 		if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:

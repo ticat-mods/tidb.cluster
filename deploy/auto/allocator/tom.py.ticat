@@ -2,6 +2,12 @@ help = a basic tidb resource allocator for auto deploy
 
 [arg]
 hosts = ''
-cluster-name-prefix = 'deployer-tom-'
-tikv-pre-disk = 1
-tidb-cpu-ratio = 50%
+deploy-user|user = tidb
+
+[arg2env]
+deploy.hosts = hosts
+deploy.user = deploy-user
+
+[env]
+deploy.hosts = read
+deploy.user = read

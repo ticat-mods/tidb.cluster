@@ -6,8 +6,8 @@ env=`cat "${env_file}"`
 shift
 
 prefix="${1}"
-user="${2}"
-group="${3}"
+user=`must_env_val "${env}" 'deploy.user'`
+group="${user}"
 
 hosts=`must_env_val "${env}" 'deploy.hosts'`
 hosts=`list_to_array "${hosts}"`
@@ -18,20 +18,20 @@ function auto_mount()
 	local dev="${2}"
 	local fs="${3}"
 	if [ -z "${fs}" ]; then
-		echo "  > auto format and mount: ${dev} at ${host}"
+		echo "--> ${host}: auto format and mount ${dev}"
 	else
-		echo "  > auto mount: ${dev}(${fs}) at ${host}"
+		echo "--> ${host}: auto mount ${dev}(${fs})"
 	fi
 
 	if [ -z "${fs}" ]; then
-		echo "    - format ${dev} to ext4: start"
+		echo "    * format ${dev} to ext4: start"
 		ssh_exe "${host}" "sudo mkfs.ext4 -F -t ext4 \"/dev/${dev}\"" 2>&1 | awk '{print "    "$0}'
-		echo "    - format ${dev} to ext4: done"
+		echo "    * format ${dev} to ext4: done"
 	fi
 
 	for (( i=1; i<99; i++ )); do
 		local dir="${prefix}${i}"
-		echo "    - ${dir}:"
+		echo "    [${dir}]"
 		set +e
 		local exists=`ssh_exe "${host}" "test -d \"${dir}\" && echo yes"`
 		set -e
@@ -39,20 +39,30 @@ function auto_mount()
 			echo "        exists, checking mounting info"
 			local mounted=`ssh_exe "${host}" "mount | awk '{if (\\$3 == \"${dir}\") {print \"yes\"; exit 0}} ENDFILE {print \"no\"}'"`
 			if [ "${mounted}" != 'no' ]; then
-				echo "        mounted, skipped"
+				echo "        mounted to other dev, skipped"
 				continue
 			else
-				echo "        with no mounting info"
+				echo "        - no mounting info"
 			fi
+			echo "        check owner"
+			local owner=`ssh_exe "${host}" "ls -ld \"${dir}\" | awk {print \\$3}"`
+			if [ "${owner}" == "${user}" ]; then
+				echo "        - owner is ${user}"
+			else
+				echo "        - owner is not ${user}"
+			fi
+		else
+			echo "        create and chown to ${user}:${group}"
+			ssh_exe "${host}" "mkdir -p \"${dir}\" && chown -R \"${user}\":\"${group}\" \"${dir}\""
+			echo "        - done"
 		fi
 
-		echo "        make sure exists and belong to ${user}:${group}"
-		ssh_exe "${host}" "mkdir -p \"${dir}\" && chown \"${user}\":\"${group}\" \"${dir}\""
-		echo "        owner check done"
-
 		echo "        mounting ${dev}"
-		ssh_exe "${host}" "sudo mount -o nodiratime,noatime -t ext4 \"/dev/${dev}\" \"${dir}\"" | awk '{print "        "$0}'
-		echo "        mounted"
+		ssh_exe "${host}" "sudo mount -o nodelalloc,nodiratime,noatime -t ext4 \"/dev/${dev}\" \"${dir}\"" | awk '{print "        "$0}'
+		echo "        - mounted"
+
+		echo "        write back to env"
+		echo "deploy.host.resource.${host}.dev.${dev}=${dir}" | tee -a "${env_file}" | awk '{print "        - "$0}'
 		return
 	done
 

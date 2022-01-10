@@ -6,13 +6,16 @@ interact = true
 [arg]
 hosts|h = ''
 password|pwd = ''
+deploy-user|user = ''
 
 [arg2env]
 deploy.hosts = hosts
+deploy.user = deploy-user
 ssh.pwd = password
 
 [env]
-deploy.hosts = tread
+deploy.hosts = read
+deploy.user = read
 ssh.pwd = may-read
 
 [dep]

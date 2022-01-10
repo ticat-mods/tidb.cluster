@@ -445,7 +445,6 @@ class TiUPYaml:
 		if name in self.instances:
 			service  = self.instances[name]
 
-		lines.append(name + ':')
 		port_names = Ports.names(name)
 		port_names.sort()
 		for port_name in port_names:
@@ -459,6 +458,8 @@ class TiUPYaml:
 				lines.append('  ' + port_name + ': ' + str(port))
 		if service != None:
 			lines += dump_kvs_list('  ' , service.attr.props)
+		if len(lines) > 0:
+			lines.insert(0, name + ':')
 		return lines
 
 	def _dump_instances(self, name, output_name, need_location_host_label):
@@ -472,7 +473,7 @@ class TiUPYaml:
 
 		for instance in service.instances:
 			lines.append('  - host: ' + instance.host)
-			lines.append('    #(deployer instance id: ' + instance.id + ')')
+			#lines.append('    #(deployer instance id: ' + instance.id + ')')
 			lines += self._dump_ports_list(name, to_int(instance.port_delta), '    ', service.attr.ports, instance.attr.ports)
 
 			lines += dump_kvs_list('    ' , service.attr.props, instance.attr.props)
