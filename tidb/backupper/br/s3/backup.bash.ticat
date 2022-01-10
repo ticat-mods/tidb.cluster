@@ -1,0 +1,36 @@
+help = backup tidb cluster data to s3 compatible storage
+abbr = back|bk
+
+[arg]
+username = ''
+password = ''
+endpoint = ''
+storage-dir|dir = ''
+cluster-name|cluster|name|n = ''
+threads|thread|thrd = 1
+check-checksum|checksum = true
+target-db|target|db = ''
+br-bin = 'tiup br'
+
+[arg2env]
+br.username = username
+br.password = password
+br.endpoint = endpoint
+br.backup-dir = storage-dir
+br.threads = threads
+br.checksum = check-checksum
+br.target = target-db
+tidb.cluster = cluster-name
+br.bin = br-bin
+
+[env]
+br.backup-dir = read
+tidb.cluster = read
+br.checksum = read
+br.bin = read
+
+[val2env]
+tidb.backupper = tidb.backupper.br.s3
+
+[dep]
+tiup = to display tidb cluster info and run br
