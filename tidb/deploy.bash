@@ -21,7 +21,7 @@ fi
 
 read ver path < <(expand_version_and_path "${ver}")
 
-tiup cluster deploy "${name}" "${ver}" "${yaml}"${confirm}
+tiup cluster --format=plain deploy "${name}" "${ver}" "${yaml}"${confirm}
 
 if [ ! -z "${path}" ]; then
 	path_patch "${path}"

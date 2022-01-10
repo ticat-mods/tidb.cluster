@@ -1,2 +1,2 @@
 set -euo pipefail
-tiup cluster list
+tiup cluster --format=plain list

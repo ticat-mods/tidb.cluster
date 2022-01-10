@@ -22,7 +22,7 @@ force=`maybe_enable_opt "${1}" '--force'`
 ignore_config_check=`maybe_enable_opt "${2}" '--ignore-config-check'`
 offline=`maybe_enable_opt "${3}" '--offline'`
 
-tiup cluster upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
+tiup cluster --format=plain upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
 
 if [ ! -z "${path}" ]; then
 	path_patch "${path}"

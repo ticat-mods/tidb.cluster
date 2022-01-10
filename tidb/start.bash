@@ -14,9 +14,9 @@ auto_conf_mysql=`to_true "${auto_conf_mysql}"`
 
 name=`must_env_val "${env}" 'tidb.cluster'`
 if [ -z "${roles}" ]; then
-	tiup cluster start "${name}"
+	tiup cluster --format=plain start "${name}"
 else
-	tiup cluster start "${name}" --role "${roles}"
+	tiup cluster --format=plain start "${name}" --role "${roles}"
 fi
 
 tidbs=`must_cluster_tidbs "${name}"`

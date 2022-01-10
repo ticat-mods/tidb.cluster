@@ -20,4 +20,4 @@ if [ "${keep_monitor}" != 'true' ]; then
 	keep_prom_str=''
 fi
 
-tiup cluster destroy "${name}"${confirm}${keep_prom_str}
+tiup cluster --format=plain destroy "${name}"${confirm}${keep_prom_str}

@@ -4,6 +4,7 @@ abbr = down|dn
 [arg]
 cluster-name|cluster|name|n = ''
 confirm|cfm|c = ''
+keep-monitor = true
 
 [arg2env]
 tidb.cluster = cluster-name
@@ -12,6 +13,7 @@ tidb.op.confirm = confirm
 [env]
 tidb.cluster = read
 tidb.op.confirm = read
+tidb.op.keep-monitor = keep-monitor
 
 [dep]
 tiup = to stop cluster

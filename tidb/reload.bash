@@ -18,4 +18,4 @@ if [ ! -z "${3// }" ]; then
 	roles=" --role ${3// }"
 fi
 
-tiup cluster reload "${name}" ${force}${skip_restart}${roles}${confirm}
+tiup cluster --format=plain reload "${name}" ${force}${skip_restart}${roles}${confirm}
