@@ -1,5 +1,6 @@
 help = test tiup config file generating
 abbr = conf
+tag = selftest
 
 [flow/]
 depl.preset.min3 delta=1000

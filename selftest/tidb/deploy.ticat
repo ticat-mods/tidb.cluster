@@ -1,5 +1,6 @@
 help = test tidb deploy, start, stop, and other things
 abbr = depl
+tag = selftest
 
 [flow/]
 depl.preset.min4 p=-222 n=st-222 v=v4.0.13 keep-mon=false

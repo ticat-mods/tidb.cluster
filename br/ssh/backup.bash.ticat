@@ -1,0 +1,26 @@
+help = backup instances' data dir to <dir>.<tag>, exist-policy: skip|overwrite|error
+abbr = back|bck|bk
+trivial = 1
+
+flow = tidb.stop
+
+[arg]
+cluster-name|cluster|name|n = ''
+tag|t = ''
+exist-policy|when-exist|exists|exist = skip
+use-mv-instead-of-cp|use-mv|mv = false
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.data.tag = tag
+tidb.backup.exist-policy = exist-policy
+tidb.backup.use-mv = use-mv-instead-of-cp
+
+[env]
+tidb.cluster = read
+tidb.data.tag = read
+tidb.backup.exist-policy = read
+tidb.backup.use-mv = read
+
+[dep]
+tiup = to get dir of each instance from cluster

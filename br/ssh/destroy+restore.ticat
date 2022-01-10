@@ -1,0 +1,5 @@
+help = stop and clean a tidb cluster, restore data by dir via ssh, then start cluster
+abbr = rm+restore|rr
+trivial = 1
+
+flow = tidb.destroy : tidb.deploy : tidb.ssh-br.restore : tidb.start

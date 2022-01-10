@@ -1,0 +1,14 @@
+help = list backuped tags
+abbrs = ls
+
+[arg]
+cluster-name|cluster|name|n = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+
+[dep]
+tiup = to get dir of each instance from cluster
