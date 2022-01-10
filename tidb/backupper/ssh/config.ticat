@@ -1,4 +1,5 @@
 help = setup backup config, set self as tidb.backupper
+tags = config
 abbr = conf
 
 [arg]

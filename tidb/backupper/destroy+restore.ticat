@@ -1,17 +1,15 @@
 help = destroy and restore instances' data by tag, then restart
 abbr = remove+restore|delete+restore|rm+restore|del+restore|rm+rs|del+rs
-trivial = 3
+trivial = 1
 
 flow = [[tidb.backupper]].destroy+restore
 
 [arg]
-tag|t = ''
 cluster-name|cluster|name|n = ''
 backupper = tidb.backupper.ssh
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.data.tag = tag
 tidb.backupper = backupper
 
 [env]
