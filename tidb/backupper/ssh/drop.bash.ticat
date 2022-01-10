@@ -1,13 +1,15 @@
-help = list backuped tags
-abbrs = ls
+help = remove instances' backupped data dir: <dir>.<tag>
 
 [arg]
+tag|t = ''
 cluster-name|cluster|name|n = ''
 
 [arg2env]
+tidb.data.tag = tag
 tidb.cluster = cluster-name
 
 [env]
+tidb.data.tag = read
 tidb.cluster = read
 
 [dep]

@@ -1,8 +1,0 @@
-help = set br.ssh as tidb backuper
-abbr = conf
-
-[arg]
-backupper = br.ssh
-
-[arg2env]
-tidb.backupper = backupper

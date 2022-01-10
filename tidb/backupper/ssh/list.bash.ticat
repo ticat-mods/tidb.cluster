@@ -1,17 +1,14 @@
-help = restore instances' data dir from <dir>.<tag>
-abbrs = rs
+help = list all backupped data's tags
+abbrs = ls
 
 [arg]
 cluster-name|cluster|name|n = ''
-tag|t = ''
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.data.tag = tag
 
 [env]
 tidb.cluster = read
-tidb.data.tag = read
 
 [dep]
 tiup = to get dir of each instance from cluster

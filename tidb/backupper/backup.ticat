@@ -1,0 +1,22 @@
+help = stop cluster and backup data, exist-policy: skip|overwrite|error
+abbr = back|bck|bk
+trivial = 3
+
+flow = [[tidb.backupper]].backup
+
+[arg]
+tag|t = ''
+cluster-name|cluster|name|n = ''
+exist-policy|when-exist|exists|exist = skip
+use-mv-instead-of-cp|use-mv|mv = false
+backupper = tidb.backupper.ssh
+
+[arg2env]
+tidb.data.tag = tag
+tidb.cluster = cluster-name
+tidb.backup.exist-policy = exist-policy
+tidb.backup.use-mv = use-mv-instead-of-cp
+tidb.backupper = backupper
+
+[env]
+tidb.backupper = read

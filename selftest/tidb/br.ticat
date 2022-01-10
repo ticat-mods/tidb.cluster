@@ -6,8 +6,8 @@ depl.ready.min4 p=-242 n=st-242 v=v4.0.13 keep-mon=false
 db.rm
 db.new
 
-br.ssh.backup tag=test-br
-br.ssh.destroy+restore
-br.ssh.list
-br.ssh.drop
+db.bk.backup tag=test-br
+db.bk.destroy+restore
+db.bk.list
+db.bk.drop
 db.rm

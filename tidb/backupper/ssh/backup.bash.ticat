@@ -5,22 +5,25 @@ trivial = 1
 flow = tidb.stop
 
 [arg]
-cluster-name|cluster|name|n = ''
 tag|t = ''
+cluster-name|cluster|name|n = ''
 exist-policy|when-exist|exists|exist = skip
 use-mv-instead-of-cp|use-mv|mv = false
 
 [arg2env]
-tidb.cluster = cluster-name
 tidb.data.tag = tag
+tidb.cluster = cluster-name
 tidb.backup.exist-policy = exist-policy
 tidb.backup.use-mv = use-mv-instead-of-cp
 
 [env]
-tidb.cluster = read
 tidb.data.tag = read
+tidb.cluster = read
 tidb.backup.exist-policy = read
 tidb.backup.use-mv = read
+
+[val2env]
+tidb.backupper = tidb.backupper.ssh
 
 [dep]
 tiup = to get dir of each instance from cluster

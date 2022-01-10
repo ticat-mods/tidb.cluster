@@ -1,0 +1,15 @@
+help = list all backupped data's tags
+abbrs = ls
+trivial = 3
+
+flow = [[tidb.backupper]].list
+
+[arg]
+cluster-name|cluster|name|n = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+tidb.backupper = read

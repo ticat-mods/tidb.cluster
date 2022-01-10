@@ -1,0 +1,17 @@
+help = setup backup config, set self as tidb.backupper
+abbr = conf
+
+[arg]
+tag|t = ''
+cluster-name|cluster|name|n = ''
+exist-policy|when-exist|exists|exist = skip
+use-mv-instead-of-cp|use-mv|mv = false
+
+[arg2env]
+tidb.data.tag = tag
+tidb.cluster = cluster-name
+tidb.backup.exist-policy = exist-policy
+tidb.backup.use-mv = use-mv-instead-of-cp
+
+[val2env]
+tidb.backupper = tidb.backupper.ssh
