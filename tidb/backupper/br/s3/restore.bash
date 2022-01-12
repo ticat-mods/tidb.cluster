@@ -33,10 +33,11 @@ br_bin=`must_env_val "${env}" 'br.bin'`
 
 echo ${br_bin} restore ${target} --pd "${pd}" --s3.endpoint "${endpoint}" -s "s3://${dir}" --check-requirements=false${checksum} --concurrency "${threads}"
 env AWS_ACCESS_KEY_ID="${username}" \
-    AWS_SECRET_ACCESS_KEY="${password}" \
-    ${br_bin} restore ${target} \
-        --pd "${pd}" \
-        --s3.endpoint "${endpoint}" \
-        -s "s3://${dir}" \
-        --check-requirements=false${checksum} \
-        --concurrency "${threads}" > ${session}/restore-`date +%s`.log 2>&1
+	AWS_SECRET_ACCESS_KEY="${password}" \
+	${br_bin} restore ${target} \
+		--pd "${pd}" \
+		--s3.endpoint "${endpoint}" \
+		-s "s3://${dir}" \
+		--check-requirements=false${checksum} \
+		--concurrency "${threads}" | tee ${session}/restore-`date +%s`.log 2>&1
+echo "[:)] restored"

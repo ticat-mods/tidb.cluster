@@ -3,14 +3,24 @@ tags = config
 abbr = conf
 
 [arg]
-backup-dir|dir|d = ''
-threads|thread|t|T = ''
-cluster-name|cluster|name|n|N = ''
+username = ''
+password = ''
+endpoint = ''
+storage-dir|dir = ''
+cluster-name|cluster|name|n = ''
+threads|thread|thrd = 1
+check-checksum|checksum = true
+target-db|target|db = ''
 br-bin = 'tiup br'
 
 [arg2env]
-br.backup-dir = backup-dir
+br.username = username
+br.password = password
+br.endpoint = endpoint
+br.backup-dir = storage-dir
 br.threads = threads
+br.checksum = check-checksum
+br.target = target-db
 tidb.cluster = cluster-name
 br.bin = br-bin
 
