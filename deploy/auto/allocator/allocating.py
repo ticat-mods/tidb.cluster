@@ -30,7 +30,7 @@ class Dev:
 		if name in ['tikv', 'tiflash']:
 			new_io_cnt = 1
 		if name in self.deployed:
-			old_cnt, old_use_vcores = self.deployed[name]
+			old_cnt, old_use_vcores, old_io_cnt = self.deployed[name]
 			new_cnt += old_cnt
 			new_use_vcores += old_use_vcores
 			new_io_cnt += old_io_cnt
@@ -124,7 +124,7 @@ class Host:
 			used_vcores_sum += dev.used_vcores()
 		return used_vcores_sum
 
-	def io_instance_cnt(self)
+	def io_instance_cnt(self):
 		sum = 0
 		for dev in self.devs:
 			sum += dev.io_instance_cnt()
@@ -208,7 +208,7 @@ class Hosts:
 					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
 		return services_sum
 
-	def io_instance_cnt(self)
+	def io_instance_cnt(self):
 		sum = 0
 		for host in self.hosts:
 			hwr = self.hwrs[host]
