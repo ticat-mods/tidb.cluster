@@ -164,7 +164,10 @@ class Hosts:
 		self.hosts = []
 		hosts = self.env.must_get('deploy.hosts')
 		if len(hosts) > 0:
-			self.hosts = hosts.split(',')
+			hosts = hosts.split(',')
+			for host in hosts:
+				if host not in self.hosts:
+					self.hosts.append(host)
 
 		self.hwrs = {}
 		self.vcores = 0
