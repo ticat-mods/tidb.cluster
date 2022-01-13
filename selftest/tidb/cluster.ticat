@@ -1,0 +1,7 @@
+help = test tidb cluster modules
+
+[flow/]
+blend.forest
+^selftest.tidb.br
+^selftest.tidb.deploy.conf
+^selftest.tidb.deploy.manual
