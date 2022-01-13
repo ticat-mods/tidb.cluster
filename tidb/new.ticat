@@ -5,9 +5,9 @@ flow = tidb.deploy : tidb.start
 
 [arg]
 tiup-yaml|yaml = ''
-cluster-name|cluster|name|n = ''
-version|ver|v = ''
-confirm|cfm = ''
+cluster-name|cluster|name|n = test
+version|ver|v = nightly
+confirm|cfm = no
 
 [arg2env]
 tidb.tiup.yaml = tiup-yaml

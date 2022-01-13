@@ -124,6 +124,12 @@ class Host:
 			used_vcores_sum += dev.used_vcores()
 		return used_vcores_sum
 
+	def io_instance_cnt(self)
+		sum = 0
+		for dev in self.devs:
+			sum += dev.io_instance_cnt()
+		return sum
+
 	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
 	def deployed_instances(self):
 		services_sum = {}
@@ -201,6 +207,13 @@ class Hosts:
 					old_cnt, old_vcores, old_io_cnt = services_sum[name]
 					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
 		return services_sum
+
+	def io_instance_cnt(self)
+		sum = 0
+		for host in self.hosts:
+			hwr = self.hwrs[host]
+			sum += hwr.io_instance_cnt()
+		return sum
 
 	def clone(self):
 		return deepcopy(self)

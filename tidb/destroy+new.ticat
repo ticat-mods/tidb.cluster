@@ -8,8 +8,8 @@ flow = tidb.destroy : tidb.deploy : tidb.start
 [arg]
 tiup-yaml|yaml = ''
 cluster-name|cluster|name|n = ''
-version|ver|v = ''
-confirm|cfm = ''
+version|ver|v = nightly
+confirm|cfm = no
 
 [arg2env]
 tidb.tiup.yaml = tiup-yaml

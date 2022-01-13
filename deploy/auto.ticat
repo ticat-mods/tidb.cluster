@@ -5,16 +5,17 @@ trivial = 1
 hosts|host|h = ''
 deploy-user|user|u = tidb
 allocator|alloc|a = deploy.auto.allocator.tom
+port-delta|delta|d = 1000
 
 [arg2env]
 deploy.hosts = hosts
 deploy.user = deploy-user
+deploy.port.delta = port-delta
 
 [flow/]
 deploy.host.auth
 deploy.host.hardware-resource
 deploy.host.idle-scan
 deploy.host.auto-mount
-deploy.set.port.delta 1000
 [[allocator]]
 deploy.gen.tiup
