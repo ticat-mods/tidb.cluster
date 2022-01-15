@@ -1,5 +1,6 @@
 help = config tidb cluster name, version and other properties for deploy
 abbr = conf
+tag = config
 
 [arg]
 cluster-name|cluster|name|n = test

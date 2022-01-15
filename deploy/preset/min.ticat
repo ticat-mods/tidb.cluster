@@ -1,4 +1,4 @@
-help = n*tikv + 1*tidb + 1*pd on the same host, n == 1 by default
+help = 1*tikv + 1*tidb + 1*pd on the same host
 trivial = 3
 
 [arg]
