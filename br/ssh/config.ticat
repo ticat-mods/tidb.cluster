@@ -1,4 +1,4 @@
-help = setup backup config, set self as tidb.backupper
+help = setup ssh-backup config
 tags = config
 abbr = conf
 
@@ -13,6 +13,3 @@ tidb.data.tag = tag
 tidb.cluster = cluster-name
 tidb.backup.exist-policy = exist-policy
 tidb.backup.use-mv = use-mv-instead-of-cp
-
-[val2env]
-tidb.backupper = tidb.backupper.ssh

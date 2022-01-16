@@ -2,4 +2,4 @@ help = stop and clean a tidb cluster, restore data by dir via ssh, then start cl
 abbr = remove+restore|delete+restore|rm+restore|del+restore|rm+rs|del+rs
 trivial = 1
 
-flow = tidb.destroy : tidb.deploy : tidb.backupper.ssh.restore : tidb.start
+flow = tidb.destroy : tidb.deploy : br.ssh.restore : tidb.start

@@ -1,4 +1,4 @@
-help = setup br config, set self as tidb.backupper
+help = setup br config
 tags = config
 abbr = conf
 
@@ -13,6 +13,3 @@ br.backup-dir = backup-dir
 br.threads = threads
 tidb.cluster = cluster-name
 br.bin = br-bin
-
-[val2env]
-tidb.backupper = tidb.backupper.br

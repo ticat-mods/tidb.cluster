@@ -1,5 +1,5 @@
-help = backup tidb cluster data to s3 compatible storage
-abbr = back|bk
+help = restore tidb cluster data from s3 compatible storage
+abbr = rs
 
 [arg]
 username = ''
@@ -28,9 +28,6 @@ br.backup-dir = read
 tidb.cluster = read
 br.checksum = read
 br.bin = read
-
-[val2env]
-tidb.backupper = tidb.backupper.br.s3
 
 [dep]
 tiup = to display tidb cluster info and run br

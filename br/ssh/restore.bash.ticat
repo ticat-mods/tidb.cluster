@@ -13,8 +13,5 @@ tidb.cluster = cluster-name
 tidb.data.tag = read
 tidb.cluster = read
 
-[val2env]
-tidb.backupper = tidb.backupper.ssh
-
 [dep]
 tiup = to get dir of each instance from cluster

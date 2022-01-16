@@ -1,4 +1,4 @@
-help = setup br config, set self as tidb.backupper
+help = setup br s3 config
 tags = config
 abbr = conf
 
@@ -23,6 +23,3 @@ br.checksum = check-checksum
 br.target = target-db
 tidb.cluster = cluster-name
 br.bin = br-bin
-
-[val2env]
-tidb.backupper = tidb.backupper.br.s3
