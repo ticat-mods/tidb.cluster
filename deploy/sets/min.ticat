@@ -1,5 +1,4 @@
-help = 3*tikv + 1*tidb + 1*pd on the same host
-abbr = m3
+help = 1*tikv + 1*tidb + 1*pd on the same host
 trivial = 3
 
 [arg]
@@ -11,8 +10,7 @@ keep-monitor-when-destroy|keep-monitor|keep-mon = true
 
 [flow/]
 tidb.config name=[[cluster-name]] ver=[[version]] keep-mon=[[keep-monitor-when-destroy]]
-deploy.set.tikv [[host]]@+0,[[host]]@+2,[[host]]@+4
+deploy.set.tikv [[host]]
 deploy.set.pd [[host]]
 deploy.set.tidb [[host]]
 deploy.set.port.delta [[port-delta]]
-deploy.gen.tiup

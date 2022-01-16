@@ -1,4 +1,4 @@
-help = 1*tikv + 1*tidb + 1*pd on the same host
+help = 1*tikv + 1*tiflash + 1*tidb + 1*pd on the same host
 trivial = 3
 
 [arg]
@@ -11,7 +11,7 @@ keep-monitor-when-destroy|keep-monitor|keep-mon = true
 [flow/]
 tidb.config name=[[cluster-name]] ver=[[version]] keep-mon=[[keep-monitor-when-destroy]]
 deploy.set.tikv [[host]]
+deploy.set.tiflash [[host]]
 deploy.set.pd [[host]]
 deploy.set.tidb [[host]]
 deploy.set.port.delta [[port-delta]]
-deploy.gen.tiup

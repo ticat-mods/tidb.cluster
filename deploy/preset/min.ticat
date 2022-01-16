@@ -14,3 +14,4 @@ deploy.set.tikv [[host]]
 deploy.set.pd [[host]]
 deploy.set.tidb [[host]]
 deploy.set.port.delta [[port-delta]]
+deploy.gen.tiup

@@ -2,18 +2,19 @@ help = test tidb br
 tag = selftest
 
 [flow/]
-depl.ready.min4 p=-242 n=st-242 v=v4.0.13 keep-mon=false
+depl.preset.min4 p=-252 n=st-252 v=v4.0.13 keep-mon=false
 db.rm+new
 
-db.bk.br.conf dir=/tmp/test-br
-db.bk.backup
-db.bk.destroy+restore
+br.conf dir=/tmp/test-br
+br.backup
+br.destroy+restore
 bash "rm -rf /tmp/test-br"
 
-db.bk.ssh.conf tag=test-br
-db.bk.backup
-db.bk.destroy+restore
-db.bk.ssh.list
-db.bk.ssh.drop
+br.ssh.conf tag=test-br
+br.ssh.backup
+br.ssh.destroy+restore
+
+br.ssh.list
+br.ssh.drop
 
 db.rm
