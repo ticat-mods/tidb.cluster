@@ -1,5 +1,6 @@
 help = config tikv host and port-delta for deploy, use ',' to seperate if more then one tikv
 abbr = kv
+unlog = true
 
 [arg]
 host-port = 127.0.0.1

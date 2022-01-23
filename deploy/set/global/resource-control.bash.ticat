@@ -1,5 +1,6 @@
 help = config global resource-control for deploy
 abbr = resource|res
+unlog = true
 
 [arg]
 key|k|config|conf|name = ''

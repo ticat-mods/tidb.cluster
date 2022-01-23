@@ -1,5 +1,6 @@
 help = config pd instances' config
 abbr = conf|c
+unlog = true
 
 [arg]
 key|k|config|conf|name = ''

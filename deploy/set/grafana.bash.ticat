@@ -1,5 +1,6 @@
 help = config grafana host and port-delta for deploy
 abbr = grf|gfn
+unlog = true
 
 [arg]
 host-port = 127.0.0.1

@@ -1,5 +1,6 @@
 help = config global prop key-values for deploy
 abbr = config|conf
+unlog = true
 
 [arg]
 key|k = ''

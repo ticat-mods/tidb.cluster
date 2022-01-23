@@ -1,5 +1,6 @@
 help = config tiflash host and port-delta for deploy, use ',' to seperate if more then one tiflash
 abbr = flash
+unlog = true
 
 [arg]
 host-port = 127.0.0.1

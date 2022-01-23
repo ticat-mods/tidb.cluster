@@ -1,5 +1,6 @@
 help = config pd host and port-delta for deploy, use ',' to seperate if more then one pd
 abbr = pd
+unlog = true
 
 [arg]
 host-port = 127.0.0.1

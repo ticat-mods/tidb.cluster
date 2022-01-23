@@ -1,5 +1,6 @@
 help = config pd ports with real port number
 abbr = p
+unlog = true
 
 [arg]
 port-name|name = ''

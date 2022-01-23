@@ -1,4 +1,5 @@
 help = config monitored's tiup prop
+unlog = true
 
 [arg]
 key|k|config|conf|name = ''

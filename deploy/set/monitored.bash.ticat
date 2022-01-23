@@ -1,5 +1,6 @@
 help = config monitored service host and port-delta for deploy
 abbr = blackbox|bbox|bb
+unlog = true
 
 [arg]
 host-port = 127.0.0.1

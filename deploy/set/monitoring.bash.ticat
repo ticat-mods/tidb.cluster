@@ -1,5 +1,6 @@
 help = config monitoring service host and port-delta for deploy
 abbr = mon
+unlog = true
 
 [arg]
 host-port = 127.0.0.1
