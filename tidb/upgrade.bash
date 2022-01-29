@@ -5,7 +5,7 @@ session="${1}"
 env=`cat "${session}/env"`
 shift
 
-confirm=`confirm_str "${env}"`
+confirm=`tiup_confirm_str "${env}"`
 name=`must_env_val "${env}" 'tidb.cluster'`
 ver=`must_env_val "${env}" 'tidb.version'`
 
@@ -18,9 +18,9 @@ if [[ "${ver}" < "${current_version}" ]]; then
 	exit 1
 fi
 
-force=`maybe_enable_opt "${1}" '--force'`
-ignore_config_check=`maybe_enable_opt "${2}" '--ignore-config-check'`
-offline=`maybe_enable_opt "${3}" '--offline'`
+force=`tiup_maybe_enable_opt "${1}" '--force'`
+ignore_config_check=`tiup_maybe_enable_opt "${2}" '--ignore-config-check'`
+offline=`tiup_maybe_enable_opt "${3}" '--offline'`
 
 tiup cluster --format=plain upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
 

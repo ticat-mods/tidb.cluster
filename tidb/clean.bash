@@ -3,7 +3,7 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
-confirm=`confirm_str "${env}"`
+confirm=`tiup_confirm_str "${env}"`
 name=`must_env_val "${env}" 'tidb.cluster'`
 exist=`cluster_exist "${name}"`
 if [ "${exist}" == 'false' ]; then

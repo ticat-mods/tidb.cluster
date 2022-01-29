@@ -4,7 +4,7 @@ set -euo pipefail
 env=`cat "${1}/env"`
 shift
 
-confirm=`confirm_str "${env}"`
+confirm=`tiup_confirm_str "${env}"`
 yaml=`must_env_val "${env}" 'tidb.tiup.yaml'`
 name=`must_env_val "${env}" 'tidb.cluster'`
 ver=`must_env_val "${env}" 'tidb.version'`
