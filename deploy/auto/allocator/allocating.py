@@ -259,6 +259,25 @@ class Hosts:
 		if self.deploy_user != 'tidb':
 			self.env.set('deploy.prop.global.user', self.deploy_user)
 
+		if not self.env.has('deploy.conf.tikv.storage.block-cache.capacity') and ('tikv' in services):
+			tikvs = services['tikv']
+			for i in range(0, len(tikvs)):
+				host_name, dev, id, nid = tikvs[i]
+				bc_id_key = 'deploy.conf.tikv.' + id + '.storage.block-cache.capacity'
+				if self.env.has(bc_id_key):
+					continue
+				bc_host_key = 'deploy.conf.tikv.' + host_name + '.storage.block-cache.capacity'
+				if self.env.has(bc_host_key):
+					bc_gb = self.env.get(bc_host_key)
+				else:
+					host = self.hwrs[host_name]
+					n = host.io_instance_cnt()
+					if n <= 1:
+						continue
+					bc_gb = float(host.mem_gb) * 0.45 / n
+					bc_gb = str(int(bc_gb)) + 'GB'
+				self.env.set(bc_id_key, bc_gb)
+
 		for host, dir in dirs:
 			ssh_exe(host, 'chown -R ' + self.deploy_user + ':' + self.deploy_group + ' "' + dir + '"')
 
