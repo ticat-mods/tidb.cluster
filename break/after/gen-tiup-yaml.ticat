@@ -1,0 +1,4 @@
+help = setup a breakpoint after tiup yaml file is generated
+abbr = gen-tiup|gen
+
+flow = break.after deploy.gen.tiup-yaml
