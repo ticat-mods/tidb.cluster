@@ -3,7 +3,7 @@ abbr = conf
 tag = selftest
 
 [flow/]
-depl.sets.min3 delta=1000
+depl.sets.min3 delta=1000 keep-mon=false
 
 depl.set.global.prop user tidb
 depl.set.tikv.prop data_dir service-level-dir

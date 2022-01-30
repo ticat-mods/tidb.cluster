@@ -6,10 +6,14 @@ port-delta|delta|port|p = +0
 host|h = 127.0.0.1
 cluster-name|cluster|name|n = test
 version|ver|v = nightly
-keep-monitor-when-destroy|keep-monitor|keep-mon = true
+keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.version = version
+tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
 
 [flow/]
-tidb.config name=[[cluster-name]] ver=[[version]] keep-mon=[[keep-monitor-when-destroy]]
 deploy.set.tikv [[host]]
 deploy.set.tiflash [[host]]
 deploy.set.pd [[host]]
