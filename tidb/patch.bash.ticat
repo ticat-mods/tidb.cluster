@@ -1,0 +1,14 @@
+help = patch tiup cluster with bin-dir, will auto search for corresponding components
+
+[arg]
+bin-dir|path|p|dir|d|bin|b = ''
+cluster-name|cluster|name|n = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+
+[dep]
+tiup = to patch cluster

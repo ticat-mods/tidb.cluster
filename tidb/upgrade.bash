@@ -25,5 +25,5 @@ offline=`tiup_maybe_enable_opt "${3}" '--offline'`
 tiup cluster --format=plain upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
 
 if [ ! -z "${path}" ]; then
-	path_patch "${path}"
+	path_patch "${name}" "${path}"
 fi
