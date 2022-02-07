@@ -8,11 +8,13 @@ host|h = 127.0.0.1
 cluster-name|cluster|name|n = test
 version|ver|v = nightly
 keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
+confirm|cfm = no
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.version = version
 tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
+tidb.op.confirm = confirm
 
 [flow/]
 deploy.set.tikv [[host]]@+0,[[host]]@+2,[[host]]@+4,[[host]]@+6

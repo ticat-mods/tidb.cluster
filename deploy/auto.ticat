@@ -3,14 +3,28 @@ trivial = 1
 
 [arg]
 hosts|host|h = ''
+port-delta|delta|d = 1000
+
+cluster-name|cluster|name|n = test
+version|ver|v = nightly
+keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
+
 deploy-user|user|u = tidb
 allocator|alloc|a = deploy.auto.allocator.tom
-port-delta|delta|d = 1000
 
 [arg2env]
 deploy.hosts = hosts
 deploy.user = deploy-user
 deploy.port.delta = port-delta
+
+tidb.cluster = cluster-name
+tidb.version = version
+tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
+
+[val2env]
+tidb.version.nightly-major = v5
+tidb.auto-config-mysql = true
+tidb.op.confirm = no
 
 [flow/]
 deploy.host.auth
