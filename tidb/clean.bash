@@ -3,7 +3,9 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
+plain=`tiup_output_fmt_str "${env}"`
 confirm=`tiup_confirm_str "${env}"`
+
 name=`must_env_val "${env}" 'tidb.cluster'`
 exist=`cluster_exist "${name}"`
 if [ "${exist}" == 'false' ]; then
@@ -12,4 +14,4 @@ if [ "${exist}" == 'false' ]; then
 fi
 
 keep_prom=" --ignore-role prometheus"
-tiup cluster clean --all "${name}"${confirm}${keep_prom}
+tiup cluster${plain} clean --all "${name}"${confirm}${keep_prom}

@@ -7,12 +7,14 @@ cluster-name|cluster|name|n = ''
 version|ver|v = ''
 confirm|cfm = ''
 skip-exist|skip|s = false
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.tiup.yaml = yaml-path
 tidb.cluster = cluster-name
 tidb.version = version
 tidb.op.confirm = confirm
+tidb.tiup.plain-output = tiup-plain-output
 
 [env]
 tidb.tiup.yaml = read

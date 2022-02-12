@@ -5,7 +5,7 @@ env=`cat "${1}/env"`
 
 name=`must_env_val "${env}" 'tidb.cluster'`
 
-tiup cluster display "${name}" 1>/dev/null 2>&1
+tiup cluster --format=plain display "${name}" 1>/dev/null 2>&1
 if [ "${?}" == 0 ]; then
 	echo "[:)] cluster '${name}' verify succeeded"
 else

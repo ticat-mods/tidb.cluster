@@ -6,6 +6,8 @@ env=`cat "${1}/env"`
 confirm=`tiup_confirm_str "${env}"`
 name=`must_env_val "${env}" 'tidb.cluster'`
 
+plain=`tiup_output_fmt_str "${env}"`
+
 keep_monitor=`must_env_val "${env}" 'tidb.op.keep-monitor'`
 keep_monitor=`to_true "${keep_monitor}"`
 
@@ -17,4 +19,4 @@ else
 	roles=''
 fi
 
-tiup cluster --format=plain stop "${name}"${confirm}${roles}
+tiup cluster${plain} stop "${name}"${confirm}${roles}

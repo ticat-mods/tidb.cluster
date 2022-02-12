@@ -1,5 +1,11 @@
 help = list tiup clusters
 abbr = ls
 
+[arg]
+tiup-plain-output|tiup-plain|plain = true
+
+[arg2env]
+tidb.tiup.plain-output = tiup-plain-output
+
 [dep]
 tiup = to display cluster

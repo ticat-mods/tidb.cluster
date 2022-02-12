@@ -11,12 +11,14 @@ confirm|cfm = ''
 force = false
 ignore-config-check|ignore-check|skip-check = false
 offline|off = false
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.version = version
 tidb.op.confirm = confirm
 tidb.op.force = force
+tidb.tiup.plain-output = tiup-plain-output
 
 [env]
 tidb.cluster = read

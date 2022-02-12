@@ -5,11 +5,13 @@ abbr = down|dn
 cluster-name|cluster|name|n = ''
 confirm|cfm|c = ''
 keep-monitor|keep-mon|k = true
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.op.confirm = confirm
 tidb.op.keep-monitor = keep-monitor
+tidb.tiup.plain-output = tiup-plain-output
 
 [env]
 tidb.cluster = read

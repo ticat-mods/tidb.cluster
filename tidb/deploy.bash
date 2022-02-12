@@ -19,9 +19,11 @@ if [ "${skip_exist}" == 'true' ]; then
 	fi
 fi
 
+plain=`tiup_output_fmt_str "${env}"`
+
 read ver path < <(expand_version_and_path "${ver}")
 
-tiup cluster --format=plain deploy "${name}" "${ver}" "${yaml}"${confirm}
+tiup cluster${plain} deploy "${name}" "${ver}" "${yaml}"${confirm}
 
 if [ ! -z "${path}" ]; then
 	path_patch "${path}"

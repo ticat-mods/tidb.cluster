@@ -3,9 +3,11 @@ abbr = disp|show|status|stat
 
 [arg]
 cluster-name|cluster|name|n = ''
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
+tidb.tiup.plain-output = tiup-plain-output
 
 [env]
 tidb.cluster = read

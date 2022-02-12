@@ -3,5 +3,7 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
+plain=`tiup_output_fmt_str "${env}"`
 name=`must_env_val "${env}" 'tidb.cluster'`
-tiup cluster display "${name}"
+
+tiup cluster${plain} display "${name}"

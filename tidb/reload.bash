@@ -5,6 +5,8 @@ session="${1}"
 env=`cat "${session}/env"`
 shift
 
+plain=`tiup_output_fmt_str "${env}"`
+
 confirm=`tiup_confirm_str "${env}"`
 name=`must_env_val "${env}" 'tidb.cluster'`
 
@@ -18,4 +20,4 @@ if [ ! -z "${3// }" ]; then
 	roles=" --role ${3// }"
 fi
 
-tiup cluster --format=plain reload "${name}" ${force}${skip_restart}${roles}${confirm}
+tiup cluster${plain} reload "${name}" ${force}${skip_restart}${roles}${confirm}

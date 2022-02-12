@@ -3,9 +3,11 @@ help = patch tiup cluster with bin-dir, will auto search for corresponding compo
 [arg]
 bin-dir|path|p|dir|d|bin|b = ''
 cluster-name|cluster|name|n = ''
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
+tidb.tiup.plain-output = tiup-plain-output
 
 [env]
 tidb.cluster = read

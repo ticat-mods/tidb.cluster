@@ -10,6 +10,7 @@ confirm|cfm = no
 auto-config-mysql|auto-conf-mysql|conf-mysql = true
 keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
 tiup-yaml|yaml = ''
+tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
@@ -19,3 +20,4 @@ tidb.auto-config-mysql = auto-config-mysql
 tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
 tidb.op.confirm = confirm
 tidb.tiup.yaml = tiup-yaml
+tidb.tiup.plain-output = tiup-plain-output

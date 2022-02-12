@@ -12,11 +12,13 @@ roles="${2}"
 auto_conf_mysql=`must_env_val "${env}" 'tidb.auto-config-mysql'`
 auto_conf_mysql=`to_true "${auto_conf_mysql}"`
 
+plain=`tiup_output_fmt_str "${env}"`
+
 name=`must_env_val "${env}" 'tidb.cluster'`
 if [ -z "${roles}" ]; then
-	tiup cluster --format=plain start "${name}"
+	tiup cluster${plain} start "${name}"
 else
-	tiup cluster --format=plain start "${name}" --role "${roles}"
+	tiup cluster${plain} start "${name}" --role "${roles}"
 fi
 
 tidbs=`must_cluster_tidbs "${name}"`
