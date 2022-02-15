@@ -12,7 +12,6 @@ if [ -z "${path}" ]; then
 fi
 
 plain=`tiup_output_fmt_str "${env}"`
-
 name=`must_env_val "${env}" 'tidb.cluster'`
 
 path_patch "${name}" "${path}" "${plain}"

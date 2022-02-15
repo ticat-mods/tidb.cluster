@@ -1,0 +1,19 @@
+help = build tikv by repo address, then use the binary to patch cluster
+abbr = kv
+quiet-err = true
+
+[arg]
+git-repo|repo = https://github.com/pingcap/tikv
+git-branch|branch = ''
+git-hash|hash = ''
+cluster-name|cluster|name|n = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+
+[dep]
+make = to build pd
+cargo = to build tikv
