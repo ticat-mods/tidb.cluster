@@ -23,4 +23,4 @@ depl.set.tikv.res cpu_quota 444% 127.0.0.1@+4
 depl.set.pd.conf schedule.enable-one-way-merge true
 depl.set.tidb.conf cross-join true
 
-depl.gen.tiup
+depl.gen.tiup depose=true

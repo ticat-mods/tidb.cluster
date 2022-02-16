@@ -1,0 +1,8 @@
+help = setup deploy configs
+abbr = conf
+
+[arg]
+depose-kvs|depose-keys|depose-values|depose = false
+
+[arg2env]
+deploy.kvs.depose = depose-kvs

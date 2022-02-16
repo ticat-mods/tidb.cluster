@@ -1,5 +1,12 @@
 help = generate tiup yaml config from env values written by deploy.set.* or deploy.auto.allocator.*
 abbr = tiup
 
+[arg]
+depose-kvs|depose-keys|depose-values|depose = false
+
+[arg2env]
+deploy.kvs.depose = depose-kvs
+
 [env]
 tidb.tiup.yaml = write
+deploy.kvs.depose = read

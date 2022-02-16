@@ -12,6 +12,8 @@ keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
 deploy-user|user|u = tidb
 allocator|alloc|a = deploy.auto.allocator.tom
 
+depose-kvs|depose-keys|depose-values|depose = false
+
 [arg2env]
 deploy.hosts = hosts
 deploy.user = deploy-user
@@ -21,6 +23,8 @@ tidb.cluster = cluster-name
 tidb.version = version
 tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
 
+deploy.kvs.depose = depose-kvs
+
 [val2env]
 tidb.version.nightly-major = v5
 tidb.auto-config-mysql = true
@@ -29,7 +33,7 @@ tidb.op.confirm = no
 [flow/]
 deploy.host.auth
 deploy.host.hardware-resource
-deploy.host.idle-scan
+#deploy.host.idle-scan
 deploy.host.auto-mount
 [[allocator]]
 deploy.gen.tiup
