@@ -1,10 +1,11 @@
 help = reload a TiDB cluster's config and restart if needed
-abbr = rl
+abbr = tiup|yaml
 
 begin-ts-key = tidb.reload.begin
 end-ts-key = tidb.reload.end
 
 [arg]
+yaml-path|yaml = ''
 cluster-name|cluster|name|n = ''
 confirm|cfm = ''
 force = false
@@ -13,12 +14,14 @@ roles|role|r = ''
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
+tidb.tiup.yaml = yaml-path
 tidb.cluster = cluster-name
 tidb.op.confirm = confirm
 tidb.op.force = force
 tidb.tiup.plain-output = tiup-plain-output
 
 [env]
+tidb.tiup.yaml = read
 tidb.cluster = read
 tidb.op.confirm = read
 tidb.op.force = read
