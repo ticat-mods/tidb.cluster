@@ -7,10 +7,11 @@ shift
 host=`must_env_val "${env}" 'mysql.host'`
 port=`must_env_val "${env}" 'mysql.port'`
 user=`must_env_val "${env}" 'mysql.user'`
+pp=`env_val "${env}" 'mysql.pwd'`
 
 query="${1}"
 db="${2}"
-shift 3
+shift 4
 fmt="${3}"
 warn=`to_true "${4}"`
 
@@ -44,4 +45,4 @@ else
 	warn=''
 fi
 
-mysql -h "${host}" -P "${port}" -u "${user}" --comments${db}${fmt}${warn} -e "${query}"
+MYSQL_PWD="${pp}" mysql -h "${host}" -P "${port}" -u "${user}" --comments${db}${fmt}${warn} -e "${query}"

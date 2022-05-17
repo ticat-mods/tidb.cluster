@@ -17,6 +17,9 @@ br.checksum = check-checksum
 br.target = target-db
 br.bin = br-bin
 
+[val2env]
+tidb.init-start = false
+
 [env]
 br.backup-dir = read
 tidb.cluster = read

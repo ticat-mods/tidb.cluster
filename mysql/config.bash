@@ -7,10 +7,11 @@ shift
 host=`must_env_val "${env}" 'mysql.host'`
 port=`must_env_val "${env}" 'mysql.port'`
 user=`must_env_val "${env}" 'mysql.user'`
+pp=`env_val "${env}" 'mysql.pwd'`
 
-shift 3
+shift 4
 verify=`to_false "${1}"`
 
 if [ "${verify}" != 'false' ]; then
-	verify_mysql "${host}" "${port}" "${user}"
+	verify_mysql "${host}" "${port}" "${user}" "${pp}"
 fi
