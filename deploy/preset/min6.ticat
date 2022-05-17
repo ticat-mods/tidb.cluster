@@ -1,4 +1,4 @@
-help = 6*tikv + 1*tidb + 1*pd on the same host
+help = generate tiup yaml file of: 6*tikv + 1*tidb + 1*pd on the same host
 abbr = m6
 trivial = 3
 

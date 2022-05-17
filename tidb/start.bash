@@ -32,8 +32,11 @@ log="${session}/tiup-cluster-start-log.${RANDOM}"
 echo tiup cluster${plain} start "${name}"${init}${roles}
 tiup cluster${plain} start "${name}"${init}${roles} | tee "${log}"
 
-pp=`cat "${log}" | { grep 'The new password is' || test $? = 1; } | awk -F "'" '{print $2}'`
-rm -f "${log}"
+pp=`env_val "${env}" 'mysql.pwd'`
+if [ ! -z "${init}" ]; then
+	pp=`cat "${log}" | { grep 'The new password is' || test $? = 1; } | awk -F "'" '{print $2}'`
+	rm -f "${log}"
+fi
 
 tidbs=`must_cluster_tidbs "${name}"`
 

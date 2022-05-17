@@ -1,4 +1,4 @@
-help = 1*tikv + 1*tidb + 1*pd on the same host
+help = define cluster for generate tiup yaml file later: 1*tikv + 1*tidb + 1*pd on the same host
 trivial = 3
 
 [arg]

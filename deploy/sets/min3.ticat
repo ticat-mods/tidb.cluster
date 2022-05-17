@@ -1,4 +1,4 @@
-help = 3*tikv + 1*tidb + 1*pd on the same host
+help = define cluster for generate tiup yaml file later: 3*tikv + 1*tidb + 1*pd on the same host
 abbr = m3
 trivial = 3
 

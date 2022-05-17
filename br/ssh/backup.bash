@@ -16,6 +16,13 @@ if [ "${exist_policy}" != 'skip' ] && [ "${exist_policy}" != 'overwrite' ] && [ 
 	exit 1
 fi
 
+db_user=`env_val "${env}" 'mysql.user'`
+if [ "${db_user}" == 'root' ]; then
+	db_root_pwd=`env_val "${env}" 'mysql.pwd'`
+else
+	db_root_pwd=''
+fi
+
 use_mv=`must_env_val "${env}" 'tidb.backup.use-mv'`
 use_mv=`to_true "${use_mv}"`
 
@@ -44,6 +51,11 @@ for (( i = 0; i < ${cnt}; ++i)) do
 
 	cmd="rm -rf \"${dir}.${tag}\" && rm -f \"${dir}/space_placeholder_file\" && rm -f \"${dir}/data/space_placeholder_file\""
 	ssh_exe "${host}" "${cmd}"
+
+	if [ "${db_user}" == 'root' ] || [ -z "${db_user}" ]; then
+		cmd="echo '${db_root_pwd}' > \"${dir}/db_root_pwd\""
+		ssh_exe "${host}" "${cmd}"
+	fi
 
 	if [ "${use_mv}" == 'true' ]; then
 		cmd="mv \"${dir}\" \"${dir}.${tag}\""
