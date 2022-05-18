@@ -1,0 +1,9 @@
+help = config tiup flags
+abbr = conf
+tag = config
+
+[arg]
+tiup-plain-output|tiup-plain|plain = true
+
+[arg2env]
+tidb.tiup.plain-output = tiup-plain-output

@@ -30,16 +30,20 @@ function get_instance_info()
 
 	local name=`must_env_val "${env}" 'tidb.cluster'`
 
-	# tiup bug workaround begin
 	set +e
-	sleep 5
-	tiup cluster display "${name}" 1>/dev/null
-	tiup cluster display "${name}" 1>/dev/null
+	local statuses=`tiup cluster display "${name}" 2>/dev/null && tiup cluster display "${name}" 2>/dev/null && tiup cluster display "${name}" 2>/dev/null | sort | uniq`
+	set -e
+
+	# tiup bug workaround begin
+	echo "***"
+	set +e
+	tiup cluster display "${name}"
+	set -e
+	echo "*"
+	echo "${statuses}"
+	echo "***"
 	# tiup bug workaround end
 
-	set +e
-	local statuses=`tiup cluster display "${name}" 2>/dev/null`
-	set -e
 	local instances=`echo "${statuses}" | awk '{if ($2=="pd" || $2=="tikv" || $2=="tiflash" || $2=="tiflash-learner") print $0}'`
 	if [ -z "${instances}" ]; then
 		tiup cluster display "${name}"
