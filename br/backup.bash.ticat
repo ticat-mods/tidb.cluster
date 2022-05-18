@@ -5,7 +5,7 @@ trivial = 1
 [arg]
 backup-dir|dir = ''
 cluster-name|cluster|name|n= ''
-exist-policy|when-exist = skip
+exist-policy|when-exist|exists|exist = skip
 threads|thread|thrd = 4
 check-checksum|checksum = true
 target-db|target|db = ''

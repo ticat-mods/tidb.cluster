@@ -13,6 +13,9 @@ tidb.op.confirm = confirm
 tidb.op.keep-monitor = keep-monitor
 tidb.tiup.plain-output = tiup-plain-output
 
+[val2env]
+tidb.init-start = true
+
 [env]
 tidb.cluster = read
 tidb.op.confirm = read

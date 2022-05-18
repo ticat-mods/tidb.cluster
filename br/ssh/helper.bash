@@ -30,6 +30,13 @@ function get_instance_info()
 
 	local name=`must_env_val "${env}" 'tidb.cluster'`
 
+	# tiup bug workaround begin
+	set +e
+	sleep 5
+	tiup cluster display "${name}" 1>/dev/null
+	tiup cluster display "${name}" 1>/dev/null
+	# tiup bug workaround end
+
 	set +e
 	local statuses=`tiup cluster display "${name}" 2>/dev/null`
 	set -e
@@ -52,7 +59,7 @@ function get_instance_info()
 	if [ "${check_stopped}" != 'false' ]; then
 		local ups=`echo "${instances}" | awk '{print $6}' | { grep 'Up' || test $? = 1; }`
 		if [ ! -z "${ups}" ]; then
-			echo "[:(] cluster not fully stop, can't backup" >&2
+			echo "[:(] cluster not fully stop as needed" >&2
 			exit 1
 		fi
 	fi

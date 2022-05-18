@@ -11,7 +11,7 @@ br.destroy+restore
 os.rm /tmp/test-br
 
 br.ssh.conf tag=test-br
-br.ssh.backup
+br.ssh.backup when-exist=overwrite
 br.ssh.destroy+restore
 
 br.ssh.list
