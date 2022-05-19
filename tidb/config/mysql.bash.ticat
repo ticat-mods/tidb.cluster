@@ -5,10 +5,12 @@ abbr = my
 cluster-name|cluster|name|n = ''
 verify-access|verify|v = true
 user|u|U = root
+password|pwd = ''
 
 [arg2env]
 tidb.cluster = cluster-name
 mysql.user = user
+mysql.pwd = password
 
 [env]
 tidb.cluster = read

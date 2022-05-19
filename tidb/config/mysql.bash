@@ -7,6 +7,7 @@ shift
 
 user=`must_env_val "${env}" 'mysql.user'`
 name=`must_env_val "${env}" 'tidb.cluster'`
+pp=`env_val "${env}" 'mysql.pwd'`
 
 shift
 verify=`to_true "${1}"`
@@ -22,10 +23,10 @@ host=`echo "${tidb}" | awk -F ':' '{print $1}'`
 port=`echo "${tidb}" | awk -F ':' '{print $2}'`
 
 if [ "${verify}" == 'true' ]; then
-	verify_mysql_timeout "${host}" "${port}" "${user}" 16
+	verify_mysql_timeout "${host}" "${port}" "${user}" "${pp}" 16
 	echo "[:)] user@host:port verify succeeded, set to env:"
 else
 	echo "[:)] user@host:port is not verified, set to env:"
 fi
 
-config_mysql "${env_file}" "${host}" "${port}" "${user}"
+config_mysql "${env_file}" "${host}" "${port}" "${user}" "${pp}"
