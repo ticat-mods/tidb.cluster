@@ -6,15 +6,14 @@ cluster-name|cluster|name|n = ''
 confirm|cfm = ''
 keep-monitor = true
 tiup-plain-output|tiup-plain|plain = true
+init-when-start-db|init-start = true
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.op.confirm = confirm
 tidb.op.keep-monitor = keep-monitor
 tidb.tiup.plain-output = tiup-plain-output
-
-[val2env]
-tidb.init-start = true
+tidb.init-start = init-when-start-db
 
 [env]
 tidb.cluster = read
