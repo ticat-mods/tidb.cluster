@@ -31,22 +31,13 @@ function get_instance_info()
 	local name=`must_env_val "${env}" 'tidb.cluster'`
 
 	set +e
-	local statuses=`tiup cluster display "${name}" 2>/dev/null && tiup cluster display "${name}" 2>/dev/null && tiup cluster display "${name}" 2>/dev/null | sort | uniq`
+	# tiup bug workaround with '-c 1'
+	local statuses=`tiup cluster display "${name}" -c 1`
 	set -e
-
-	# tiup bug workaround begin
-	echo "***"
-	set +e
-	tiup cluster display "${name}"
-	set -e
-	echo "*"
-	echo "${statuses}"
-	echo "***"
-	# tiup bug workaround end
 
 	local instances=`echo "${statuses}" | awk '{if ($2=="pd" || $2=="tikv" || $2=="tiflash" || $2=="tiflash-learner") print $0}'`
 	if [ -z "${instances}" ]; then
-		tiup cluster display "${name}"
+		tiup cluster display "${name}" -c 1
 		echo "[:(] can't find storage instances (pd/tikv/tiflash)" >&2
 		exit 1
 	fi
