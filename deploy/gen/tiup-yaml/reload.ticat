@@ -1,0 +1,5 @@
+help = re-gen tiup yaml and apply to cluster
+abbr = re|r
+trivial = 3
+
+flow = depl.gen.yaml : db.reload.yaml

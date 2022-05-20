@@ -54,7 +54,11 @@ else
 fi
 
 # TODO: get user name from tiup
-mkdir -p "${dir}" && chown -R tidb:tidb "${dir}"
+mkdir -p "${dir}"
+set +e 
+chown -R tidb "${dir}"
+sudo chown -R tidb "${dir}" < /dev/null
+set -e
 
 br_bin=`must_env_val "${env}" 'br.bin'`
 
