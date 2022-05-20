@@ -1,6 +1,7 @@
 help = login mysql interactive interface
 abbrs = l
 
+quiet-error = true
 interactive = true
 
 [args]

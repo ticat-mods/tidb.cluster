@@ -7,13 +7,15 @@ user|u = root
 roles = ''
 auto-config-mysql|mysql = true
 tiup-plain-output|tiup-plain|plain = true
-init-when-start-db|init-start = true
+need-init-db-now|need-init-db|need-init|init-db|init = false
+init-when-start-db|init-when-start|init-start = true
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.auto-config-mysql = auto-config-mysql
 tidb.tiup.plain-output = tiup-plain-output
-tidb.init-start = init-when-start-db
+tidb.need-init = need-init-db-now
+tidb.init-when-start = init-when-start-db
 
 [env]
 tidb.cluster = read

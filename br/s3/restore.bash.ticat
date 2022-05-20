@@ -24,7 +24,7 @@ tidb.cluster = cluster-name
 br.bin = br-bin
 
 [val2env]
-tidb.init-start = false
+tidb.need-init = false
 
 [env]
 br.backup-dir = read

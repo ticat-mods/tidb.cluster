@@ -14,7 +14,7 @@ tidb.op.keep-monitor = keep-monitor
 tidb.tiup.plain-output = tiup-plain-output
 
 [val2env]
-tidb.init-start = false
+tidb.need-init = false
 
 [env]
 tidb.cluster = read

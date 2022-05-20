@@ -10,7 +10,7 @@ tidb.data.tag = tag
 tidb.cluster = cluster-name
 
 [val2env]
-tidb.init-start = false
+tidb.need-init = false
 
 [env]
 tidb.data.tag = read

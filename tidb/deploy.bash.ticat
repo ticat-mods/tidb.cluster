@@ -16,6 +16,9 @@ tidb.version = version
 tidb.op.confirm = confirm
 tidb.tiup.plain-output = tiup-plain-output
 
+[val2env]
+tidb.need-init = true
+
 [env]
 tidb.tiup.yaml = read
 tidb.cluster = read

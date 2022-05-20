@@ -1,4 +1,4 @@
-help = 1*tikv + 1*tiflash + 1*tidb + 1*pd on the same host
+help = generate tiup yaml file of: 1*tikv + 1*tiflash + 1*tidb + 1*pd on the same host
 abbr = flash
 
 trivial = 3

@@ -10,9 +10,12 @@ shift
 user="${1}"
 roles="${2}"
 
-init=`must_env_val "${env}" 'tidb.init-start'`
-init=`to_true "${init}"`
-if [ "${init}" == 'true' ]; then
+init_start=`must_env_val "${env}" 'tidb.init-when-start'`
+init_start=`to_true "${init_start}"`
+
+need_init=`env_val "${env}" 'tidb.need-init'`
+need_init=`to_true "${need_init}"`
+if [ "${init_start}" == 'true' ] && [ "${need_init}" == 'true' ]; then
 	init=' --init'
 else
 	init=''
