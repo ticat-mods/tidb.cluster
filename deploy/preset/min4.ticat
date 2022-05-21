@@ -20,5 +20,6 @@ tidb.op.confirm = confirm
 deploy.set.tikv [[host]]@+0,[[host]]@+2,[[host]]@+4,[[host]]@+6
 deploy.set.pd [[host]]
 deploy.set.tidb [[host]]
+deploy.set.monitoring [[host]]
 deploy.set.port.delta [[port-delta]]
 deploy.gen.tiup
