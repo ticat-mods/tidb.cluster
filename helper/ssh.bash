@@ -36,7 +36,7 @@ function ssh_auto_auth()
 		if [ "${ssh_ok}" == 'true' ]; then
 			continue
 		fi
-		echo "${ssh_ok} ssh_ok"
+		echo "ssh ping ok: ${ssh_ok}"
 		local need_auth='true'
 		break
 	done
