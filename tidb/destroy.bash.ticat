@@ -4,7 +4,7 @@ abbr = delete|del|remove|rm|burn
 [arg]
 cluster-name|cluster|name|n = ''
 confirm|cfm = ''
-keep-monitor = true
+keep-monitor|keep-mon = true
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
