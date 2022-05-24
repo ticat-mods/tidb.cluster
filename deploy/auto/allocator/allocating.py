@@ -156,10 +156,10 @@ class Hosts:
 
 		self.env = Env()
 
-		self.deploy_user = self.env.must_get('deploy.user')
-		self.deploy_group = self.env.get_ex('deploy.group', '')
-		if len(self.deploy_group) == 0:
-			self.deploy_group = self.deploy_user
+		self.deploy_to_user = self.env.must_get('deploy.to.user')
+		self.deploy_to_group = self.env.get_ex('deploy.to.user.group', '')
+		if len(self.deploy_to_group) == 0:
+			self.deploy_to_group = self.deploy_to_user
 
 		self.hosts = []
 		hosts = self.env.must_get('deploy.hosts')
@@ -256,8 +256,8 @@ class Hosts:
 				dirs.add((host, os.path.join(dev.mounted, self.deploy_dir_name)))
 			self.env.set(key, ','.join(vals))
 
-		if self.deploy_user != 'tidb':
-			self.env.set('deploy.prop.global.user', self.deploy_user)
+		if self.deploy_to_user != 'tidb':
+			self.env.set('deploy.prop.global.user', self.deploy_to_user)
 
 		if not self.env.has('deploy.conf.tikv.storage.block-cache.capacity') and ('tikv' in services):
 			tikvs = services['tikv']
@@ -279,7 +279,7 @@ class Hosts:
 				self.env.set(bc_id_key, bc_gb)
 
 		for host, dir in dirs:
-			ssh_exe(host, 'chown -R ' + self.deploy_user + ':' + self.deploy_group + ' "' + dir + '"')
+			ssh_exe(host, 'chown -R ' + self.deploy_to_user + ':' + self.deploy_to_group + ' "' + dir + '"')
 
 		self.env.flush()
 

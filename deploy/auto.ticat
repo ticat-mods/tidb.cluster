@@ -9,7 +9,7 @@ cluster-name|cluster|name|n = test
 version|ver|v = nightly
 keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
 
-deploy-user|user|u = tidb
+deploy-user|user|u = root
 allocator|alloc|a = deploy.auto.allocator.tom
 
 depose-kvs|depose-keys|depose-values|depose = false

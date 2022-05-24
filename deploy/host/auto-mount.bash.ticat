@@ -4,7 +4,7 @@ interactive = true
 
 [arg]
 mount-point-prefix|prefix|p = /tidb-data-
-deploy-user|user|u = tidb
+deploy-user|user|u = root
 
 [arg2env]
 deploy.user = deploy-user

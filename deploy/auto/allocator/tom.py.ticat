@@ -2,12 +2,12 @@ help = a basic tidb resource allocator for auto deploy
 
 [arg]
 hosts|host|h = ''
-deploy-user|user|u = tidb
+deploy-to-user|user|u = tidb
 
 [arg2env]
 deploy.hosts = hosts
-deploy.user = deploy-user
+deploy.to.user = deploy-to-user
 
 [env]
 deploy.hosts = read
-deploy.user = read
+deploy.to.user = read
