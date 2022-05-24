@@ -6,7 +6,7 @@ interact = true
 [arg]
 hosts|host|h = ''
 password|pwd|p = ''
-deploy-user|user|usr|u = ''
+deploy-user|user|usr|u = root
 
 [arg2env]
 deploy.hosts = hosts
