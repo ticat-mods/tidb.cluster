@@ -20,7 +20,7 @@ def deploy_non_io(deployment):
 		deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_tidb()
 
 def deploy_tikv(deployment):
-	run_on_all_disk = float(len(deployment.nvmes)) / float(len(deployment.devs)) < 1 / 2
+	run_on_all_disk = len(deployment.nvmes) == 0 or float(len(deployment.nvmes)) / float(len(deployment.devs)) < 1 / 2
 	if run_on_all_disk:
 		# deploy tikv on both nvme and non-nvme
 		for host_name in deployment.hosts:
@@ -50,6 +50,11 @@ def main():
 		hwr.dump()
 
 	deploy_tikv(deployment)
+		if deployment.io_instance_cnt() == 0:
+			panic('[:(] try to auto select storage instance but failed')
+			import sys
+			sys.exit(1)
+
 	deploy_non_io(deployment)
 	deployment.flush()
 

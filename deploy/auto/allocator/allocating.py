@@ -80,6 +80,7 @@ class Host:
 
 		self.vcores = hwr_env.must_get('vcores')
 
+		self.numa_nodes = []
 		numa_nodes = hwr_env.must_get('numa')
 		if len(numa_nodes) > 0:
 			self.numa_nodes = numa_nodes.split(',')
@@ -157,9 +158,6 @@ class Hosts:
 		self.env = Env()
 
 		self.deploy_to_user = self.env.must_get('deploy.to.user')
-		self.deploy_to_group = self.env.get_ex('deploy.to.user.group', '')
-		if len(self.deploy_to_group) == 0:
-			self.deploy_to_group = self.deploy_to_user
 
 		self.hosts = []
 		hosts = self.env.must_get('deploy.hosts')
@@ -251,9 +249,12 @@ class Hosts:
 			for i in range(0, len(locations)):
 				host, dev, id, nid = locations[i]
 				vals.append(id)
-				path = os.path.join(dev.mounted, self.deploy_dir_name, service + nid)
+				on_dev_path = dev.mounted
+				if on_dev_path == '/home':
+					on_dev_path = os.path.join(dev.mounted, self.deploy_to_user)
+				path = os.path.join(on_dev_path, self.deploy_dir_name, service + nid)
 				self.env.set('deploy.prop.' + service + '.' + id + '.deploy_dir', path)
-				dirs.add((host, os.path.join(dev.mounted, self.deploy_dir_name)))
+				dirs.add((host, os.path.join(on_dev_path, self.deploy_dir_name)))
 			self.env.set(key, ','.join(vals))
 
 		if self.deploy_to_user != 'tidb':
@@ -279,7 +280,7 @@ class Hosts:
 				self.env.set(bc_id_key, bc_gb)
 
 		for host, dir in dirs:
-			ssh_exe(host, 'chown -R ' + self.deploy_to_user + ':' + self.deploy_to_group + ' "' + dir + '"')
+			ssh_exe(host, 'chown -R ' + self.deploy_to_user + ' "' + dir + '"')
 
 		self.env.flush()
 

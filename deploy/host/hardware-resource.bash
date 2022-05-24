@@ -15,7 +15,7 @@ for host in ${hosts[@]}; do
 	echo "==> ${host}"
 
 	disks=`ssh_exe "${host}" "lsblk -rbo NAME,TYPE,FSTYPE,SIZE,PKNAME,RM,MOUNTPOINT"`
-	echo 'lsblk -rbo NAME,TYPE,FSTYPE,SIZE,PKNAME,MOUNTPOINT'
+	echo 'lsblk -rbo NAME,TYPE,FSTYPE,SIZE,PKNAME,RM,MOUNTPOINT'
 	echo "${disks}" | awk '{print "    "$0}'
 	set +e
 	disks_used=`ssh_exe "${host}" "df --output=source,avail,target"`
@@ -23,7 +23,7 @@ for host in ${hosts[@]}; do
 	echo 'df --output=source,avail,target'
 	echo "${disks_used}" | awk '{print "    "$0}'
 	selecteds=`"${py}" "${here}/select_disk.py" "${disks}" "${disks_used}"`
-	disk_names=`echo "${selecteds}" | grep avail | awk -F '.' '{print $2}' | uniq`
+	disk_names=`echo "${selecteds}" | { grep avail || test $? = 1; } | awk -F '.' '{print $2}' | uniq`
 	disk_names=`lines_to_list "${disk_names}"`
 
 	echo 'output env:'

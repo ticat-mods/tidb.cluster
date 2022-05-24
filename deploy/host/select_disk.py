@@ -48,7 +48,7 @@ def parse_lsblk(lines):
 
 	filtered = {}
 	for blk in blks:
-		if blk.mounted in ['/', '/home', '[SWAP]']:
+		if blk.mounted in ['/', '/boot', '/home', '[SWAP]']:
 			continue
 		if blk.mounted.find('docker') >= 0:
 			continue
@@ -63,6 +63,16 @@ def parse_lsblk(lines):
 		if blk.avail < size_1g * 32:
 			continue
 		filtered['/dev/' + blk.name] = blk
+
+		if len(filtered) == 0:
+			for blk in blks:
+				if blk.mounted in ['/', '/boot', '[SWAP]']:
+					continue
+				if blk.name in parents:
+					continue
+				if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
+					continue
+				filtered['/dev/' + blk.name] = blk
 
 	return filtered
 
