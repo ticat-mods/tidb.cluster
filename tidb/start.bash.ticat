@@ -27,3 +27,4 @@ mysql.user = write
 
 [dep]
 tiup = to start cluster
+mysql = to verify tidb is ready as client
