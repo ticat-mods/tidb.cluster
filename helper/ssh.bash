@@ -36,7 +36,7 @@ function ssh_auto_auth()
 		if [ "${ssh_ok}" == 'true' ]; then
 			continue
 		fi
-		echo "ssh ping ok: ${ssh_ok}"
+		echo "ssh ping is-ok = ${ssh_ok}"
 		local need_auth='true'
 		break
 	done
@@ -65,9 +65,12 @@ function ssh_auto_auth()
 			return 1
 		fi
 		echo "[:)] ${host} script coping"
-		sshpass -p "${phrase}" scp -o "StrictHostKeyChecking=no" "${script}" "${host}:${script}"
+		#echo sshpass -p "***" scp -o "StrictHostKeyChecking=no" "${script}" "${user}@${host}:${script}"
+		sshpass -p "${phrase}" scp -o "StrictHostKeyChecking=no" "${script}" "${user}@${host}:${script}"
 		echo "[:)] ${host} script copied"
-		sshpass -p "${phrase}" ssh -o "StrictHostKeyChecking=no" "${host}" \
+		#echo sshpass -p "***" ssh -o "StrictHostKeyChecking=no" "${user}@${host}" \
+		#	"chown \"${user}:${user}\" \"${script}\" && su ${user} -c \"bash ${script}\""
+		sshpass -p "${phrase}" ssh -o "StrictHostKeyChecking=no" "${user}@${host}" \
 			"chown \"${user}:${user}\" \"${script}\" && su ${user} -c \"bash ${script}\""
 		echo "[:)] ${host} authorized"
 	done

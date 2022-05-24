@@ -4,9 +4,9 @@ abbr = auth
 interact = true
 
 [arg]
-hosts|h = ''
-password|pwd = ''
-deploy-user|user = ''
+hosts|host|h = ''
+password|pwd|p = ''
+deploy-user|user|usr|u = ''
 
 [arg2env]
 deploy.hosts = hosts
@@ -16,7 +16,7 @@ ssh.pwd = password
 [env]
 deploy.hosts = read
 deploy.user = read
-ssh.pwd = may-read | delete
+ssh.pwd = may-read : delete
 
 [dep]
 ssh-keygen = to gen ssh key
