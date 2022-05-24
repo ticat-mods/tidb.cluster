@@ -27,19 +27,22 @@ for host in ${hosts[@]}; do
 	disk_names=`lines_to_list "${disk_names}"`
 
 	echo 'output env:'
-	echo "${selecteds}" | awk '{print "deploy.host.resource.'${host}'."$0}' | tee -a "${env_file}" | awk '{print "    "$0}'
+	if [ ! -z "${selecteds}" ]; then
+		echo "${selecteds}" | awk '{print "deploy.host.resource.'${host}'."$0}' | tee -a "${env_file}" | awk '{print "    "$0}'
+	fi
 	echo "deploy.host.resource.${host}.devs=${disk_names}" | tee -a "${env_file}" | awk '{print "    "$0}'
 
 	vc=`ssh_exe "${host}" "grep -c processor /proc/cpuinfo"`
 	echo "deploy.host.resource.${host}.vcores=${vc}" | tee -a "${env_file}" | awk '{print "    "$0}'
 
+	numa=''
 	if [ -x "$(command -v numactl)" ]; then
 		set +e
 		numa=`numactl --hardware|grep cpus|awk '{print $2}'`
 		set -e
 		numa=`lines_to_list "${numa}"`
-		echo "deploy.host.resource.${host}.numa=${numa}" | tee -a "${env_file}" | awk '{print "    "$0}'
 	fi
+	echo "deploy.host.resource.${host}.numa=${numa}" | tee -a "${env_file}" | awk '{print "    "$0}'
 
 	mem=`ssh_exe "${host}" "free -g | grep Mem | awk '{print \\$2}'"`
 	echo "deploy.host.resource.${host}.mem-gb=${mem}" | tee -a "${env_file}" | awk '{print "    "$0}'

@@ -51,7 +51,7 @@ def main():
 
 	deploy_tikv(deployment)
 	if deployment.io_instance_cnt() == 0:
-		panic('[:(] try to auto select storage instance but failed')
+		print('[:(] try to auto select storage instance but failed')
 		import sys
 		sys.exit(1)
 

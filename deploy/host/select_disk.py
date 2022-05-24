@@ -64,15 +64,15 @@ def parse_lsblk(lines):
 			continue
 		filtered['/dev/' + blk.name] = blk
 
-		if len(filtered) == 0:
-			for blk in blks:
-				if blk.mounted in ['/', '/boot', '[SWAP]']:
-					continue
-				if blk.name in parents:
-					continue
-				if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
-					continue
-				filtered['/dev/' + blk.name] = blk
+	if len(filtered) == 0:
+		for blk in blks:
+			if blk.mounted in ['/', '/boot', '[SWAP]']:
+				continue
+			if blk.name in parents:
+				continue
+			if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
+				continue
+			filtered['/dev/' + blk.name] = blk
 
 	return filtered
 
