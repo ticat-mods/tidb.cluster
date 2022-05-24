@@ -50,10 +50,10 @@ def main():
 		hwr.dump()
 
 	deploy_tikv(deployment)
-		if deployment.io_instance_cnt() == 0:
-			panic('[:(] try to auto select storage instance but failed')
-			import sys
-			sys.exit(1)
+	if deployment.io_instance_cnt() == 0:
+		panic('[:(] try to auto select storage instance but failed')
+		import sys
+		sys.exit(1)
 
 	deploy_non_io(deployment)
 	deployment.flush()
