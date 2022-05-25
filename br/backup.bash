@@ -55,13 +55,15 @@ fi
 
 # TODO: get deploy-to-user from tiup
 mkdir -p "${dir}"
-curr_usr=`whoami`
-if [ "${curr_usr}" != 'root' ]; then
-	set +e
+user=`whoami`
+set +e
+if [ "${user}" != 'root' ]; then
 	chmod 775 -R "${dir}" || sudo chmod 775 -R "${dir}"
-	chown "${curr_usr}:tidb" -R "${dir}" || sudo chown "${curr_usr}:tidb" -R "${dir}"
-	set -e
+	chown "${user}:tidb" -R "${dir}" || sudo chown "${user}:tidb" -R "${dir}"
+else
+	chown tidb -R "${dir}" || sudo chown tidb -R "${dir}"
 fi
+set -e
 
 br_bin=`must_env_val "${env}" 'br.bin'`
 
