@@ -48,7 +48,7 @@ function get_instance_info()
 	pri_key=`tiup cluster list 2>/dev/null | awk '{if ($1=="'${name}'") print $NF}'`
 	set -e
 
-	# TODO: get this from tiup yaml file. and other values like ssh-port
+	# TODO: get deploy-to-user from tiup yaml file. and other values like ssh-port
 	user='tidb'
 
 	if [ "${check_stopped}" != 'false' ]; then

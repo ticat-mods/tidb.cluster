@@ -53,7 +53,7 @@ else
 	target="db --db ${target}"
 fi
 
-# TODO: get user name from tiup
+# TODO: get deploy-to-user from tiup
 mkdir -p "${dir}"
 curr_usr=`whoami`
 if [ "${curr_usr}" != 'root' ]; then
