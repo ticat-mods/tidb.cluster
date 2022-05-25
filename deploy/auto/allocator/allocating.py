@@ -280,7 +280,7 @@ class Hosts:
 				self.env.set(bc_id_key, bc_gb)
 
 		for host, dir in dirs:
-			ssh_exe(host, 'chown -R ' + self.deploy_to_user + ' "' + dir + '"')
+			ssh_exe(host, 'test -d "' + dir + '" && chown -R ' + self.deploy_to_user + ' "' + dir + '" || test $? = 1')
 
 		self.env.flush()
 
