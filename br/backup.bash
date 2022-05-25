@@ -55,11 +55,13 @@ fi
 
 # TODO: get user name from tiup
 mkdir -p "${dir}"
-set +e
-chmod 775 -R "${dir}" || sudo chmod 775 -R "${dir}"
 curr_usr=`whoami`
-chown "${curr_usr}:tidb" -R "${dir}" || sudo chown "${curr_usr}:tidb" -R "${dir}"
-set -e
+if [ "${curr_usr}" != 'root' ]; then
+	set +e
+	chmod 775 -R "${dir}" || sudo chmod 775 -R "${dir}"
+	chown "${curr_usr}:tidb" -R "${dir}" || sudo chown "${curr_usr}:tidb" -R "${dir}"
+	set -e
+fi
 
 br_bin=`must_env_val "${env}" 'br.bin'`
 
