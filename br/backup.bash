@@ -55,9 +55,10 @@ fi
 
 # TODO: get user name from tiup
 mkdir -p "${dir}"
-set +e 
-chown -R tidb "${dir}"
-sudo chown -R tidb "${dir}" < /dev/null
+set +e
+chmod 775 -R "${dir}" || sudo chmod 775 -R "${dir}"
+curr_usr=`whoami`
+chown "${curr_usr}:tidb" -R "${dir}" || sudo chown "${curr_usr}:tidb" -R "${dir}"
 set -e
 
 br_bin=`must_env_val "${env}" 'br.bin'`
