@@ -1,0 +1,17 @@
+help = remove a scheduler
+abbr = rm-sched|rm-scheduler
+
+[arg]
+cluster-name|cluster|name|N = ""
+scheduler|sched|s = ""
+
+[arg2env]
+tidb.cluster = cluster-name
+
+[env]
+tidb.cluster = read
+tidb.version = may-read
+
+[dep]
+tiup = to control cluster
+jq = parse tiup's output

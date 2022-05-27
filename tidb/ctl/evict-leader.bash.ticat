@@ -1,0 +1,21 @@
+help = evict leader of specified tikv node
+
+[arg]
+cluster-name|cluster|name|N = ""
+host|h|H = ""
+port|p|P = ""
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.node.host = host
+tidb.node.port = port
+
+[env]
+tidb.cluster = read
+tidb.version = may-read
+tidb.node.host = read
+tidb.node.port = read
+
+[dep]
+tiup = to control cluster
+jq = parse tiup's output
