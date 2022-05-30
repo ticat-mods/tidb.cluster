@@ -1,0 +1,23 @@
+help = set scheduler config
+abbr = sc
+
+[arg]
+scheduler|s = ''
+config|key|k|c = ''
+value|val = ''
+cluster-name|cluster|name|n = ''
+pd-addr|pd = ''
+version|ver = ''
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.cluster.pd = pd-addr
+tidb.version = version
+
+[env]
+tidb.cluster = read
+tidb.version = may-read
+tidb.cluster.pd = may-read
+
+[dep]
+tiup = to control cluster
