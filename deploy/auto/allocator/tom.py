@@ -35,12 +35,18 @@ def deploy_tikv(deployment):
 	# deploy tikv * 2 on one disk:
 	# - if we got lots of cpu
 	# - if only deployed 2 * tikv totally, 2 is not a good amount
+
+	def deploy_more(on_nvme):
+		for host_name in deployment.hosts:
+			hwr = deployment.hwrs[host_name]
+			devs = on_nvme and hwr.nvmes or hwr.devs
+			for dev in devs:
+				dev.deploy_tikv()
+
 	used_vcores = deployment.used_vcores()
 	have_extra_cpu = used_vcores < deployment.vcores / 2 - deployment.cost_model['tidb'] * 2
 	if deployment.io_instance_cnt() == 2 or (have_extra_cpu and not run_on_all_disk):
-		for host_name in deployment.hosts:
-			for dev in deployment.hwrs[host_name].nvmes:
-				dev.deploy_tikv()
+		deploy_more(len(deployment.nvmes) != 0)
 
 def main():
 	deployment = Hosts(Hosts.std_cost_model(), 'deployed-by-tom')
