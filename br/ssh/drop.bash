@@ -17,6 +17,6 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	dir=`choose_backup_dir "${data_dir}" "${deploy_dir}"`
 
 	echo "[:-] '${host}:${dir}.${tag}' remove backup dir begin"
-	ssh_exe "${host}" "rm -rf \"${dir}.${tag}\""
+	ssh_exe "${host}" "sudo rm -rf \"${dir}.${tag}\""
 	echo "[:)] '${host}:${dir}.${tag}' remove backup dir done"
 done

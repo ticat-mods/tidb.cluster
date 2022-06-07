@@ -5,6 +5,8 @@ set -euo pipefail
 env=`cat "${1}/env"`
 shift
 
+deploy_to_user='tidb'
+
 # export: $pri_key, $user, $cnt, $hosts, $deploy_dirs, $data_dirs
 get_instance_info "${env}" 'true'
 
@@ -34,7 +36,7 @@ for (( i = 0; i < ${cnt}; ++i)) do
 
 	echo "[:-] '${host}:${dir}' backup to tag '${tag}' begin"
 	set +e
-	exists=`ssh_exe "${host}" "test -d \"${dir}.${tag}\" && echo exists"`
+	exists=`ssh_exe "${host}" "sudo test -d \"${dir}.${tag}\" && echo exists"`
 	set -e
 
 	if [ ! -z "${exists}" ]; then
@@ -49,20 +51,20 @@ for (( i = 0; i < ${cnt}; ++i)) do
 		fi
 	fi
 
-	cmd="rm -rf \"${dir}.${tag}\" && rm -f \"${dir}/space_placeholder_file\" && rm -f \"${dir}/data/space_placeholder_file\""
+	cmd="sudo rm -rf \"${dir}.${tag}\" && sudo rm -f \"${dir}/space_placeholder_file\" && sudo rm -f \"${dir}/data/space_placeholder_file\""
 	ssh_exe "${host}" "${cmd}"
 
 	if [ "${db_user}" == 'root' ] || [ -z "${db_user}" ]; then
-		cmd="echo '${db_root_pwd}' > \"${dir}/db_root_pwd\""
+		cmd="echo '${db_root_pwd}' | sudo tee \"${dir}/db_root_pwd\" >/dev/null"
 		ssh_exe "${host}" "${cmd}"
 	fi
 
 	if [ "${use_mv}" == 'true' ]; then
-		cmd="mv \"${dir}\" \"${dir}.${tag}\""
+		cmd="sudo mv \"${dir}\" \"${dir}.${tag}\""
 		ssh_exe "${host}" "${cmd}"
 		echo "[:)] '${host}:${dir}' backup to tag '${tag}' finish (mv)"
 	else
-		cmd="cp -rp \"${dir}\" \"${dir}.${tag}\""
+		cmd="sudo cp -rp \"${dir}\" \"${dir}.${tag}\" && sudo chown -R \"${deploy_to_user}\" \"${dir}\" \"${dir}.${tag}\""
 		ssh_exe "${host}" "${cmd}"
 		echo "[:)] '${host}:${dir}' backup to tag '${tag}' finish (cp)"
 	fi
