@@ -234,19 +234,21 @@ class Hosts:
 			id_gen = {}
 			for dev in hwr.devs:
 				for service in dev.deployed.keys():
-					if service not in id_gen:
-						id = host
-						nid = '@+0'
-						id_gen[service] = 0
-					else:
-						nid = '@+' + str(id_gen[service] * 2)
-						id = host + nid
-					location = (host, dev, id, nid)
-					if service not in services:
-						services[service] = [location]
-					else:
-						services[service].append(location)
-					id_gen[service] += 1
+					cnt, _, _ = dev.deployed[service]
+					for _ in range(0, cnt):
+						if service not in id_gen:
+							id = host
+							nid = '@+0'
+							id_gen[service] = 0
+						else:
+							nid = '@+' + str(id_gen[service] * 2)
+							id = host + nid
+						location = (host, dev, id, nid)
+						if service not in services:
+							services[service] = [location]
+						else:
+							services[service].append(location)
+						id_gen[service] += 1
 
 		dirs = set()
 		for service in services.keys():
