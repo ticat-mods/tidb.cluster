@@ -54,6 +54,8 @@ def parse_lsblk(lines):
 			continue
 		if blk.name.startswith('sda'):
 			continue
+		if blk.type in ['BitLocker']:
+			continue
 		if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
 			continue
 		if blk.name in parents:

@@ -80,9 +80,13 @@ for host in ${hosts[@]}; do
 		dev_key="deploy.host.resource.${host}.dev.${dev}"
 		fs=`env_val "${env}" "${dev_key}.fs"`
 		mounted=`env_val "${env}" "${dev_key}.mounted"`
-		if [ -z "${mounted}" ]; then
-			auto_mount "${host}" "${dev}" "${fs}"
+		if [ ! -z "${mounted}" ]; then
+			continue
 		fi
+		if [ "${fs}" == 'BitLocker' ]; then
+			continue
+		fi
+		auto_mount "${host}" "${dev}" "${fs}"
 	done
 	echo "==> ${host}: all mounted: ${devs_str}"
 done
