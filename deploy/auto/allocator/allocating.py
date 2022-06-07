@@ -9,13 +9,17 @@ from ticat import Env
 from ssh import ssh_exe
 
 class Dev:
-	def __init__(self, cost_model, host, name, avail, mounted):
+	def __init__(self, cost_model, host, name, avail, mounted, os_default = False):
 		self.cost_model = cost_model
 		self.host = host
 		self.name = name
 		self.avail = int(avail)
 		self.mounted = mounted
 		self.deployed = {}
+		self.os_default = os_default
+
+	def is_os_default(self):
+		return self.is_os_default
 
 	def is_nvme(self):
 		return self.name.startswith('nvme')
@@ -100,6 +104,9 @@ class Host:
 			self.devs.append(dev)
 			if dev.is_nvme():
 				self.nvmes.append(dev)
+		if len(dev_names) == 0:
+			dev = Dev(cost_model, self, '', -1, '', True)
+			self.devs.append(dev)
 
 	def least_use_dev(self, nvme_only):
 		devs = self.devs
@@ -249,6 +256,8 @@ class Hosts:
 			for i in range(0, len(locations)):
 				host, dev, id, nid = locations[i]
 				vals.append(id)
+				if dev.is_os_default():
+					continue
 				on_dev_path = dev.mounted
 				if on_dev_path == '/home':
 					on_dev_path = os.path.join(dev.mounted, self.deploy_to_user)
