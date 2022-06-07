@@ -10,7 +10,7 @@ from topology import TiUPYaml
 
 def main():
 	env = Env()
-	depose_kvs = to_true(env.must_get('deploy.kvs.depose'))
+	depose_kvs = to_true(env.must_get('deploy.env.kvs.depose-after-deployed'))
 
 	yaml = TiUPYaml(env, depose_kvs = depose_kvs)
 	text, path = yaml.save()

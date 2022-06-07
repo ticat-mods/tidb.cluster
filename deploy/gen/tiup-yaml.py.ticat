@@ -2,11 +2,11 @@ help = generate tiup yaml config from env values written by deploy.set.* or depl
 abbr = tiup|yaml
 
 [arg]
-depose-kvs|depose-keys|depose-values|depose = false
+depose-env-kvs-after-deployed|depose-env = false
 
 [arg2env]
-deploy.kvs.depose = depose-kvs
+deploy.env.kvs.depose-after-deployed = depose-env-kvs-after-deployed
 
 [env]
 tidb.tiup.yaml = write
-deploy.kvs.depose = read
+deploy.env.kvs.depose-after-deployed = read
