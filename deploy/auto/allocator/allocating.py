@@ -19,7 +19,7 @@ class Dev:
 		self.os_default = os_default
 
 	def is_os_default(self):
-		return self.is_os_default
+		return self.os_default
 
 	def is_nvme(self):
 		return self.name.startswith('nvme')
@@ -153,7 +153,7 @@ class Host:
 	def dump(self):
 		print('host:'+self.name+', vcores:'+str(self.vcores)+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
 		for dev in self.devs:
-			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted)
+			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted+', os-disk:'+str(dev.os_default))
 
 class Hosts:
 	def __init__(self, cost_model, deploy_dir_name):
