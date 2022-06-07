@@ -3,19 +3,19 @@
 from allocating import Hosts
 
 def deploy_non_io(deployment):
-	deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_tidb()
-	deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_pd()
-	deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_monitoring()
-	deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_grafana()
+	deployment.least_cpu_use_host(for_service='tidb').least_use_dev(nvme_only=False).deploy_tidb()
+	deployment.least_cpu_use_host(for_service='pd').least_use_dev(nvme_only=False).deploy_pd()
+	deployment.least_cpu_use_host(for_service='monitoring').least_use_dev(nvme_only=False).deploy_monitoring()
+	deployment.least_cpu_use_host(for_service='grafana').least_use_dev(nvme_only=False).deploy_grafana()
 
 	used_vcores = deployment.used_vcores()
 	if used_vcores < deployment.vcores:
-		deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_pd()
-		deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_pd()
+		deployment.least_cpu_use_host(for_service='pd').least_use_dev(nvme_only=False).deploy_pd()
+		deployment.least_cpu_use_host(for_service='pd').least_use_dev(nvme_only=False).deploy_pd()
 
 	while True:
 		used_vcores = deployment.used_vcores()
-		if used_vcores + deployment.cost_model['tidb'] > deployment.vcores:
+		if used_vcores + deployment.cost_model.need_vcores('tidb') > deployment.vcores:
 			break
 		deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_tidb()
 
@@ -44,7 +44,7 @@ def deploy_tikv(deployment):
 				dev.deploy_tikv()
 
 	used_vcores = deployment.used_vcores()
-	have_extra_cpu = used_vcores < deployment.vcores / 2 - deployment.cost_model['tidb'] * 2
+	have_extra_cpu = used_vcores < deployment.vcores / 2 - deployment.cost_model.need_vcores('tidb') * 2
 	if deployment.io_instance_cnt() == 2 or (have_extra_cpu and not run_on_all_disk):
 		deploy_more(len(deployment.nvmes) != 0)
 

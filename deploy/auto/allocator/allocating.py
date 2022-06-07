@@ -25,20 +25,17 @@ class Dev:
 		return self.name.startswith('nvme')
 
 	def _deploy_service(self, name):
-		use_vcores = 0
-		if name in self.cost_model:
-			use_vcores = self.cost_model[name]
 		new_cnt = 1
-		new_use_vcores = use_vcores
+		new_services = [name]
 		new_io_cnt = 0
 		if name in ['tikv', 'tiflash']:
 			new_io_cnt = 1
 		if name in self.deployed:
-			old_cnt, old_use_vcores, old_io_cnt = self.deployed[name]
+			old_cnt, old_services, old_io_cnt = self.deployed[name]
 			new_cnt += old_cnt
-			new_use_vcores += old_use_vcores
+			new_services = old_services + new_services
 			new_io_cnt += old_io_cnt
-		self.deployed[name] = (new_cnt, new_use_vcores, new_io_cnt)
+		self.deployed[name] = (new_cnt, new_services, new_io_cnt)
 
 	def deploy_tikv(self):
 		self._deploy_service('tikv')
@@ -61,8 +58,9 @@ class Dev:
 	def used_vcores(self):
 		used_vcores_sum = 0
 		for name in self.deployed:
-			_, used_vcores, _ = self.deployed[name]
-			used_vcores_sum += used_vcores
+			_, services, _ = self.deployed[name]
+			for name in services:
+				used_vcores_sum += self.cost_model.need_vcores(name)
 		return used_vcores_sum
 
 	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
@@ -82,7 +80,7 @@ class Host:
 		self.name = name
 		hwr_env = env.detach_prefix('deploy.host.resource.' + name + '.')
 
-		self.vcores = hwr_env.must_get('vcores')
+		self.vcores = int(hwr_env.must_get('vcores'))
 
 		self.numa_nodes = []
 		numa_nodes = hwr_env.must_get('numa')
@@ -153,7 +151,7 @@ class Host:
 		return services_sum
 
 	def dump(self):
-		print('host:'+self.name+', vcores:'+self.vcores+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
+		print('host:'+self.name+', vcores:'+str(self.vcores)+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
 		for dev in self.devs:
 			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted)
 
@@ -184,16 +182,25 @@ class Hosts:
 			self.devs += hwr.devs
 			self.hwrs[host] = hwr
 
-	def least_cpu_use_host(self):
-		cand = None
-		min_vcores = -1
-		for host in self.hosts:
-			hwr = self.hwrs[host]
-			used_vcores = hwr.used_vcores()
-			if cand == None or used_vcores < min_vcores:
-				cand = hwr
-				min_vcores = used_vcores
-		return cand
+	def least_cpu_use_host(self, for_service):
+		while True:
+			cand = None
+			max_avail_vcores = -1
+			not_enough_vcores = False
+			for host in self.hosts:
+				hwr = self.hwrs[host]
+				used_vcores = hwr.used_vcores()
+				if used_vcores > hwr.vcores:
+					not_enough_vcores = True
+					break
+				avail_vcores = hwr.vcores - used_vcores
+				if cand == None or max_avail_vcores < avail_vcores:
+					cand = hwr
+					max_avail_vcores = avail_vcores
+
+			if not not_enough_vcores and self.cost_model.need_vcores(for_service) <= max_avail_vcores:
+				return cand
+			self.cost_model.down_grade(50)
 
 	def used_vcores(self):
 		used_vcores_sum = 0
@@ -297,11 +304,23 @@ class Hosts:
 
 	@staticmethod
 	def std_cost_model():
-		return {
-			'tikv': 16,
-			'pd': 8,
-			'tidb': 16,
-			'tiflash': 16,
-			'monitering': 2,
-			'grafana': 4,
-		}
+		class Costs:
+			def __init__(self):
+				self.cost_map = {
+					'tikv': 16,
+					'pd': 8,
+					'tidb': 16,
+					'tiflash': 16,
+					'monitoring': 2,
+					'grafana': 4,
+				}
+			def down_grade(self, down_to_percent = 50):
+				for service in self.cost_map.keys():
+					vcores = self.cost_map[service]
+					self.cost_map[service] = float(vcores) * float(down_to_percent) / 100
+			def need_vcores(self, service):
+				if service not in self.cost_map:
+					return 0
+				return self.cost_map[service]
+
+		return Costs()
