@@ -26,7 +26,7 @@ tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
 deploy.env.kvs.depose-after-deployed = depose-env-kvs-after-deployed
 
 [val2env]
-tidb.version.nightly-major = v5
+tidb.version.nightly-major = v6
 tidb.auto-config-mysql = true
 tidb.op.confirm = no
 
