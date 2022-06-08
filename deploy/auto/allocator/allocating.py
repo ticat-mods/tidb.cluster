@@ -163,6 +163,7 @@ class Hosts:
 		self.env = Env()
 
 		self.deploy_to_user = self.env.must_get('deploy.to-user')
+		self.deploy_user = self.env.must_get('deploy.user')
 
 		self.hosts = []
 		hosts = self.env.must_get('deploy.hosts')
@@ -298,7 +299,8 @@ class Hosts:
 				self.env.set(bc_id_key, bc_gb)
 
 		for host, dir in dirs:
-			ssh_exe(host, 'sudo test -d "' + dir + '" && sudo chown -R ' + self.deploy_to_user + ' "' + dir + '" || test $? = 1')
+			ssh_exe(host, 'sudo mkdir -p "' + dir + '"', sef.deploy_user)
+			ssh_exe(host, 'sudo chown -R ' + self.deploy_to_user + ' "' + dir + '"', sef.deploy_user)
 
 		self.env.flush()
 

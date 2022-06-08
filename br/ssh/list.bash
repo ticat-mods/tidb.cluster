@@ -4,6 +4,8 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
+deploy_user=`must_env_val "${env}" 'deploy.user'`
+
 # export: $pri_key, $user, $cnt, $hosts, $deploy_dirs, $data_dirs
 get_instance_info "${env}" 'false'
 
@@ -14,7 +16,7 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	dir=`choose_backup_dir "${data_dir}" "${deploy_dir}"`
 
 	# TODO: need sudo in the cmd
-	tags=`ssh_exe "${host}" 'for f in "'${dir}'".*; do echo "${f##*.}"; done'`
+	tags=`ssh_exe "${host}" 'for f in "'${dir}'".*; do echo "${f##*.}"; done' "${deploy_user}"`
 	if [ -z "${tags}" ] || [ "${tags}" == '*' ]; then
 		echo "[:)] '${host}:${dir}' has not backup tags"
 		continue

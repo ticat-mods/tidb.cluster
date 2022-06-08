@@ -3,9 +3,12 @@ abbr = hwr
 
 [arg]
 hosts|host|h = ''
+deploy-user = root
 
 [arg2env]
 deploy.hosts = hosts
+deploy.user = deploy-user
 
 [env]
 deploy.hosts = read
+deploy.user = read

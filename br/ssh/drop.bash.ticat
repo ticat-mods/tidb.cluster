@@ -3,14 +3,17 @@ help = remove instances' backupped data dir: <dir>.<tag>
 [arg]
 tag|t = ''
 cluster-name|cluster|name|n = ''
+deploy-user = root
 
 [arg2env]
 tidb.data.tag = tag
 tidb.cluster = cluster-name
+deploy.user = deploy-user
 
 [env]
 tidb.data.tag = read
 tidb.cluster = read
+deploy.user = read
 
 [dep]
 tiup = to get dir of each instance from cluster

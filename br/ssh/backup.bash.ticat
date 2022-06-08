@@ -10,6 +10,7 @@ cluster-name|cluster|name|n = ''
 exist-policy|when-exist|exists|exist = skip
 use-mv-instead-of-cp|use-mv|mv = false
 deploy-to-user|user|u = tidb
+deploy-user = root
 
 [arg2env]
 tidb.data.tag = tag
@@ -17,6 +18,7 @@ tidb.cluster = cluster-name
 tidb.backup.exist-policy = exist-policy
 tidb.backup.use-mv = use-mv-instead-of-cp
 deploy.to-user = deploy-to-user
+deploy.user = deploy-user
 
 [env]
 tidb.data.tag = read
@@ -24,6 +26,7 @@ tidb.cluster = read
 tidb.backup.exist-policy = read
 tidb.backup.use-mv = read
 deploy.to-user = read
+deploy.user = read
 
 [dep]
 tiup = to get dir of each instance from cluster

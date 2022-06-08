@@ -8,6 +8,7 @@ shift
 # export: $pri_key, $user, $cnt, $hosts, $deploy_dirs, $data_dirs
 get_instance_info "${env}" 'false'
 
+deploy_user=`must_env_val "${env}" 'deploy.user'`
 tag=`must_env_val "${env}" 'tidb.data.tag'`
 
 for (( i = 0; i < ${cnt}; ++i)) do
@@ -17,6 +18,6 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	dir=`choose_backup_dir "${data_dir}" "${deploy_dir}"`
 
 	echo "[:-] '${host}:${dir}.${tag}' remove backup dir begin"
-	ssh_exe "${host}" "sudo rm -rf \"${dir}.${tag}\""
+	ssh_exe "${host}" "sudo rm -rf \"${dir}.${tag}\"" "${deploy_user}"
 	echo "[:)] '${host}:${dir}.${tag}' remove backup dir done"
 done

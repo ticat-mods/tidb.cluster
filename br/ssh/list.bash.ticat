@@ -3,12 +3,15 @@ abbrs = ls
 
 [arg]
 cluster-name|cluster|name|n = ''
+deploy-user = root
 
 [arg2env]
 tidb.cluster = cluster-name
+deploy.user = deploy-user
 
 [env]
 tidb.cluster = read
+deploy.user = read
 
 [dep]
 tiup = to get dir of each instance from cluster
