@@ -299,8 +299,8 @@ class Hosts:
 				self.env.set(bc_id_key, bc_gb)
 
 		for host, dir in dirs:
-			ssh_exe(host, 'sudo mkdir -p "' + dir + '"', sef.deploy_user)
-			ssh_exe(host, 'sudo chown -R ' + self.deploy_to_user + ' "' + dir + '"', sef.deploy_user)
+			ssh_exe(host, 'sudo mkdir -p "' + dir + '"', self.deploy_user)
+			ssh_exe(host, 'sudo chown -R ' + self.deploy_to_user + ' "' + dir + '"', self.deploy_user)
 
 		self.env.flush()
 
