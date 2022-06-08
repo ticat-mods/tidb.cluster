@@ -4,10 +4,12 @@ abbrs = rs
 [arg]
 tag|t = ''
 cluster-name|cluster|name|n = ''
+deploy-to-user|user|u = tidb
 
 [arg2env]
 tidb.data.tag = tag
 tidb.cluster = cluster-name
+deploy.to-user = deploy-to-user
 
 [val2env]
 tidb.need-init = false
@@ -15,6 +17,7 @@ tidb.need-init = false
 [env]
 tidb.data.tag = read
 tidb.cluster = read
+deploy.to-user = read
 
 [dep]
 tiup = to get dir of each instance from cluster

@@ -10,6 +10,7 @@ threads|thread|thrd = 4
 check-checksum|checksum = true
 target-db|target|db = ''
 br-bin = 'tiup br'
+deploy-to-user|user|u = tidb
 
 [arg2env]
 br.backup-dir = backup-dir
@@ -19,6 +20,7 @@ br.threads = threads
 br.checksum = check-checksum
 br.target = target-db
 br.bin = br-bin
+deploy.to-user = deploy-to-user
 
 [env]
 br.backup-dir = read
@@ -26,6 +28,7 @@ tidb.cluster = read
 br.checksum = read
 tidb.backup.exist-policy = read
 br.bin = read
+deploy.to-user = read
 
 [dep]
 tiup = to display tidb cluster info and run br

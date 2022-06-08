@@ -4,6 +4,8 @@ set -euo pipefail
 env=`cat "${1}/env"`
 shift
 
+deploy_to_user=`must_env_val "${env}" 'deploy.to-user'`
+
 ## Handle args
 #
 name=`must_env_val "${env}" 'tidb.cluster'`
@@ -53,15 +55,14 @@ else
 	target="db --db ${target}"
 fi
 
-# TODO: get deploy-to-user from tiup
 mkdir -p "${dir}"
-user=`whoami`
+op_user=`whoami`
 set +e
-if [ "${user}" != 'root' ]; then
+if [ "${op_user}" != 'root' ]; then
 	chmod 775 -R "${dir}" || sudo chmod 775 -R "${dir}"
-	chown "${user}:tidb" -R "${dir}" || sudo chown "${user}:tidb" -R "${dir}"
+	chown "${op_user}:${deploy_to_user}" -R "${dir}" || sudo chown "${op_user}:${deploy_to_user}" -R "${dir}"
 else
-	chown tidb -R "${dir}" || sudo chown tidb -R "${dir}"
+	chown "${deploy_to_user}" -R "${dir}" || sudo chown "${deploy_to_user}" -R "${dir}"
 fi
 set -e
 

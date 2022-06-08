@@ -33,11 +33,11 @@ function auto_mount()
 		local dir="${prefix}${i}"
 		echo "    [${dir}]"
 		set +e
-		local exists=`ssh_exe "${host}" "test -d \"${dir}\" && echo yes"`
+		local exists=`ssh_exe "${host}" "sudo test -d \"${dir}\" && echo yes"`
 		set -e
 		if [ "${exists}" == 'yes' ]; then
 			echo "        exists, checking mounting info"
-			local mounted=`ssh_exe "${host}" "mount | awk '{if (\\$3 == \"${dir}\") {print \"yes\"; exit 0}} ENDFILE {print \"no\"}'"`
+			local mounted=`ssh_exe "${host}" "sudo mount | awk '{if (\\$3 == \"${dir}\") {print \"yes\"; exit 0}} ENDFILE {print \"no\"}'"`
 			if [ "${mounted}" != 'no' ]; then
 				echo "        mounted to other dev, skipped"
 				continue
@@ -45,7 +45,7 @@ function auto_mount()
 				echo "        - no mounting info"
 			fi
 			echo "        check owner"
-			local owner=`ssh_exe "${host}" "ls -ld \"${dir}\" | awk {print \\$3}"`
+			local owner=`ssh_exe "${host}" "sudo ls -ld \"${dir}\" | awk {print \\$3}"`
 			if [ "${owner}" == "${user}" ]; then
 				echo "        - owner is ${user}"
 			else
@@ -53,7 +53,7 @@ function auto_mount()
 			fi
 		else
 			echo "        create and chown to ${user}:${group}"
-			ssh_exe "${host}" "mkdir -p \"${dir}\" && chown -R \"${user}\":\"${group}\" \"${dir}\""
+			ssh_exe "${host}" "sudo mkdir -p \"${dir}\" && sudo chown -R \"${user}\":\"${group}\" \"${dir}\""
 			echo "        - done"
 		fi
 

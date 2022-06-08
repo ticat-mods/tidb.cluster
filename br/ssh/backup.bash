@@ -5,7 +5,7 @@ set -euo pipefail
 env=`cat "${1}/env"`
 shift
 
-deploy_to_user='tidb'
+deploy_to_user=`must_env_val "${env}" 'deploy.to-user'`
 
 # export: $pri_key, $user, $cnt, $hosts, $deploy_dirs, $data_dirs
 get_instance_info "${env}" 'true'

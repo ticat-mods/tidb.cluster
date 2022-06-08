@@ -6,8 +6,8 @@ deploy-to-user|user|u = tidb
 
 [arg2env]
 deploy.hosts = hosts
-deploy.to.user = deploy-to-user
+deploy.to-user = deploy-to-user
 
 [env]
 deploy.hosts = read
-deploy.to.user = read
+deploy.to-user = read

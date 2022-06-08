@@ -14,7 +14,7 @@ tag=`must_env_val "${env}" 'tidb.data.tag'`
 db_user=`env_val "${env}" 'mysql.user'`
 db_root_pwd=''
 
-deploy_to_user='tidb'
+deploy_to_user=`must_env_val "${env}" 'deploy.to-user'`
 
 for (( i = 0; i < ${cnt}; ++i)) do
 	host="${hosts[$i]}"

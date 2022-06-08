@@ -17,6 +17,9 @@ function ssh_ensure_key_exists()
 		if [ ! -f "${pri_key}" ]; then
 			ssh-keygen -f "${pri_key}" -t rsa -N ''
 		else
+			if [ ! -f "${pri_key}.pub" ]; then
+				ssh-keygen -y -f "${pri_key}" > "${pri_key}.pub"
+			fi
 			break
 		fi
 	done

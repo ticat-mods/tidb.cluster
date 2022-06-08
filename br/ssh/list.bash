@@ -13,6 +13,7 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	deploy_dir="${deploy_dirs[$i]}"
 	dir=`choose_backup_dir "${data_dir}" "${deploy_dir}"`
 
+	# TODO: need sudo in the cmd
 	tags=`ssh_exe "${host}" 'for f in "'${dir}'".*; do echo "${f##*.}"; done'`
 	if [ -z "${tags}" ] || [ "${tags}" == '*' ]; then
 		echo "[:)] '${host}:${dir}' has not backup tags"
