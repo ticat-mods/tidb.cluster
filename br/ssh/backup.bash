@@ -37,7 +37,7 @@ for (( i = 0; i < ${cnt}; ++i)) do
 
 	echo "[:-] '${host}:${dir}' backup to tag '${tag}' begin"
 	set +e
-	exists=`ssh_exe "${host}" "sudo test -d \"${dir}.${tag}\" && echo exists" "${deploy_user}"`
+	exists=`ssh_exe "${host}" "sudo test -d \"${dir}.${tag}\" && echo exists"` #"${deploy_user}"`
 	set -e
 
 	if [ ! -z "${exists}" ]; then
@@ -53,20 +53,20 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	fi
 
 	cmd="sudo rm -rf \"${dir}.${tag}\" && sudo rm -f \"${dir}/space_placeholder_file\" && sudo rm -f \"${dir}/data/space_placeholder_file\""
-	ssh_exe "${host}" "${cmd}" "${deploy_user}"
+	ssh_exe "${host}" "${cmd}" #"${deploy_user}"
 
 	if [ "${db_user}" == 'root' ] || [ -z "${db_user}" ]; then
 		cmd="echo '${db_root_pwd}' | sudo tee \"${dir}/db_root_pwd\" >/dev/null"
-		ssh_exe "${host}" "${cmd}" "${deploy_user}"
+		ssh_exe "${host}" "${cmd}" #"${deploy_user}"
 	fi
 
 	if [ "${use_mv}" == 'true' ]; then
 		cmd="sudo mv \"${dir}\" \"${dir}.${tag}\""
-		ssh_exe "${host}" "${cmd}" "${deploy_user}"
+		ssh_exe "${host}" "${cmd}" #"${deploy_user}"
 		echo "[:)] '${host}:${dir}' backup to tag '${tag}' finish (mv)"
 	else
 		cmd="sudo cp -rp \"${dir}\" \"${dir}.${tag}\" && sudo chown -R \"${deploy_to_user}\" \"${dir}\" \"${dir}.${tag}\""
-		ssh_exe "${host}" "${cmd}" "${deploy_user}"
+		ssh_exe "${host}" "${cmd}" #"${deploy_user}"
 		echo "[:)] '${host}:${dir}' backup to tag '${tag}' finish (cp)"
 	fi
 done

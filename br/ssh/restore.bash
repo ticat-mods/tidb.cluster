@@ -25,11 +25,12 @@ for (( i = 0; i < ${cnt}; ++i)) do
 
 	echo "[:-] restore '${host}:${dir}' from tag '${tag}' begin"
 	cmd="sudo rm -rf \"${dir}\" && sudo rm -f \"${dir}.${tag}/space_placeholder_file\" && sudo cp -rp \"${dir}.${tag}\" \"${dir}\" && sudo chown -R \"${deploy_to_user}\" \"${dir}\""
-	ssh_exe "${host}" "${cmd}" "${deploy_user}"
+
+	ssh_exe "${host}" "${cmd}" #"${deploy_user}"
 
 	if [ "${db_user}" == 'root' ] && [ -z "${db_root_pwd}" ]; then
 		cmd="sudo touch \"${dir}/db_root_pwd\" && sudo cat \"${dir}/db_root_pwd\""
-		db_root_pwd=`ssh_exe "${host}" "${cmd}" "${deploy_user}"`
+		db_root_pwd=`ssh_exe "${host}" "${cmd}" #"${deploy_user}"`
 		if [ ! -z "${db_root_pwd}" ]; then
 			echo "mysql.pwd=${db_root_pwd}" >> "${env_file}"
 			echo "[:)] retrieved database root password from backup"

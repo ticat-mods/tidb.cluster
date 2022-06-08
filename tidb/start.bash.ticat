@@ -3,7 +3,7 @@ abbr = up
 
 [arg]
 cluster-name|cluster|name|n = ''
-user|u = root
+db-user|user|u = root
 roles = ''
 auto-config-mysql|mysql = true
 tiup-plain-output|tiup-plain|plain = true
