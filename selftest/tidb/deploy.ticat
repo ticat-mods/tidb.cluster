@@ -1,2 +1,2 @@
-help = tidb depoy selftest
+help = TiDB deploy selftest
 abbr = depl

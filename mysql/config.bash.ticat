@@ -1,4 +1,4 @@
-help = setup MySql access info
+help = setup mysql access info
 abbr = conf
 cmd = config.bash
 

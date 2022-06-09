@@ -1,4 +1,4 @@
-help = deploy tiup cluster
+help = deploy tiup cluster by tiup's yaml file
 abbr = depl|dep|dpl
 
 [arg]

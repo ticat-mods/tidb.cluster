@@ -1,4 +1,4 @@
-help = build tidb by repo address, then use the binary to patch cluster
+help = build TiDB by repo address, then use the binary to patch cluster
 abbr = db
 quiet-err = true
 

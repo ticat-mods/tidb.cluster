@@ -1,4 +1,4 @@
-help = config tidb cluster name, version and other properties for deploy
+help = config TiDB cluster name, version and other properties for deploy
 abbr = conf
 tag = config
 

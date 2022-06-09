@@ -1,4 +1,4 @@
-help = restore tidb cluster data
+help = restore TiDB cluster data
 abbr = rs
 
 [arg]

@@ -1,4 +1,4 @@
-help = test tidb deploy, start, stop, and other things
+help = test TiDB deploy, start, stop, and other things
 abbr = depl
 tag = selftest
 

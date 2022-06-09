@@ -1,4 +1,4 @@
-help = destroy, deploy and start a cluster with tiup yaml path
+help = destroy, deploy and start a cluster with tiup's yaml file path
 abbr = rm+new|del+new
 
 trivial = 1

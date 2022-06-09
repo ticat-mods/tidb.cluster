@@ -1,4 +1,4 @@
-help = find mysql host and port in tidb cluster then set to env
+help = find mysql host and port in TiDB cluster then set to env
 abbr = my
 
 [arg]

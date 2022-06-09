@@ -1,4 +1,4 @@
-help = restore instances' data dir from <dir>.<tag>
+help = restore instances' data dir from <dir>.<tag> via ssh
 abbrs = rs
 
 [arg]

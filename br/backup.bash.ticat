@@ -1,4 +1,6 @@
-help = backup tidb cluster data, exist-policy: skip|overwrite|error
+help = backup TiDB cluster data \
+	arg `exist-policy`: skip|overwrite|error
+
 abbr = back|bk
 trivial = 1
 

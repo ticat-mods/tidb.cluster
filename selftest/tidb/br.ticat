@@ -1,4 +1,4 @@
-help = test tidb br
+help = test backup/restore data in TiDB with `br.*`
 tag = selftest
 
 [flow/]

@@ -1,4 +1,6 @@
-help = backup instances' data dir to <dir>.<tag>, exist-policy: skip|overwrite|error
+help = backup instances' data dir to <dir>.<tag> via ssh \
+	arg `exist-policy`: skip|overwrite|error
+
 abbr = back|bk
 trivial = 1
 

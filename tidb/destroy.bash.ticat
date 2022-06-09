@@ -1,4 +1,4 @@
-help = destroy tiup cluster
+help = destroy tiup cluster by name
 abbr = delete|del|remove|rm|burn
 
 [arg]

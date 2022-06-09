@@ -1,4 +1,4 @@
-help = a basic tidb resource allocator for auto deploy
+help = a basic TiDB resource allocator for auto deploy
 
 [arg]
 hosts|host|h = ''

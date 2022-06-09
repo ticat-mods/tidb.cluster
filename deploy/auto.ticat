@@ -1,4 +1,4 @@
-help = tidb auto deployer
+help = auto generate topology and deploy TiDB on given hosts
 trivial = 1
 
 [arg]

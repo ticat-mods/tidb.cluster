@@ -1,4 +1,4 @@
-help = start tiup cluster
+help = start tiup cluster by name
 abbr = up
 
 [arg]

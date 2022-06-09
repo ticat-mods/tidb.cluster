@@ -1,4 +1,4 @@
-help = restore tidb cluster data from s3 compatible storage
+help = restore TiDB cluster data from s3 compatible storage
 abbr = rs
 
 [arg]

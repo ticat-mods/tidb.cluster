@@ -1,4 +1,4 @@
-help = backup tidb cluster data to s3 compatible storage
+help = backup TiDB cluster data to s3 compatible storage
 abbr = back|bk
 
 [arg]

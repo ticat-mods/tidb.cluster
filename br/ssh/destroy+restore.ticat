@@ -1,4 +1,4 @@
-help = stop and clean a tidb cluster, restore data by dir via ssh, then start cluster
+help = stop and clean a TiDB cluster, restore data by dir via ssh, then start cluster
 abbr = remove+restore|delete+restore|rm+restore|del+restore|rm+rs|del+rs
 trivial = 1
 
