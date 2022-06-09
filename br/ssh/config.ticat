@@ -7,9 +7,11 @@ tag|t = ''
 cluster-name|cluster|name|n = ''
 exist-policy|when-exist|exists|exist = skip
 use-mv-instead-of-cp|use-mv|mv = false
+wait-secs-before-backup|wait-secs|wait = 2
 
 [arg2env]
 tidb.data.tag = tag
 tidb.cluster = cluster-name
 tidb.backup.exist-policy = exist-policy
 tidb.backup.use-mv = use-mv-instead-of-cp
+br.ssh.backup.wait-secs = wait-secs-before-backup

@@ -4,7 +4,7 @@ help = backup instances' data dir to <dir>.<tag> via ssh \
 abbr = back|bk
 trivial = 1
 
-flow = tidb.stop
+flow = sleep [[br.ssh.backup.wait-secs]] : tidb.stop
 
 [arg]
 tag|t = ''
@@ -13,6 +13,7 @@ exist-policy|when-exist|exists|exist = skip
 use-mv-instead-of-cp|use-mv|mv = false
 deploy-to-user|user|u = tidb
 deploy-user = root
+wait-secs-before-backup|wait-secs|wait = 2
 
 [arg2env]
 tidb.data.tag = tag
@@ -21,6 +22,7 @@ tidb.backup.exist-policy = exist-policy
 tidb.backup.use-mv = use-mv-instead-of-cp
 deploy.to-user = deploy-to-user
 deploy.user = deploy-user
+br.ssh.backup.wait-secs = wait-secs-before-backup
 
 [env]
 tidb.data.tag = read
