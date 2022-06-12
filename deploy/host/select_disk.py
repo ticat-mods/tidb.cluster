@@ -48,7 +48,7 @@ def parse_lsblk(lines):
 
 	filtered = {}
 	for blk in blks:
-		if blk.mounted in ['/', '/boot', '/home', '[SWAP]']:
+		if blk.mounted in ['/', '/boot', '/boot/efi', '/home', '[SWAP]']:
 			continue
 		if blk.mounted.find('docker') >= 0:
 			continue
@@ -68,7 +68,7 @@ def parse_lsblk(lines):
 
 	if len(filtered) == 0:
 		for blk in blks:
-			if blk.mounted in ['/', '/boot', '[SWAP]']:
+			if blk.mounted in ['/', '/boot', '/boot/efi', '[SWAP]']:
 				continue
 			if blk.name in parents:
 				continue
