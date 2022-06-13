@@ -6,6 +6,10 @@ env_file="${1}/env"
 env=`cat "${env_file}"`
 
 key_file=`env_val "${env}" 'ssh.key-file'`
+if [ ! -z "${key_file}" ]; then
+	key_file=`abs_path "${key_file}"`
+fi
+
 phrase=`env_val "${env}" 'ssh.pwd'`
 deploy_user=`must_env_val "${env}" 'deploy.user'`
 hosts=`must_env_val "${env}" 'deploy.hosts'`
