@@ -72,11 +72,12 @@ function ssh_auto_auth()
 			echo "[:(] no provided password and key file for host '${host}'"
 			return 1
 		fi
-		echo "[:)] ${host} script coping"
+		echo "[:)] cleansing ${host} script file if it exists"
 		#echo sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
 		#	"sudo rm -f \"${script_dest}\""
 		sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
 			"sudo rm -f \"${script_dest}\""
+		echo "[:)] ${host} script coping"
 		#echo sshpass -p "***" scp${key_arg} -o "StrictHostKeyChecking=no" "${script_src}" "${user}@${host}:${script_dest}"
 		sshpass -p "${phrase}" scp${key_arg} -o "StrictHostKeyChecking=no" "${script_src}" "${user}@${host}:${script_dest}"
 		echo "[:)] ${host} script copied"
