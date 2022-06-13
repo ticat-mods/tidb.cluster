@@ -15,7 +15,7 @@ class Dev:
 		self.host = host
 		self.name = name
 		self.avail = int(avail)
-		if len(mounted) == 0:
+		if len(mounted) == 0 and not os_default:
 			raise Exception('should not happen: unmounted dev during auto deploying. host:' + self.host.name + ', dev:' + self.name)
 		self.mounted = mounted
 		self.deployed = {}
