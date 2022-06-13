@@ -54,7 +54,7 @@ def parse_lsblk(lines):
 			continue
 		if blk.name.startswith('sda'):
 			continue
-		if blk.type in ['BitLocker']:
+		if blk.fs in ['vfat', 'ntfs', 'BitLocker', 'tmpfs', 'run']:
 			continue
 		if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
 			continue
@@ -72,7 +72,11 @@ def parse_lsblk(lines):
 				continue
 			if blk.name in parents:
 				continue
+			if blk.fs in ['vfat', 'ntfs', 'BitLocker', 'tmpfs', 'run']:
+				continue
 			if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
+				continue
+			if blk.avail < size_1g:
 				continue
 			filtered['/dev/' + blk.name] = blk
 

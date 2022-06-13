@@ -7,6 +7,7 @@ sys.path.append('../../../helper/python.helper')
 from copy import deepcopy
 from ticat import Env
 from ssh import ssh_exe
+from strs import to_true
 
 class Dev:
 	def __init__(self, cost_model, host, name, avail, mounted, os_default = False):
@@ -14,6 +15,8 @@ class Dev:
 		self.host = host
 		self.name = name
 		self.avail = int(avail)
+		if len(mounted) == 0:
+			raise Exception('should not happen: unmounted dev during auto deploying. host:' + self.host.name + ', dev:' + self.name)
 		self.mounted = mounted
 		self.deployed = {}
 		self.os_default = os_default
@@ -73,6 +76,9 @@ class Dev:
 			_, _, io_cnt = self.deployed[name]
 			io_cnt_sum += io_cnt
 		return io_cnt_sum
+
+	def has_tikv(self):
+		return 'tikv' in self.deployed
 
 class Host:
 	def __init__(self, cost_model, env, name):
@@ -136,6 +142,12 @@ class Host:
 			sum += dev.io_instance_cnt()
 		return sum
 
+	def has_tikv(self):
+		for dev in self.devs:
+			if dev.has_tikv():
+				return True
+		return False
+
 	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
 	def deployed_instances(self):
 		services_sum = {}
@@ -155,12 +167,17 @@ class Host:
 		for dev in self.devs:
 			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted+', os-disk:'+str(dev.os_default))
 
+class DeployHints:
+	def __init__(self, env):
+		self.pd_with_tikv = to_true(env.get_ex('deploy.hint.pd-with-tikv', ''))
+
 class Hosts:
 	def __init__(self, cost_model, deploy_dir_name):
 		self.cost_model = cost_model
 		self.deploy_dir_name = deploy_dir_name
 
 		self.env = Env()
+		self.hints = DeployHints(self.env)
 
 		self.deploy_to_user = self.env.must_get('deploy.to-user')
 		self.deploy_user = self.env.must_get('deploy.user')
@@ -230,6 +247,14 @@ class Hosts:
 			hwr = self.hwrs[host]
 			sum += hwr.io_instance_cnt()
 		return sum
+
+	def tikv_hosts(self):
+		hwrs = []
+		for host in self.hosts:
+			hwr = self.hwrs[host]
+			if hwr.has_tikv():
+				hwrs.append(hwr)
+		return hwrs
 
 	def clone(self):
 		return deepcopy(self)

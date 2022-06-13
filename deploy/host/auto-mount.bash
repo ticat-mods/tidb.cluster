@@ -83,7 +83,7 @@ for host in ${hosts[@]}; do
 		if [ ! -z "${mounted}" ]; then
 			continue
 		fi
-		if [ "${fs}" == 'BitLocker' ]; then
+		if [ "${fs}" == 'BitLocker' ] || [ "${fs}" == 'tmpfs' ] || [ "${fs}" == 'run' ] ; then
 			continue
 		fi
 		auto_mount "${host}" "${dev}" "${fs}"
