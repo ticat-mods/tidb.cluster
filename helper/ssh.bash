@@ -29,7 +29,8 @@ function ssh_auto_auth()
 {
 	local user="${1}"
 	local phrase="${2}"
-	shift 2
+	local key_file="${3}"
+	shift 3
 	local hosts=("${@}")
 
 	local need_auth='false'
@@ -51,9 +52,15 @@ function ssh_auto_auth()
 
 	ssh_ensure_key_exists
 
-	local script="/tmp/auto-auth.bash"
+	local script_src="/tmp/auto-auth-to-be-copied.bash"
+	local script_dest="/tmp/auto-auth-copied.bash"
 	local here=`cd $(dirname ${BASH_SOURCE[0]}) && pwd`
-	gen_auth_script "${script}" "${here}/authorize.template"
+	gen_auth_script "${script_src}" "${here}/authorize.template"
+
+	local key_arg=''
+	if [ ! -z "${key_file}" ]; then
+		local key_arg=" -i ${key_file}"
+	fi
 
 	for host in ${hosts[@]}; do
 		local ssh_ok=`ssh_ping "${host}" "${user}"`
@@ -61,20 +68,22 @@ function ssh_auto_auth()
 			continue
 		fi
 		echo "[:-] ${host} authorizing"
-		#sshpass -p "${phrase}" scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" "${script}" "${host}:/tmp/"
-		#sshpass -p "${phrase}" ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" "${host}" "bash /tmp/auto-auth.bash"
-		if [ -z "${phrase}" ]; then
-			echo "[:(] no provided password for host '${host}'"
+		if [ -z "${phrase}" ] && [ -z "${key_file}" ]; then
+			echo "[:(] no provided password and key file for host '${host}'"
 			return 1
 		fi
 		echo "[:)] ${host} script coping"
-		#echo sshpass -p "***" scp -o "StrictHostKeyChecking=no" "${script}" "${user}@${host}:${script}"
-		sshpass -p "${phrase}" scp -o "StrictHostKeyChecking=no" "${script}" "${user}@${host}:${script}"
+		#echo sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
+		#	"sudo rm -f \"${script_dest}\""
+		sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
+			"sudo rm -f \"${script_dest}\""
+		#echo sshpass -p "***" scp${key_arg} -o "StrictHostKeyChecking=no" "${script_src}" "${user}@${host}:${script_dest}"
+		sshpass -p "${phrase}" scp${key_arg} -o "StrictHostKeyChecking=no" "${script_src}" "${user}@${host}:${script_dest}"
 		echo "[:)] ${host} script copied"
-		#echo sshpass -p "***" ssh -o "StrictHostKeyChecking=no" "${user}@${host}" \
-		#	"chown \"${user}:${user}\" \"${script}\" && su ${user} -c \"bash ${script}\""
-		sshpass -p "${phrase}" ssh -o "StrictHostKeyChecking=no" "${user}@${host}" \
-			"chown \"${user}:${user}\" \"${script}\" && su ${user} -c \"bash ${script}\""
+		#echo sshpass -p "***" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
+		#	"chown \"${user}:${user}\" \"${script_dest}\" && su ${user} -c \"bash ${script_dest}\""
+		sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
+			"chown \"${user}:${user}\" \"${script_dest}\" && su ${user} -c \"bash ${script_dest}\""
 		echo "[:)] ${host} authorized"
 	done
 }
