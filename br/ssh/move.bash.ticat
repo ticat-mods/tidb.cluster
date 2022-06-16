@@ -1,0 +1,21 @@
+help = move instances' backupped dirfrom one tag to another
+abbr = mv|rename
+
+[arg]
+from-tag|tag|t|from|src = ''
+to-tag|to|dest = ''
+cluster-name|cluster|name|n = ''
+deploy-user = root
+
+[arg2env]
+tidb.data.tag = tag
+tidb.cluster = cluster-name
+deploy.user = deploy-user
+
+[env]
+tidb.data.tag = may-read
+tidb.cluster = read
+deploy.user = read
+
+[dep]
+tiup = to get dir of each instance from cluster
