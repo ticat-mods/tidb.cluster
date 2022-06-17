@@ -1,0 +1,25 @@
+help = default config of: TiDB cluster name, version and other properties for deploy
+abbr = def
+tag = config
+
+[arg]
+cluster-name|cluster|name|n = test
+version|ver|v = nightly
+nightly-major-version = v6
+confirm|cfm = no
+auto-config-mysql|auto-conf-mysql|conf-mysql = true
+keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
+tiup-yaml|yaml = ''
+tiup-plain-output|tiup-plain|plain = true
+init-when-start-db|init-when-start|init-start = false
+
+[arg2env]
+tidb.cluster = cluster-name
+tidb.version = version
+tidb.version.nightly-major = nightly-major-version
+tidb.auto-config-mysql = auto-config-mysql
+tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
+tidb.op.confirm = confirm
+tidb.tiup.yaml = tiup-yaml
+tidb.tiup.plain-output = tiup-plain-output
+tidb.init-when-start = init-when-start-db

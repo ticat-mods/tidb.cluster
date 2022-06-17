@@ -3,15 +3,15 @@ abbr = conf
 tag = config
 
 [arg]
-cluster-name|cluster|name|n = test
-version|ver|v = nightly
-nightly-major-version = v6
-confirm|cfm = no
-auto-config-mysql|auto-conf-mysql|conf-mysql = true
-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
+cluster-name|cluster|name|n = ''
+version|ver|v = ''
+nightly-major-version = ''
+confirm|cfm = ''
+auto-config-mysql|auto-conf-mysql|conf-mysql = ''
+keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = ''
 tiup-yaml|yaml = ''
-tiup-plain-output|tiup-plain|plain = true
-init-when-start-db|init-when-start|init-start = false
+tiup-plain-output|tiup-plain|plain = ''
+init-when-start-db|init-when-start|init-start = ''
 
 [arg2env]
 tidb.cluster = cluster-name
