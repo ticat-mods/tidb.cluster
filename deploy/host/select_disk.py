@@ -76,6 +76,8 @@ def parse_lsblk(lines):
 				continue
 			if blk.type not in ['disk', 'part'] and len(blk.mounted) == 0:
 				continue
+			if blk.removable:
+				continue
 			if blk.avail < size_1g:
 				continue
 			filtered['/dev/' + blk.name] = blk
