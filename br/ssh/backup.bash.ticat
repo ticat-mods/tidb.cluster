@@ -1,5 +1,7 @@
-help = backup instances' data dir to <dir>.<tag> via ssh \
-	arg `exist-policy`: skip|overwrite|error
+[help/]
+backup instances' data dir to <dir>.<tag> via ssh
+arg `exist-policy`: skip|overwrite|error
+[/help]
 
 abbr = back|bk
 trivial = 1
@@ -9,7 +11,7 @@ flow = sleep [[br.ssh.backup.wait-secs]] : tidb.stop
 [arg]
 tag|t = ''
 cluster-name|cluster|name|n = ''
-exist-policy|when-exist|exists|exist = skip
+exist-policy|when-exist|exists|exist = overwrite
 use-mv-instead-of-cp|use-mv|mv = false
 deploy-to-user|user|u = tidb
 deploy-user = root

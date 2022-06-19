@@ -19,6 +19,9 @@ for (( i = 0; i < ${cnt}; ++i)) do
 	tags=`ssh_exe "${host}" 'for f in "'${dir}'".*; do echo "${f##*.}"; done' "${deploy_user}"`
 	if [ -z "${tags}" ] || [ "${tags}" == '*' ]; then
 		echo "[:)] '${host}:${dir}' has not backup tags"
+		if [ "${dir:0:6}" == '/home/' ]; then
+			echo "(maybe backup tags exist but 'permission denied' because '${dir}' is under '/home')"
+		fi
 		continue
 	fi
 
