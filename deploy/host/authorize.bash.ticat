@@ -13,7 +13,7 @@ key-file-abs-path|key-file|key|k = ''
 deploy.hosts = hosts
 deploy.user = deploy-user
 ssh.pwd = password
-ssh.key-file = key-file
+ssh.key-file = key-file-abs-path
 
 [env]
 deploy.hosts = read

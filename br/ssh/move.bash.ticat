@@ -8,7 +8,7 @@ cluster-name|cluster|name|n = ''
 deploy-user = root
 
 [arg2env]
-tidb.data.tag = tag
+tidb.data.tag = from-tag
 tidb.cluster = cluster-name
 deploy.user = deploy-user
 
