@@ -3,17 +3,17 @@ abbr = conf
 cmd = config.bash
 
 [args]
-host|h = 127.0.0.1
-port|p = 4000
-user|u = root
-password|pwd = ''
+mysql-host|host|h = 127.0.0.1
+mysql-port|port|p = 4000
+mysql-user|user|u = root
+mysql-password|mysql-pwd|password|pwd = ''
 verify-access|verify|v = true
 
 [arg2env]
-mysql.host = host
-mysql.port = port
-mysql.user = user
-mysql.pwd = password
+mysql.host = mysql-host
+mysql.port = mysql-port
+mysql.user = mysql-user
+mysql.pwd = mysql-password
 
 [env]
 mysql.host = write

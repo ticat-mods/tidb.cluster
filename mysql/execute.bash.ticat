@@ -4,23 +4,23 @@ abbrs = exec|exe
 [args]
 query|sql|q = ''
 db-name|database|db = ''
-host|h = 127.0.0.1
-port|p = 4000
-user|u = root
-password|pwd = ''
+mysql-host|host|h = 127.0.0.1
+mysql-port|port|p = 4000
+mysql-user|user|u = root
+mysql-password|mysql-pwd|password|pwd = ''
 output-format|format|fmt = ''
 warnings|warning|warn = true
+
+[arg2env]
+mysql.host = mysql-host
+mysql.port = mysql-port
+mysql.user = mysql-user
+mysql.pwd = mysql-password
 
 [env]
 mysql.host = read
 mysql.port = read
 mysql.user = read
-
-[arg2env]
-mysql.host = host
-mysql.port = port
-mysql.user = user
-mysql.pwd = password
 
 [dep]
 mysql = as client
