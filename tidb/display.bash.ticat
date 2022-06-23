@@ -2,7 +2,7 @@ help = display tiup cluster by name
 abbr = disp|show|status|stat
 
 [arg]
-cluster-name|cluster|name|n = ''
+cluster-name|cluster = ''
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]

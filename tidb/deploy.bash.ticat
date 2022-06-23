@@ -2,18 +2,19 @@ help = deploy tiup cluster by tiup's yaml file
 abbr = depl|dep|dpl
 
 [arg]
-yaml-path|yaml = ''
-cluster-name|cluster|name|n = ''
-version|ver|v = ''
-confirm|cfm = ''
+tiup-yaml|yaml-path|yaml = ''
+cluster-name|cluster = ''
+tidb-version|version|ver|v = ''
+tiup-op-confirm|op-confirm|confirm|cfm = ''
 skip-exist|skip|s = false
 tiup-plain-output|tiup-plain|plain = true
+tiup-plain-output|tiup-plain|plain = ''
 
 [arg2env]
-tidb.tiup.yaml = yaml-path
+tidb.tiup.yaml = tiup-yaml
 tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.confirm = confirm
+tidb.version = tidb-version
+tidb.op.confirm = tiup-op-confirm
 tidb.tiup.plain-output = tiup-plain-output
 
 [val2env]

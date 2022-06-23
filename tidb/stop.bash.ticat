@@ -2,15 +2,15 @@ help = stop tiup cluster
 abbr = down|dn
 
 [arg]
-cluster-name|cluster|name|n = ''
-confirm|cfm|c = ''
-keep-monitor|keep-mon|k = true
+cluster-name|cluster = ''
+tiup-op-confirm|op-confirm|confirm|cfm = ''
+tidb-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = ''
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.op.confirm = confirm
-tidb.op.keep-monitor = keep-monitor
+tidb.op.confirm = tiup-op-confirm
+tidb.op.keep-monitor = tidb-keep-monitor-when-stop-and-destroy
 tidb.tiup.plain-output = tiup-plain-output
 
 [val2env]
@@ -19,7 +19,7 @@ tidb.need-init = false
 [env]
 tidb.cluster = read
 tidb.op.confirm = read
-tidb.op.keep-monitor = keep-monitor
+tidb.op.keep-monitor = read
 
 [dep]
 tiup = to stop cluster

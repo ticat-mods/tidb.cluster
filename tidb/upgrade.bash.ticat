@@ -5,19 +5,19 @@ begin-ts-key = tidb.upgrade.begin
 end-ts-key = tidb.upgrade.end
 
 [arg]
-cluster-name|name|n = ''
-version|v = ''
-confirm|cfm = ''
-force = false
-ignore-config-check|ignore-check|skip-check = false
-offline|off = false
+cluster-name|cluster = ''
+tidb-version|version|ver|v = ''
+tiup-op-confirm|op-confirm|confirm|cfm = ''
+tiup-op-force|op-force|force-op|force = false
+tidb-upgrade-ignore-config-check|ignore-conf-check|skip-conf-check = false
+tidb-upgrade-offline|offline = false
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.confirm = confirm
-tidb.op.force = force
+tidb.version = tidb-version
+tidb.op.confirm = tiup-op-confirm
+tidb.op.force = tiup-op-force
 tidb.tiup.plain-output = tiup-plain-output
 
 [env]

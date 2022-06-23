@@ -5,9 +5,9 @@ trivial = 3
 flow = tidb.destroy
 
 [arg]
-cluster-name|cluster|name|n = ''
-confirm|cfm = false
+cluster-name|cluster = ''
+tiup-op-confirm|op-confirm|confirm|cfm = false
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.op.confirm = confirm
+tidb.op.confirm = tiup-op-confirm

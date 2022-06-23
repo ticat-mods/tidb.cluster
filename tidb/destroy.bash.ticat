@@ -2,15 +2,15 @@ help = destroy tiup cluster by name
 abbr = delete|del|remove|rm|burn
 
 [arg]
-cluster-name|cluster|name|n = ''
-confirm|cfm = ''
-keep-monitor|keep-mon = true
+cluster-name|cluster = ''
+tiup-op-confirm|op-confirm|confirm|cfm = ''
+tidb-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
 tiup-plain-output|tiup-plain|plain = true
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.op.confirm = confirm
-tidb.op.keep-monitor = keep-monitor
+tidb.op.confirm = tiup-op-confirm
+tidb.op.keep-monitor = tidb-keep-monitor-when-stop-and-destroy
 tidb.tiup.plain-output = tiup-plain-output
 
 [val2env]

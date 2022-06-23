@@ -3,7 +3,7 @@ abbr = l
 flow = tidb.config.mysql verify=false : mysql.login
 
 [arg]
-cluster-name|cluster|name|n = ''
+cluster-name|cluster = ''
 
 [arg2env]
 tidb.cluster = cluster-name

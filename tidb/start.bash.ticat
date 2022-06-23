@@ -2,20 +2,20 @@ help = start tiup cluster by name
 abbr = up
 
 [arg]
-cluster-name|cluster|name|n = ''
-db-user|user|u = root
-roles = ''
-auto-config-mysql|mysql = true
+cluster-name|cluster = ''
+mysql-user|db-user-for-verify-access|user = root
+tidb-start-roles|start-roles|roles = ''
+tidb-start-auto-config-mysql|auto-conf-mysql|mysql = true
 tiup-plain-output|tiup-plain|plain = true
-need-init-db-now|need-init-db|need-init|init-db|init = false
-init-when-start-db|init-when-start|init-start = false
+tidb-start-need-init-db-now|need-init-db|need-init|init-db|init = false
+tidb-init-when-start-db|init-when-start|init-start = false
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.auto-config-mysql = auto-config-mysql
+tidb.auto-config-mysql = tidb-start-auto-config-mysql
 tidb.tiup.plain-output = tiup-plain-output
-tidb.need-init = need-init-db-now
-tidb.init-when-start = init-when-start-db
+tidb.need-init = tidb-start-need-init-db-now
+tidb.init-when-start = tidb-init-when-start-db
 
 [env]
 tidb.cluster = read

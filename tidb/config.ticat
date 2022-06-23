@@ -3,23 +3,23 @@ abbr = conf
 tag = config
 
 [arg]
-cluster-name|cluster|name|n = ''
-version|ver|v = ''
-nightly-major-version = ''
-confirm|cfm = ''
-auto-config-mysql|auto-conf-mysql|conf-mysql = ''
-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = ''
+cluster-name|cluster = ''
+tidb-version|version|ver|v = ''
+tidb-nightly-major-version|nightly-maj = ''
+tiup-op-confirm|op-confirm|confirm|cfm = ''
+tidb-start-auto-config-mysql|auto-conf-mysql|conf-mysql = ''
+tidb-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = ''
 tiup-yaml|yaml = ''
 tiup-plain-output|tiup-plain|plain = ''
-init-when-start-db|init-when-start|init-start = ''
+tidb-init-when-start|init-when-start|init-start = ''
 
 [arg2env]
 tidb.cluster = cluster-name
-tidb.version = version
-tidb.version.nightly-major = nightly-major-version
-tidb.auto-config-mysql = auto-config-mysql
-tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
-tidb.op.confirm = confirm
+tidb.version = tidb-version
+tidb.version.nightly-major = tidb-nightly-major-version
+tidb.auto-config-mysql = tidb-start-auto-config-mysql
+tidb.op.keep-monitor = tidb-keep-monitor-when-stop-and-destroy
+tidb.op.confirm = tiup-op-confirm
 tidb.tiup.yaml = tiup-yaml
 tidb.tiup.plain-output = tiup-plain-output
-tidb.init-when-start = init-when-start-db
+tidb.init-when-start = tidb-init-when-start-db

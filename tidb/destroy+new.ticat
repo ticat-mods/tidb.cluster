@@ -1,18 +1,6 @@
 help = destroy, deploy and start a cluster with tiup's yaml file path
 abbr = rm+new|del+new
-
 trivial = 1
 
+args.auto = *
 flow = tidb.destroy : tidb.deploy : tidb.start
-
-[arg]
-tiup-yaml|yaml = ''
-cluster-name|cluster|name|n = ''
-version|ver|v = nightly
-confirm|cfm = no
-
-[arg2env]
-tidb.tiup.yaml = tiup-yaml
-tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.confirm = confirm
