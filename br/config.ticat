@@ -4,7 +4,7 @@ abbr = conf
 
 [arg]
 br-backup-dir|br-dir|backup-dir|dir = ''
-br-threads|threads|thread|t = 4
+br-threads|br-t|threads|thread|thd|t = 4
 cluster-name|cluster = ''
 br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
 br-bin = 'tiup br'
