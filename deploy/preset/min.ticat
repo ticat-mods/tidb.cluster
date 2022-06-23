@@ -1,19 +1,11 @@
 help = generate tiup yaml file of: 1*tikv + 1*tidb + 1*pd on the same host
 trivial = 3
 
+args.auto = *
+
 [arg]
 port-delta|delta|port|p = +0
 host|h = 127.0.0.1
-cluster-name|cluster|name|n = test
-version|ver|v = nightly
-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
-confirm|cfm = no
-
-[arg2env]
-tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
-tidb.op.confirm = confirm
 
 [flow/]
 deploy.set.tikv [[host]]
@@ -21,4 +13,5 @@ deploy.set.pd [[host]]
 deploy.set.tidb [[host]]
 deploy.set.monitoring [[host]]
 deploy.set.port.delta [[port-delta]]
+tidb.conf.def
 deploy.gen.tiup

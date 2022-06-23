@@ -1,39 +1,24 @@
 help = auto generate topology and deploy TiDB on given hosts
 trivial = 1
 
+args.auto = cluster,version,keep-mon,deploy-user,nightly-major,auto-conf-mysql,confirm
+
 [arg]
-hosts|host|h = ''
-port-delta|delta|d = 1000
-
-cluster-name|cluster|name|n = test
-version|ver|v = nightly
-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
-
-deploy-user|user|u = root
-allocator|alloc|a = deploy.auto.allocator.tom
-
-depose-env-kvs-after-deployed|depose-env = false
+deploy-hosts|hosts|host = ''
+deploy-port-delta|port-delta|delta = 1000
+deploy-allocator|allocator|alloc|a = deploy.auto.allocator.tom
+deploy-depose-env-kvs-after-deployed|depose-env = false
 
 [arg2env]
-deploy.hosts = hosts
-deploy.user = deploy-user
-deploy.port.delta = port-delta
-
-tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
-
-deploy.env.kvs.depose-after-deployed = depose-env-kvs-after-deployed
-
-[val2env]
-tidb.version.nightly-major = v6
-tidb.auto-config-mysql = true
-tidb.op.confirm = no
+deploy.hosts = deploy-hosts
+deploy.port.delta = deploy-port-delta
+deploy.env.kvs.depose-after-deployed = deploy-depose-env-kvs-after-deployed
 
 [flow/]
+tidb.conf.def
 deploy.host.auth
 deploy.host.hardware-resource
 #deploy.host.idle-scan
 deploy.host.auto-mount
-[[allocator]]
+[[deploy-allocator]]
 deploy.gen.tiup

@@ -1,10 +1,10 @@
 help = scan hosts to make sure they are in idle status
 
 [arg]
-hosts|host|h = ''
+deploy-hosts|hosts|host = ''
 
 [arg2env]
-deploy.hosts = hosts
+deploy.hosts = deploy-hosts
 
 [env]
 deploy.hosts = read

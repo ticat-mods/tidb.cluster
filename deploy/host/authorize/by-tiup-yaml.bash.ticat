@@ -4,10 +4,10 @@ abbr = tiup-yaml|yaml
 interact = true
 
 [arg]
-password|pwd = ''
+deploy-ssh-password|deploy-ssh-pwd|deploy-pwd|ssh-pwd|password|pwd = ''
 
 [arg2env]
-ssh.pwd = password
+ssh.pwd = deploy-ssh-password
 
 [env]
 tidb.tiup.yaml = read

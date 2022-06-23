@@ -2,21 +2,14 @@ help = define cluster for generate tiup yaml file later: 3*tikv + 1*tidb + 1*pd 
 abbr = m3
 trivial = 3
 
+args.auto = *
+
 [arg]
 port-delta|delta|port|p = +0
 host|h = 127.0.0.1
-cluster-name|cluster|name|n = test
-version|ver|v = nightly
-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
-confirm|cfm = no
-
-[arg2env]
-tidb.cluster = cluster-name
-tidb.version = version
-tidb.op.keep-monitor = keep-monitor-when-stop-and-destroy
-tidb.op.confirm = confirm
 
 [flow/]
+tidb.conf.def
 deploy.set.tikv [[host]]@+0,[[host]]@+2,[[host]]@+4
 deploy.set.pd [[host]]
 deploy.set.tidb [[host]]

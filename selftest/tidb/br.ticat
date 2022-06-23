@@ -2,7 +2,7 @@ help = test backup/restore data in TiDB with `br.*`
 tag = selftest
 
 [flow/]
-depl.preset.min4 p=-252 n=st-252 v=v4.0.13 keep-mon=false
+depl.preset.min4 p=-252 cluster=st-252 v=v4.0.13 keep-mon=false
 db.rm+new
 
 br.conf dir=/tmp/test-br

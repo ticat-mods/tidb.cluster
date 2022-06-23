@@ -3,11 +3,11 @@ abbr = depl
 tag = selftest
 
 [flow/]
-depl.preset.min4 p=-222 n=st-222 v=v4.0.13 keep-mon=false
+depl.preset.min4 p=-222 cluster=st-222 v=v4.0.13 keep-mon=false
 db.rm
 db.new
 
-depl.preset.min p=-333 n=st-333 v=v4.0.13 keep-mon=false
+depl.preset.min p=-333 cluster=st-333 v=v4.0.13 keep-mon=false
 db.rm
 db.new
 

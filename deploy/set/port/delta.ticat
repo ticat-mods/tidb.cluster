@@ -2,7 +2,7 @@ help = config global port delta for deploy
 abbr = d
 
 [arg]
-port-delta|delta = +0
+deploy-port-delta|port-delta|delta = +0
 
 [arg2env]
-deploy.port.delta = port-delta
+deploy.port.delta = deploy-port-delta

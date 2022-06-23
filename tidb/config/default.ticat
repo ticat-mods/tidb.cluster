@@ -5,7 +5,7 @@ tag = config
 [arg]
 cluster-name|cluster = test
 tidb-version|version|ver|v = nightly
-tidb-nightly-major-version|nightly-maj = v6
+tidb-nightly-major-version|nightly-major = v6
 tiup-op-confirm|op-confirm|confirm|cfm = no
 tidb-start-auto-config-mysql|auto-conf-mysql|conf-mysql = true
 tidb-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = true
@@ -22,4 +22,4 @@ tidb.op.keep-monitor = tidb-keep-monitor-when-stop-and-destroy
 tidb.op.confirm = tiup-op-confirm
 tidb.tiup.yaml = tiup-yaml
 tidb.tiup.plain-output = tiup-plain-output
-tidb.init-when-start = tidb-init-when-start-db
+tidb.init-when-start = tidb-init-when-start
