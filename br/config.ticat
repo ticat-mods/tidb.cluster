@@ -3,15 +3,17 @@ tags = config
 abbr = conf
 
 [arg]
-backup-dir|dir|d = ''
-threads|thread|t|T = ''
-cluster-name|cluster|name|n|N = ''
+br-backup-dir|br-dir|backup-dir|dir = ''
+br-threads|threads|thread|t = 4
+cluster-name|cluster = ''
+br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
 br-bin = 'tiup br'
-exist-policy|when-exist|exists|exist = skip
+br-backup-exist-policy|br-exist|exist-policy|when-exist|exists|exist = overwrite
 
 [arg2env]
-br.backup-dir = backup-dir
-br.threads = threads
+br.backup-dir = br-backup-dir
+br.threads = br-threads
+br.checksum = br-check-checksum
 tidb.cluster = cluster-name
 br.bin = br-bin
-tidb.backup.exist-policy = exist-policy
+tidb.backup.exist-policy = br-backup-exist-policy

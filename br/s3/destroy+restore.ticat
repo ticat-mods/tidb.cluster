@@ -2,4 +2,5 @@ help = clean a TiDB cluster, restore data, then start cluster
 abbr = remove+restore|delete+restore|rm+restore|del+restore|rm+rs|del+rs
 trivial = 1
 
+args.auto = *
 flow = tidb.clean : tidb.start : br.s3.restore

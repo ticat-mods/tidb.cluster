@@ -2,7 +2,7 @@ help = list all backupped data's tags
 abbrs = ls
 
 [arg]
-cluster-name|cluster|name|n = ''
+cluster-name|cluster = ''
 deploy-user = root
 
 [arg2env]

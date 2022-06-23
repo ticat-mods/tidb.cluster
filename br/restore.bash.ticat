@@ -2,19 +2,19 @@ help = restore TiDB cluster data
 abbr = rs
 
 [arg]
-backup-dir|dir = ''
-cluster-name|cluster|name|n = ''
-threads|thread|thrd = 1
-check-checksum|checksum = true
-target-db|target|db = ''
+br-backup-dir|br-dir|backup-dir|dir = ''
+cluster-name|cluster = ''
+br-threads|threads|thread|t = 4
+br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
+br-target-db|target|db = ''
 br-bin = 'tiup br'
 
 [arg2env]
-br.backup-dir = backup-dir
+br.backup-dir = br-backup-dir
 tidb.cluster = cluster-name
-br.threads = threads
-br.checksum = check-checksum
-br.target = target-db
+br.threads = br-threads
+br.checksum = br-check-checksum
+br.target = br-target-db
 br.bin = br-bin
 
 [val2env]

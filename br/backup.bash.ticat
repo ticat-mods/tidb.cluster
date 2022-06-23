@@ -1,26 +1,28 @@
-help = backup TiDB cluster data \
-	arg `exist-policy`: skip|overwrite|error
+[help/]
+backup TiDB cluster data
+arg `exist-policy`: skip|overwrite|error
+[/help]
 
 abbr = back|bk
 trivial = 1
 
 [arg]
-backup-dir|dir = ''
-cluster-name|cluster|name|n= ''
-exist-policy|when-exist|exists|exist = skip
-threads|thread|thrd = 4
-check-checksum|checksum = true
-target-db|target|db = ''
+br-backup-dir|br-dir|backup-dir|dir = ''
+cluster-name|cluster = ''
+br-backup-exist-policy|br-exist|exist-policy|when-exist|exists|exist = overwrite
+br-threads|threads|thread|t = 4
+br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
+br-target-db|target|db = ''
 br-bin = 'tiup br'
 deploy-to-user|user|u = tidb
 
 [arg2env]
-br.backup-dir = backup-dir
+br.backup-dir = br-backup-dir
 tidb.cluster = cluster-name
-tidb.backup.exist-policy = exist-policy
-br.threads = threads
-br.checksum = check-checksum
-br.target = target-db
+tidb.backup.exist-policy = br-backup-exist-policy
+br.threads = br-threads
+br.checksum = br-check-checksum
+br.target = br-target-db
 br.bin = br-bin
 deploy.to-user = deploy-to-user
 

@@ -3,15 +3,15 @@ tags = config
 abbr = conf
 
 [arg]
-tag|t = ''
-cluster-name|cluster|name|n = ''
-exist-policy|when-exist|exists|exist = skip
-use-mv-instead-of-cp|use-mv|mv = false
-wait-secs-before-backup|wait-secs|wait = 2
+br-backup-tag|backup-tag|tag = ''
+cluster-name|cluster = ''
+br-backup-exist-policy|br-exit|exist-policy|when-exist|exists|exist = overwrite
+br-backup-use-mv-instead-of-cp|br-mv|use-mv|mv = false
+br-backup-wait-secs|br-backup-wait|wait-secs|wait = 2
 
 [arg2env]
-tidb.data.tag = tag
+tidb.data.tag = br-backup-tag
 tidb.cluster = cluster-name
-tidb.backup.exist-policy = exist-policy
-tidb.backup.use-mv = use-mv-instead-of-cp
-br.ssh.backup.wait-secs = wait-secs-before-backup
+tidb.backup.exist-policy = br-backup-exist-policy
+tidb.backup.use-mv = br-backup-use-mv-instead-of-cp
+br.ssh.backup.wait-secs = br-backup-wait-secs

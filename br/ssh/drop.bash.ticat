@@ -1,12 +1,12 @@
 help = remove instances' backupped data dir: <dir>.<tag>
 
 [arg]
-tag|t = ''
+br-backup-tag|backup-tag|tag = ''
 cluster-name|cluster|name|n = ''
 deploy-user = root
 
 [arg2env]
-tidb.data.tag = tag
+tidb.data.tag = br-backup-tag
 tidb.cluster = cluster-name
 deploy.user = deploy-user
 

@@ -9,22 +9,22 @@ trivial = 1
 flow = sleep [[br.ssh.backup.wait-secs]] : tidb.stop
 
 [arg]
-tag|t = ''
-cluster-name|cluster|name|n = ''
-exist-policy|when-exist|exists|exist = overwrite
-use-mv-instead-of-cp|use-mv|mv = false
-deploy-to-user|user|u = tidb
+br-backup-tag|backup-tag|tag = ''
+cluster-name|cluster = ''
+br-backup-exist-policy|br-exit|exist-policy|when-exist|exists|exist = overwrite
+br-backup-use-mv-instead-of-cp|br-mv|use-mv|mv = false
+deploy-to-user|user = tidb
 deploy-user = root
-wait-secs-before-backup|wait-secs|wait = 2
+br-backup-wait-secs|br-backup-wait|wait-secs|wait = 2
 
 [arg2env]
-tidb.data.tag = tag
+tidb.data.tag = br-backup-tag
 tidb.cluster = cluster-name
-tidb.backup.exist-policy = exist-policy
-tidb.backup.use-mv = use-mv-instead-of-cp
+tidb.backup.exist-policy = br-backup-exist-policy
+tidb.backup.use-mv = br-backup-use-mv-instead-of-cp
 deploy.to-user = deploy-to-user
 deploy.user = deploy-user
-br.ssh.backup.wait-secs = wait-secs-before-backup
+br.ssh.backup.wait-secs = br-backup-wait-secs
 
 [env]
 tidb.data.tag = read

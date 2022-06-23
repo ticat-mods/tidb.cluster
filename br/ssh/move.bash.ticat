@@ -2,9 +2,9 @@ help = move instances' backupped dirfrom one tag to another
 abbr = mv|rename
 
 [arg]
-from-tag|tag|t|from|src = ''
+br-backup-tag|backup-tag|from-tag|tag|from|src = ''
 to-tag|to|dest = ''
-cluster-name|cluster|name|n = ''
+cluster-name|cluster = ''
 deploy-user = root
 
 [arg2env]
