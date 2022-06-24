@@ -2,7 +2,7 @@ help = generate tiup yaml config from env values written by `deploy.set.*` or `d
 abbr = tiup|yaml
 
 [arg]
-deploy-depose-env-kvs-after-deployed|depose-env = false
+deploy-depose-env-kvs-after-deployed|depose-env = true
 
 [arg2env]
 deploy.env.kvs.depose-after-deployed = deploy-depose-env-kvs-after-deployed

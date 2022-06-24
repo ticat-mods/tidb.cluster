@@ -4,7 +4,7 @@ abbr = conf
 [arg]
 deploy-hosts|hosts|host = ''
 deploy-user = ''
-deploy-depose-env-kvs-after-deployed|depose-env = false
+deploy-depose-env-kvs-after-deployed|depose-env = true
 
 [arg2env]
 deploy.user = deploy-user

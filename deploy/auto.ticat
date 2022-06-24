@@ -7,7 +7,7 @@ args.auto = cluster,version,keep-mon,deploy-user,nightly-major,auto-conf-mysql,c
 deploy-hosts|hosts|host = ''
 deploy-port-delta|port-delta|delta = 1000
 deploy-allocator|allocator|alloc|a = deploy.auto.allocator.tom
-deploy-depose-env-kvs-after-deployed|depose-env = false
+deploy-depose-env-kvs-after-deployed|depose-env = true
 
 [arg2env]
 deploy.hosts = deploy-hosts
