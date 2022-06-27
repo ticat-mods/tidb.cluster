@@ -26,9 +26,6 @@ tidb.version = read
 tidb.op.confirm = read
 tidb.op.force = read
 
-tidb.upgrade.begin = write
-tidb.upgrade.end = write
-
 [dep]
 tiup = to operate cluster
 expr = to parse 'version+path'

@@ -7,13 +7,13 @@ interact = true
 deploy-hosts|hosts|host = ''
 deploy-ssh-password|deploy-ssh-pwd|deploy-pwd|ssh-pwd|password|pwd = ''
 deploy-user|user|u = root
-deploy-key-file-abs-path|key-file|key|k = ''
+deploy-key-file-path|key-file|key|k = ''
 
 [arg2env]
 deploy.hosts = deploy-hosts
 deploy.user = deploy-user
 ssh.pwd = deploy-ssh-password
-ssh.key-file = deploy-key-file-abs-path
+ssh.key-file = deploy-key-file-path
 
 [env]
 deploy.hosts = read
