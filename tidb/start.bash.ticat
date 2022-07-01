@@ -21,6 +21,9 @@ tidb.init-when-start = tidb-init-when-start-db
 tidb.cluster = read
 tidb.auto-config-mysql = read
 
+tidb.prometheus = write
+tidb.pd = write
+
 mysql.host = write
 mysql.port = write
 mysql.user = write

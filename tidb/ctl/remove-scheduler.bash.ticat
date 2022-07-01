@@ -6,6 +6,7 @@ cluster-name|cluster|name|N = ""
 scheduler|sched|s = ""
 
 [arg2env]
+# TODO: get pd leader by other way, not from cluster name
 tidb.cluster = cluster-name
 
 [env]

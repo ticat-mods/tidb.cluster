@@ -6,7 +6,9 @@ host|h|H = ""
 port|p|P = ""
 
 [arg2env]
+# TODO: get pd leader by other way, not from cluster name
 tidb.cluster = cluster-name
+
 tidb.node.host = host
 tidb.node.port = port
 

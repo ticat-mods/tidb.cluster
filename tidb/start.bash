@@ -57,3 +57,11 @@ if [ "${auto_conf_mysql}" == 'true' ]; then
 		echo "[:-] more than 1 tidb found(${cnt}) in cluster '${name}', select the first one" >&2
 	fi
 fi
+
+pd_addr=`must_pd_addr "${name}"`
+echo "tidb.pd=${pd_addr}" | tee -a "${env_file}"
+
+prom_addr=`must_prometheus_addr "${name}"`
+echo "tidb.prometheus=${prom_addr}" | tee -a "${env_file}"
+
+echo "[:)] cluster '${name}' is all set"
