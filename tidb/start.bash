@@ -61,7 +61,7 @@ fi
 pd_addr=`must_pd_addr "${name}"`
 echo "tidb.pd=${pd_addr}" | tee -a "${env_file}"
 
-prom_addr=`must_prometheus_addr "${name}"`
+prom_addr='http://'`must_prometheus_addr "${name}"`
 echo "tidb.prometheus=${prom_addr}" | tee -a "${env_file}"
 
 echo "[:)] cluster '${name}' is all set"
