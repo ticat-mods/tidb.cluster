@@ -96,6 +96,7 @@ class Host:
 		dev_names = hwr_env.must_get('devs')
 		if len(dev_names) > 0:
 			dev_names = dev_names.split(',')
+
 		self.devs = []
 		self.nvmes = []
 		for dev_name in dev_names:
@@ -106,6 +107,10 @@ class Host:
 			self.devs.append(dev)
 			if dev.is_nvme():
 				self.nvmes.append(dev)
+
+		self.devs.sort(key = lambda dev: dev.avail, reverse = True)
+		self.nvmes.sort(key = lambda dev: dev.avail, reverse = True)
+
 		if len(dev_names) == 0:
 			dev = Dev(cost_model, self, '', -1, '', True)
 			self.devs.append(dev)
