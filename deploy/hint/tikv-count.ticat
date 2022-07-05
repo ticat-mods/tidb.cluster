@@ -3,6 +3,8 @@ abbr = tikv-cnt|kv-cnt
 
 [arg]
 auto-deploy-hint-tikv-count|tikv-count|kv-cnt|cnt = ''
+auto-deploy-hint-tikv-per-node-count|per-node-tikv|per-node-kv|per-node|node-tikv|node-kv = ''
 
 [arg2env]
 deploy.hint.tikv-count = auto-deploy-hint-tikv-count
+deploy.hint.tikv-per-node-count = auto-deploy-hint-tikv-per-node-count

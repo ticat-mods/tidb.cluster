@@ -160,11 +160,15 @@ class Host:
 class DeployHints:
 	def __init__(self, env, hosts):
 		self.pd_with_tikv = to_true(env.get_ex('deploy.hint.pd-with-tikv', ''))
-		self.tikv_cnt = int(env.get_ex('deploy.hint.tikv-count', '-1'))
+		self.tikv_total_cnt = int(env.get_ex('deploy.hint.tikv-count', '-1'))
+		self.tikv_per_host_cnt = int(env.get_ex('deploy.hint.tikv-per-node-count', '-1'))
 		self._hosts = hosts
 
-	def reached_tikv_cnt(self):
-		return self.tikv_cnt > 0 and self._hosts.tikv_instance_cnt() >= self.tikv_cnt
+	def reached_tikv_total_cnt(self):
+		return self.tikv_total_cnt > 0 and self._hosts.tikv_instance_cnt() >= self.tikv_total_cnt
+
+	def reached_tikv_per_host_cnt(self, host):
+		return self.tikv_per_host_cnt > 0 and host.tikv_instance_cnt() >= self.tikv_per_host_cnt
 
 class Hosts:
 	def __init__(self, cost_model, deploy_dir_name):

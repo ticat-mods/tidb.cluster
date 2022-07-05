@@ -32,15 +32,18 @@ def deploy_non_io(deployment):
 def deploy_tikv(deployment):
 	run_on_all_disk = len(deployment.nvmes) == 0 or float(len(deployment.nvmes)) / float(len(deployment.devs)) < 1 / 2
 	for host_name in deployment.hosts:
+		host = deployment.hwrs[host_name]
 		if run_on_all_disk:
 			# deploy tikv on both nvme and non-nvme
-			devs = deployment.hwrs[host_name].devs
+			devs = host.devs
 		else:
 			# deploy tikv on nvme only
-			devs = deployment.hwrs[host_name].nvmes
+			devs = host.nvmes
 		for dev in devs:
-			if deployment.hints.reached_tikv_cnt():
+			if deployment.hints.reached_tikv_total_cnt():
 				return
+			if deployment.hints.reached_tikv_per_host_cnt(host):
+				continue
 			dev.deploy_tikv()
 
 	# deploy tikv * 2 on one disk:
@@ -49,10 +52,10 @@ def deploy_tikv(deployment):
 
 	def deploy_more(on_nvme):
 		for host_name in deployment.hosts:
-			hwr = deployment.hwrs[host_name]
-			devs = on_nvme and hwr.nvmes or hwr.devs
+			host = deployment.hwrs[host_name]
+			devs = on_nvme and host.nvmes or host.devs
 			for dev in devs:
-				if deployment.hints.reached_tikv_cnt():
+				if deployment.hints.reached_tikv_total_cnt():
 					return
 				dev.deploy_tikv()
 
@@ -65,8 +68,8 @@ def main():
 	deployment = Hosts(Hosts.std_cost_model(), 'deployed-by-tom')
 
 	for host_name in deployment.hwrs.keys():
-		hwr = deployment.hwrs[host_name]
-		hwr.dump()
+		host = deployment.hwrs[host_name]
+		host.dump()
 
 	deploy_tikv(deployment)
 	if deployment.io_instance_cnt() == 0:
