@@ -1,5 +1,5 @@
 help = set a hint for auto-deployer: tikv instance count
-abbr = kv-cnt
+abbr = tikv-cnt|kv-cnt
 
 [arg]
 auto-deploy-hint-tikv-count|tikv-count|kv-cnt|cnt = ''

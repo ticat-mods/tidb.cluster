@@ -1,5 +1,9 @@
 help = set a hint for auto-deployer: deploy pd on the nodes of tikv
 abbr = pd-with-kv
 
-[val2env]
-deploy.hint.pd-with-tikv = true
+trivial = 9
+
+flow = env.set deploy.hint.pd-with-tikv [[deploy-hint-pd-with-tikv]]
+
+[arg]
+deploy-hint-pd-with-tikv|pd-with-kv = true

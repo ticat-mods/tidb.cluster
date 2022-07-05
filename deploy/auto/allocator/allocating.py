@@ -134,6 +134,12 @@ class Host:
 			used_vcores_sum += dev.used_vcores()
 		return used_vcores_sum
 
+	def tikv_instance_cnt(self):
+		sum = 0
+		for dev in self.devs:
+			sum += dev.tikv_instance_cnt()
+		return sum
+
 	def io_instance_cnt(self):
 		sum = 0
 		for dev in self.devs:
