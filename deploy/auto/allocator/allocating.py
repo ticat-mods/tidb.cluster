@@ -27,18 +27,15 @@ class Dev:
 	def is_nvme(self):
 		return self.name.startswith('nvme')
 
+	@staticmethod
+	def is_io_instance(name):
+		return name in ['tikv', 'tiflash']
+
 	def _deploy_service(self, name):
 		new_cnt = 1
-		new_services = [name]
-		new_io_cnt = 0
-		if name in ['tikv', 'tiflash']:
-			new_io_cnt = 1
 		if name in self.deployed:
-			old_cnt, old_services, old_io_cnt = self.deployed[name]
-			new_cnt += old_cnt
-			new_services = old_services + new_services
-			new_io_cnt += old_io_cnt
-		self.deployed[name] = (new_cnt, new_services, new_io_cnt)
+			new_cnt += self.deployed[name]
+		self.deployed[name] = new_cnt
 
 	def deploy_tikv(self):
 		self._deploy_service('tikv')
@@ -61,20 +58,21 @@ class Dev:
 	def used_vcores(self):
 		used_vcores_sum = 0
 		for name in self.deployed:
-			_, services, _ = self.deployed[name]
-			for name in services:
+			cnt = self.deployed[name]
+			for _ in range(0, cnt):
 				used_vcores_sum += self.cost_model.need_vcores(name)
 		return used_vcores_sum
 
-	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
-	def deployed_instances(self):
-		return deepcopy(self.deployed)
+	def tikv_instance_cnt(self):
+		if 'tikv' not in self.deployed:
+			return 0
+		return self.deployed['tikv']
 
 	def io_instance_cnt(self):
 		io_cnt_sum = 0
 		for name in self.deployed:
-			_, _, io_cnt = self.deployed[name]
-			io_cnt_sum += io_cnt
+			if Dev.is_io_instance(name):
+				io_cnt_sum += self.deployed[name]
 		return io_cnt_sum
 
 	def has_tikv(self):
@@ -148,28 +146,19 @@ class Host:
 				return True
 		return False
 
-	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
-	def deployed_instances(self):
-		services_sum = {}
-		for dev in self.devs:
-			dev_vcores, services = dev.deployed_instances()
-			for name in services.keys():
-				cnt, vcores, io_cnt = services[name]
-				if name not in services_sum:
-					services_sum[name] = (cnt, vcores, io_cnt)
-				else:
-					old_cnt, old_vcores, old_io_cnt = services_sum[name]
-					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
-		return services_sum
-
 	def dump(self):
 		print('host:'+self.name+', vcores:'+str(self.vcores)+', mem:'+self.mem_gb+'G'+', numa:'+str(self.numa_nodes))
 		for dev in self.devs:
 			print('    dev:'+dev.name+', avail:'+str(dev.avail)+', mounted:'+dev.mounted+', os-disk:'+str(dev.os_default))
 
 class DeployHints:
-	def __init__(self, env):
+	def __init__(self, env, hosts):
 		self.pd_with_tikv = to_true(env.get_ex('deploy.hint.pd-with-tikv', ''))
+		self.tikv_cnt = int(env.get_ex('deploy.hint.tikv-count', '-1'))
+		self._hosts = hosts
+
+	def reached_tikv_cnt(self):
+		return self.tikv_cnt > 0 and self._hosts.tikv_instance_cnt() >= self.tikv_cnt
 
 class Hosts:
 	def __init__(self, cost_model, deploy_dir_name):
@@ -177,7 +166,7 @@ class Hosts:
 		self.deploy_dir_name = deploy_dir_name
 
 		self.env = Env()
-		self.hints = DeployHints(self.env)
+		self.hints = DeployHints(self.env, self)
 
 		self.deploy_to_user = self.env.must_get('deploy.to-user')
 		self.deploy_user = self.env.must_get('deploy.user')
@@ -226,20 +215,12 @@ class Hosts:
 			used_vcores_sum += self.hwrs[host].used_vcores()
 		return used_vcores_sum
 
-	# return: map{service: (instance_cnt, used_vcores, io_instance_cnt), ...}
-	def deployed_instances(self):
-		services_sum = {}
+	def tikv_instance_cnt(self):
+		sum = 0
 		for host in self.hosts:
 			hwr = self.hwrs[host]
-			services = hwr.deployed_instances()
-			for name in services.keys():
-				cnt, vcores, io_cnt = services[name]
-				if name not in services_sum:
-					services_sum[name] = (cnt, vcores, io_cnt)
-				else:
-					old_cnt, old_vcores, old_io_cnt = services_sum[name]
-					services_sum[name] = (cnt + old_cnt, vcores + old_vcores, io_cnt + old_io_cnt)
-		return services_sum
+			sum += hwr.tikv_instance_cnt()
+		return sum
 
 	def io_instance_cnt(self):
 		sum = 0
@@ -267,7 +248,7 @@ class Hosts:
 			id_gen = {}
 			for dev in hwr.devs:
 				for service in dev.deployed.keys():
-					cnt, _, _ = dev.deployed[service]
+					cnt = dev.deployed[service]
 					for _ in range(0, cnt):
 						if service not in id_gen:
 							id = host

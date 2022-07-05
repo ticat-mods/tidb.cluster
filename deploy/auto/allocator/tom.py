@@ -31,16 +31,17 @@ def deploy_non_io(deployment):
 
 def deploy_tikv(deployment):
 	run_on_all_disk = len(deployment.nvmes) == 0 or float(len(deployment.nvmes)) / float(len(deployment.devs)) < 1 / 2
-	if run_on_all_disk:
-		# deploy tikv on both nvme and non-nvme
-		for host_name in deployment.hosts:
-			for dev in deployment.hwrs[host_name].devs:
-				dev.deploy_tikv()
-	else:
-		# deploy tikv on nvme only
-		for host_name in deployment.hosts:
-			for dev in deployment.hwrs[host_name].nvmes:
-				dev.deploy_tikv()
+	for host_name in deployment.hosts:
+		if run_on_all_disk:
+			# deploy tikv on both nvme and non-nvme
+			devs = deployment.hwrs[host_name].devs
+		else:
+			# deploy tikv on nvme only
+			devs = deployment.hwrs[host_name].nvmes
+		for dev in devs:
+			if deployment.hints.reached_tikv_cnt():
+				return
+			dev.deploy_tikv()
 
 	# deploy tikv * 2 on one disk:
 	# - if we got lots of cpu
@@ -51,6 +52,8 @@ def deploy_tikv(deployment):
 			hwr = deployment.hwrs[host_name]
 			devs = on_nvme and hwr.nvmes or hwr.devs
 			for dev in devs:
+				if deployment.hints.reached_tikv_cnt():
+					return
 				dev.deploy_tikv()
 
 	used_vcores = deployment.used_vcores()
