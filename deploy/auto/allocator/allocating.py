@@ -335,12 +335,12 @@ class Hosts:
 		class Costs:
 			def __init__(self):
 				self.cost_map = {
-					'tikv': 16,
-					'pd': 8,
+					'tikv': 8,
+					'pd': 4,
 					'tidb': 16,
 					'tiflash': 16,
-					'monitoring': 2,
-					'grafana': 4,
+					'monitoring': 1,
+					'grafana': 2,
 				}
 			def down_grade(self, down_to_percent = 50):
 				for service in self.cost_map.keys():
