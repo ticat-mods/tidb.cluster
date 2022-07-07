@@ -5,8 +5,12 @@ abbr = conf
 deploy-hosts|hosts|host = ''
 deploy-user = ''
 deploy-depose-env-kvs-after-deployed|depose-env = true
+deploy-ssh-password|deploy-ssh-pwd|deploy-pwd|ssh-pwd|password|pwd = ''
+deploy-ssh-key-file|ssh-key|key-file|key|k = ''
 
 [arg2env]
 deploy.user = deploy-user
 deploy.hosts = deploy-hosts
 deploy.env.kvs.depose-after-deployed = deploy-depose-env-kvs-after-deployed
+ssh.pwd = deploy-ssh-password
+ssh.key-file = deploy-ssh-key-file
