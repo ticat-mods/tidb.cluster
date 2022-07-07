@@ -82,9 +82,9 @@ function ssh_auto_auth()
 		sshpass -p "${phrase}" scp${key_arg} -o "StrictHostKeyChecking=no" "${script_src}" "${user}@${host}:${script_dest}"
 		echo "[:)] ${host} script copied"
 		#echo sshpass -p "***" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
-		#	"chown \"${user}:${user}\" \"${script_dest}\" && su ${user} -c \"bash ${script_dest}\""
+		#	"chown \"${user}:${user}\" \"${script_dest}\" && bash \"${script_dest}\""
 		sshpass -p "${phrase}" ssh${key_arg} -o "StrictHostKeyChecking=no" "${user}@${host}" \
-			"chown \"${user}:${user}\" \"${script_dest}\" && su ${user} -c \"bash ${script_dest}\""
+			"chown \"${user}:${user}\" \"${script_dest}\" && bash \"${script_dest}\""
 		echo "[:)] ${host} authorized"
 	done
 }
