@@ -202,9 +202,10 @@ class Hosts:
 			hwr = Host(self.cost_model, self.env, host)
 			self.nvmes += hwr.nvmes
 			self.devs += hwr.devs
+			self.vcores += hwr.vcores
 			self.hwrs[host] = hwr
 
-	def least_cpu_use_host(self, for_service):
+	def least_cpu_use_host(self, for_service, allow_down_grade = True):
 		while True:
 			cand = None
 			max_avail_vcores = -1
@@ -222,7 +223,11 @@ class Hosts:
 
 			if not not_enough_vcores and self.cost_model.need_vcores(for_service) <= max_avail_vcores:
 				return cand
+			if not allow_down_grade:
+				break
 			self.cost_model.down_grade(50)
+
+		return None
 
 	def used_vcores(self):
 		used_vcores_sum = 0

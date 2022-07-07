@@ -25,9 +25,10 @@ def deploy_non_io(deployment):
 
 	while True:
 		used_vcores = deployment.used_vcores()
-		if used_vcores + deployment.cost_model.need_vcores('tidb') > deployment.vcores:
+		host = deployment.least_cpu_use_host(for_service='tidb', allow_down_grade=False)
+		if host == None:
 			break
-		deployment.least_cpu_use_host().least_use_dev(nvme_only=False).deploy_tidb()
+		host.least_use_dev(nvme_only=False).deploy_tidb()
 
 def deploy_tikv(deployment):
 	run_on_all_disk = len(deployment.nvmes) == 0 or float(len(deployment.nvmes)) / float(len(deployment.devs)) < 1 / 2
