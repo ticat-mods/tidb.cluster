@@ -9,8 +9,8 @@ mysql-password|mysql-pwd|password|pwd = ''
 
 [arg2env]
 tidb.cluster = cluster-name
-mysql.user = user
-mysql.pwd = password
+mysql.user = mysql-user
+mysql.pwd = mysql-password
 
 [env]
 tidb.cluster = read
