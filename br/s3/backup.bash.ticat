@@ -24,10 +24,15 @@ tidb.pd = tidb-pd-addr
 br.bin = br-bin
 
 [env]
-br.backup-dir = read
 tidb.pd = read
+br.endpoint = read
+br.password = read
+br.endpoint = read
+br.threads = read
+br.backup-dir = read
 br.checksum = read
 br.bin = read
+br.checksum = read
 
 [dep]
 tiup = to display tidb cluster info and run br
