@@ -5,7 +5,7 @@ abbr = conf
 [arg]
 br-backup-dir|br-dir|backup-dir|dir = ''
 br-threads|br-t|threads|thread|thd|t = 4
-cluster-name|cluster = ''
+tidb-pd-addr|pd-addr|pd = ''
 br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
 br-bin = 'tiup br'
 br-backup-exist-policy|br-exist|exist-policy|when-exist|exists|exist = overwrite
@@ -14,6 +14,6 @@ br-backup-exist-policy|br-exist|exist-policy|when-exist|exists|exist = overwrite
 br.backup-dir = br-backup-dir
 br.threads = br-threads
 br.checksum = br-check-checksum
-tidb.cluster = cluster-name
+tidb.pd = tidb-pd-addr
 br.bin = br-bin
 tidb.backup.exist-policy = br-backup-exist-policy

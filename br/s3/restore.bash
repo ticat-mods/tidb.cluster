@@ -7,8 +7,7 @@ env=`cat "${session}/env"`
 endpoint=`must_env_val "${env}" 'br.endpoint'`
 username=`must_env_val "${env}" 'br.username'`
 password=`must_env_val "${env}" 'br.password'`
-name=`must_env_val "${env}" 'tidb.cluster'`
-pd=`must_cluster_pd "${name}"`
+pd=`must_env_val "${env}" 'tidb.pd'`
 
 threads=`must_env_val "${env}" 'br.threads'`
 

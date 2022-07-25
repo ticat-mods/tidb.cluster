@@ -8,7 +8,7 @@ trivial = 1
 
 [arg]
 br-backup-dir|br-dir|backup-dir|dir = ''
-cluster-name|cluster = ''
+tidb-pd-addr|pd-addr|pd = ''
 br-backup-exist-policy|br-exist|exist-policy|when-exist|exists|exist = overwrite
 br-threads|br-t|threads|thread|thd|t = 4
 br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
@@ -18,7 +18,7 @@ deploy-to-user|user|u = tidb
 
 [arg2env]
 br.backup-dir = br-backup-dir
-tidb.cluster = cluster-name
+tidb.pd = tidb-pd-addr
 tidb.backup.exist-policy = br-backup-exist-policy
 br.threads = br-threads
 br.checksum = br-check-checksum
@@ -28,7 +28,7 @@ deploy.to-user = deploy-to-user
 
 [env]
 br.backup-dir = read
-tidb.cluster = read
+tidb.pd = read
 br.checksum = read
 tidb.backup.exist-policy = read
 br.bin = read

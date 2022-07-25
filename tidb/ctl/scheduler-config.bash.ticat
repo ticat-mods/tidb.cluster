@@ -5,19 +5,16 @@ abbr = sc
 scheduler|s = ''
 config|key|k|c = ''
 value|val = ''
-cluster-name|cluster|name|n = ''
-pd-addr|pd = ''
-version|ver = ''
+tidb-pd-addr|pd-addr|pd = ''
+tidb-version|version|ver|v = ''
 
 [arg2env]
-tidb.cluster = cluster-name
-tidb.cluster.pd = pd-addr
-tidb.version = version
+tidb.pd = tidb-pd-addr
+tidb.version = tidb-version
 
 [env]
-tidb.cluster = read
-tidb.version = may-read
-tidb.cluster.pd = may-read
+tidb.version = read
+tidb.pd = read
 
 [dep]
 tiup = to control cluster

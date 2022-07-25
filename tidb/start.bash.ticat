@@ -23,6 +23,7 @@ tidb.auto-config-mysql = read
 
 tidb.prometheus = write
 tidb.pd = write
+tidb.version = write
 
 mysql.host = write
 mysql.port = write

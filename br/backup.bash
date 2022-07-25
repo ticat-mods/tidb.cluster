@@ -8,8 +8,7 @@ deploy_to_user=`must_env_val "${env}" 'deploy.to-user'`
 
 ## Handle args
 #
-name=`must_env_val "${env}" 'tidb.cluster'`
-pd=`must_cluster_pd "${name}"`
+pd=`must_env_val "${env}" 'tidb.pd'`
 
 threads=`must_env_val "${env}" 'br.threads'`
 

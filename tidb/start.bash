@@ -64,4 +64,10 @@ echo "tidb.pd=${pd_addr}" | tee -a "${env_file}"
 prom_addr='http://'`must_prometheus_addr "${name}"`
 echo "tidb.prometheus=${prom_addr}" | tee -a "${env_file}"
 
+version=`env_val "${env}" 'tidb.version'`
+if [ -z "${version}" ]; then
+	version=`must_cluster_version "${name}"`
+	echo "tidb.version=${version}" | tee -a "${env_file}"
+fi
+
 echo "[:)] cluster '${name}' is all set"

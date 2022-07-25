@@ -3,8 +3,7 @@ set -euo pipefail
 
 env=`cat "${1}/env"`
 
-name=`must_env_val "${env}" 'tidb.cluster'`
-pd=`must_cluster_pd "${name}"`
+pd=`must_env_val "${env}" 'tidb.pd'`
 
 threads=`must_env_val "${env}" 'br.threads'`
 

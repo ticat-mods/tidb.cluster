@@ -3,7 +3,7 @@ abbr = rs
 
 [arg]
 br-backup-dir|br-dir|backup-dir|dir = ''
-cluster-name|cluster = ''
+tidb-pd-addr|pd-addr|pd = ''
 br-threads|br-t|threads|thread|thd|t = 4
 br-check-checksum|br-checksum|br-ccs|check-checksum|checksum|ccs = true
 br-target-db|target|db = ''
@@ -11,7 +11,7 @@ br-bin = 'tiup br'
 
 [arg2env]
 br.backup-dir = br-backup-dir
-tidb.cluster = cluster-name
+tidb.pd = tidb-pd-addr
 br.threads = br-threads
 br.checksum = br-check-checksum
 br.target = br-target-db
@@ -22,7 +22,7 @@ tidb.need-init = false
 
 [env]
 br.backup-dir = read
-tidb.cluster = read
+tidb.pd = read
 br.checksum = read
 br.bin = read
 
