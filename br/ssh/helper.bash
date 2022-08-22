@@ -56,7 +56,7 @@ function get_instance_info()
 		fi
 	fi
 
-	hosts=(`echo "${instances}" | awk '{print $3}'`)
+	hosts=(`echo "${instances}" | awk '{print $(NF-5)}'`)
 	deploy_dirs=(`echo "${instances}" | awk '{print $NF}'`)
 	data_dirs=(`echo "${instances}" | awk '{print $(NF-1)}'`)
 
