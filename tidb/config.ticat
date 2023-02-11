@@ -11,6 +11,7 @@ tidb-start-auto-config-mysql|auto-conf-mysql|conf-mysql = ''
 tidb-keep-monitor-when-stop-and-destroy|keep-monitor|keep-mon = ''
 tiup-yaml|yaml = ''
 tiup-plain-output|tiup-plain|plain = ''
+tiup-patch-offline|patch-offline|p-o = ''
 tidb-init-when-start|init-when-start|init-start = ''
 
 [arg2env]
@@ -22,4 +23,5 @@ tidb.op.keep-monitor = tidb-keep-monitor-when-stop-and-destroy
 tidb.op.confirm = tiup-op-confirm
 tidb.tiup.yaml = tiup-yaml
 tidb.tiup.plain-output = tiup-plain-output
+tidb.tiup.patch.offline = tiup-patch-offline
 tidb.init-when-start = tidb-init-when-start

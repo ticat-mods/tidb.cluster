@@ -26,5 +26,5 @@ read ver path < <(expand_version_and_path "${ver}")
 tiup cluster${plain} deploy "${name}" "${ver}" "${yaml}"${confirm}
 
 if [ ! -z "${path}" ]; then
-	path_patch "${path}"
+	path_patch "${name}" "${path}" "${plain}" 'true'
 fi

@@ -50,7 +50,8 @@ function tidb_component_build_and_patch()
 	echo "binary: ${built}"
 
 	local plain=`env_val "${env}" 'tidb.tiup.plain-output'`
+	local offline=`env_val "${env}" 'tidb.tiup.patch.offline'`
 	local cluster=`must_env_val "${env}" 'tidb.cluster'`
 
-	path_patch "${cluster}" "${built}" "${plain}"
+	path_patch "${cluster}" "${built}" "${plain}" "${offline}"
 }

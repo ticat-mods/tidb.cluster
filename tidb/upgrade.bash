@@ -22,10 +22,12 @@ plain=`tiup_output_fmt_str "${env}"`
 
 force=`tiup_maybe_enable_opt "${1}" '--force'`
 ignore_config_check=`tiup_maybe_enable_opt "${2}" '--ignore-config-check'`
-offline=`tiup_maybe_enable_opt "${3}" '--offline'`
 
-tiup cluster${plain} upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline}${confirm}
+offline="${3}"
+offline_str=`tiup_maybe_enable_opt "${offline}" '--offline'`
+
+tiup cluster${plain} upgrade "${name}" "${ver}" ${force}${ignore_config_check}${offline_str}${confirm}
 
 if [ ! -z "${path}" ]; then
-	path_patch "${name}" "${path}"
+	path_patch "${name}" "${path}" "${plain}" "${offline}"
 fi

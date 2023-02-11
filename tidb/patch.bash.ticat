@@ -4,10 +4,12 @@ help = patch tiup cluster with bin-dir, will auto search for corresponding compo
 patch-bin-dir|bin-dir|path|dir|bin = ''
 cluster-name|cluster = ''
 tiup-plain-output|tiup-plain|plain = true
+tiup-patch-offline|patch-offline|offline = ''
 
 [arg2env]
 tidb.cluster = cluster-name
 tidb.tiup.plain-output = tiup-plain-output
+tidb.tiup.patch.offline = tiup-patch-offline
 
 [env]
 tidb.cluster = read
